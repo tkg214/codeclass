@@ -99,6 +99,37 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+//Posting gist to github on behlaf of current user
+
+function makeGistPostOptions(request) {
+  return {
+    url: "https://api.github.com/gists",
+    headers: {
+      "User-Agent": request.user.username,
+      "Authorization": `token ${request.user.token}`
+    },
+    "body": JSON.stringify({
+      "files": {
+        "file1.txt": {
+          "content": "TEST CONTENT"
+        }
+      }
+    })
+  };
+}
+
+// Test posting a gist for the currently authentictaed user
+app.get('/gists', function (req, res) {
+  request.post(makeGistPostOptions(req), function(error, response, body) {
+    if (!error) {
+      console.log('statusCode:', response.statusCode);
+      res.send("Success!");
+    } else {
+      console.log('error:', error);
+    }
+  });
+});
+
 
 app.listen(3000, () =>
   console.log("App listening on port 3000")
