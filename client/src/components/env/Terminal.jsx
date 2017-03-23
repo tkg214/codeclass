@@ -12,3 +12,5 @@ class Terminal extends Component {
 }
 
 export default Terminal;
+
+// Terminal not styled yet. This component only shows the state change. It is very dumb :)
