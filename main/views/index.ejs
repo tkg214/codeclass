@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Code Class</title>
+	</head>
+	<body>
+		<header>
+			<% include ./partials/_nav.ejs %>
+		</header>
+		<% if (!user) { %>
+			<h2>Welcome! Please log in.</h2>
+		<% } else { %>
+			<h2>Hello, <%= user.displayName %>.</h2>
+		<% } %>
+	</body>
+</html>
