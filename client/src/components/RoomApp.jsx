@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar.jsx';
-import EnvContainer from './EnvContainer.jsx';
-import ChatContainer from './ChatContainer.jsx';
+import Navbar from './nav/Navbar.jsx';
+import EnvContainer from './env/EnvContainer.jsx';
+import ChatContainer from './chat/ChatContainer.jsx';
 
 class RoomApp extends Component {
 

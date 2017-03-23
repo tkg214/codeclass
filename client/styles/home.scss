@@ -6,12 +6,33 @@ main {
   flex: 3;
   overflow: auto;
   right: 0;
+
+  .user-count-container {
+    height: 120px;
+  }
+
+  .control-container {
+    height: 120px;
+  }
+
+  .message-list-container {
+  }
+
+  .message-compose-container {
+    height: 180px;
+  }
 }
 
 .env-container {
   flex: 7;
   width: 70%;
+
+  .env-nav-container {
+
+  }
 }
+
+
 
 .navbar {
   margin-bottom: 0;
