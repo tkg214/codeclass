@@ -10,7 +10,6 @@ class EditorContainer extends Component {
 
   render() {
 
-    const value = 'Need to adjust layout for environment containers. The red borders are just for visual aid'
     return (
       <div className='editor-container'>
         <AceEditor
@@ -19,10 +18,14 @@ class EditorContainer extends Component {
           theme="monokai"
           name="blah2"
           fontSize={10}
-          defaultValue={value}
+          onChange={this._onChange.bind(this)}
         />
       </div>
     )
+  }
+
+  _onChange(newValue) {
+    this.props.actions.updateEditorValues(newValue)
   }
 }
 
