@@ -1,3 +1,5 @@
 client/node_modules
 main/node_modules
 .DS_Store
+.env
+/tmp
