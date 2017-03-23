@@ -6,13 +6,12 @@ import ChatContainer from './chat/ChatContainer.jsx';
 class RoomApp extends Component {
 
   render() {
-
     return (
       <div>
         <Navbar/>
         <main>
-          <EnvContainer store={this.props.store}/>
-          <ChatContainer store={this.props.store}/>
+          <EnvContainer/>
+          <ChatContainer/>
         </main>
       </div>
     )
