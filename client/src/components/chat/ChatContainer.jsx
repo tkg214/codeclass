@@ -19,3 +19,6 @@ class ChatContainer extends Component {
 }
 
 export default ChatContainer;
+
+// This container is supposed to be pretty smart. Its children are supposed to be dumb :P
+// The control and messagecompose containers are a bit smarter than the others
