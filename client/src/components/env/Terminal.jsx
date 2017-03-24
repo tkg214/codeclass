@@ -5,7 +5,6 @@ class Terminal extends Component {
   render() {
     return (
       <div className='terminal'>
-
         <pre>{this.props.editor}</pre>
       </div>
     )

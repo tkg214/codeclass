@@ -11,10 +11,9 @@ $(function() {
       $('.message-list-container').css('height', mvh + 'vh')
   }
 
-<<<<<<< HEAD
   $(document).ready(SetHeight);
   $(window).resize(SetHeight);
-=======
+
   function SetWidth(){
     const w = $(window).width();
     const m = $('.chat-container').width();
@@ -25,6 +24,5 @@ $(function() {
   $(document).ready(SetHeight);
   $(window).resize(SetHeight);
   $(window).resize(SetWidth);
->>>>>>> 33519f9c4295cd363f9680ef574f53806a47ff38
 
 });

@@ -8,13 +8,14 @@ import 'brace/ext/language_tools';
 
 class EditorContainer extends Component {
 
-
   constructor() {
     super();
     this.width = $(window).width() - $('.chat-container').width();
   }
 
   render() {
+    const { editor } = this.props;
+
     return (
       <div className='editor-container'>
         <AceEditor
@@ -23,15 +24,14 @@ class EditorContainer extends Component {
           theme="monokai"
           name="blah2"
           fontSize={10}
-
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
-          value={this.props.editor}
+          value={editor}
+
         />
       </div>
     )
   }
-
 
   _onChange(newValue) {
     this.props.actions.updateEditorValues(newValue)
