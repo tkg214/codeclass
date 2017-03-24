@@ -15,6 +15,7 @@ class EditorContainer extends Component {
 
   render() {
     const { editor } = this.props;
+
     return (
       <div className='editor-container'>
         <AceEditor
@@ -26,6 +27,7 @@ class EditorContainer extends Component {
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
+
         />
       </div>
     )
