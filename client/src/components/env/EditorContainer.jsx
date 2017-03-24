@@ -8,6 +8,12 @@ import 'brace/ext/language_tools';
 
 class EditorContainer extends Component {
 
+
+  constructor() {
+    super();
+    this.width = $(window).width() - $('.chat-container').width();
+  }
+
   render() {
 
     return (
@@ -19,6 +25,8 @@ class EditorContainer extends Component {
           name="blah2"
           fontSize={10}
           onChange={this._onChange.bind(this)}
+          width={`${this.width}`}
+          value={this.props.editor}
         />
       </div>
     )

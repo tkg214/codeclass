@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import * as Actions from '../../actions/editor';
 
 class EnvContainer extends Component {
-
   render() {
 
     const { editorValues, dispatch } = this.props
@@ -18,17 +17,19 @@ class EnvContainer extends Component {
           <GistContainer/>
           <button className='btn btn-primary btn-sm'>Run</button>
         </div>
-        <EditorContainer actions={actions} />
-        <Terminal/>
+        <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
+        <Terminal editor={this.props.editor.value}/>
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {
-    editorValues: state.editorValues
-  }
+  return { editor: state.editor }
 }
 
-export default connect(mapStateToProps)(EnvContainer);
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(Actions, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);

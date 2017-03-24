@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true
   },
   entry: [
     'webpack-dev-server/client?http://localhost:3000',

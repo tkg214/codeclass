@@ -11,7 +11,19 @@ $(function() {
       $('.message-list-container').css('height', mvh + 'vh')
   }
 
+
   $(document).ready(SetHeight);
   $(window).resize(SetHeight);
+
+  function SetWidth(){
+    const w = $(window).width();
+    const m = $('.chat-container').width();
+    const wh = ((w - m) / w) * 100 - 0.1;
+    $('.editor').css('width', wh + 'wh');
+  }
+
+  $(document).ready(SetHeight);
+  $(window).resize(SetHeight);
+  $(window).resize(SetWidth);
 
 });

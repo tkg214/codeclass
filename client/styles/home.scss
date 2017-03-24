@@ -1,43 +1,37 @@
+
+html, body { height: 100%; }
+
 main {
   display: flex;
+  height: 100%;
 }
 
-.chat-container {
-  flex: 3;
-  overflow: auto;
-  right: 0;
-
-  .user-count-container {
-    height: 120px;
-  }
-
-  .control-container {
-    height: 120px;
-  }
-
-  .message-list-container {
-  }
-
-  .message-compose-container {
-    height: 180px;
-  }
-}
 
 .env-container {
-  flex: 7;
-  width: 70%;
-
-  .env-nav-container {
-
-  }
+  width: 75%;
+  height: calc(100% - $nav-height);
 }
 
 
-
-.navbar {
-  margin-bottom: 0;
-}
 
 div {
   border: 1px solid red;
+}
+div#blah2{
+  width: 100%!important;
+}
+
+
+button.btn {
+  border-radius: 0%;
+}
+
+.form-group.gist-container{
+  width: 100%;
+
+}
+
+.terminal{
+  height: 10vh;
+  overflow-y: scroll;
 }
