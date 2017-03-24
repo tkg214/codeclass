@@ -14,7 +14,6 @@ class EditorContainer extends Component {
   }
 
   render() {
-
     return (
       <div className='editor-container'>
         <AceEditor

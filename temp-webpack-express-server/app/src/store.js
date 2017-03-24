@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 
-let socket = io('http://localhost:3000');
+let socket = io();
+socket.emit('new waffle request', {hello: 'world'})
 
 let socketIoMiddleware = createSocketIoMiddleware(socket, 'server/')
 

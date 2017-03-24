@@ -1,13 +1,13 @@
 // Application entry point
 
 // Load application styles
-require('../styles/application.scss');
+require('./styles/application.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from './store'
-import RoomApp from './components/RoomApp.jsx';
+import store from './src/store'
+import RoomApp from './src/components/RoomApp.jsx';
 
 const app = document.getElementById('react-root');
 
