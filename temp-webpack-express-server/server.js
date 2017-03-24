@@ -52,9 +52,16 @@ const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   console.log('New Connection :)')
-  socket.emit('waffles', { flavour: 'strawberry' });
-  socket.on('new waffle request', (data) => {
-    console.log(data);
+  // socket.emit('action', { type: 'NEW_CONNECTION', payload: {data: 'hello'} });
+
+  socket.on('action', (action) => {
+    // console.log('Action received on server: ', action)
+    switch(action.type) {
+      case 'UPDATE_EDITOR_VALUES': {
+        console.log('UPDATE')
+        socket.emit('action', action)
+      }
+    }
   });
   socket.on('close', () => {
     console.log('Closed Connection :(')

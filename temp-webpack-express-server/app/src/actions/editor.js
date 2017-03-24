@@ -7,6 +7,7 @@ export function updateEditorValues(val) {
 export function sendUpdatedEditorValues(val) {
   return {
     type: 'UPDATE_EDITOR_VALUES',
+    meta: {remote: true},
     payload: {
       value: val
     }
