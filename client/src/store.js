@@ -6,7 +6,9 @@ import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 
-// let socket = io('http://localhost:3000');
+let socket = io('http://localhost:3000');
+
+let socketIoMiddleware = createSocketIoMiddleware(socket, 'server/')
 
 const middleware = applyMiddleware(promise(), thunk, logger());
 
