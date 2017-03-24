@@ -4,25 +4,18 @@
   "description": "Lighthouse Labs final project",
   "scripts": {
     "lint": "eslint src",
-<<<<<<< HEAD
-    "start": "node server.js",
-    "knex": "./node_modules/.bin/knex"
-=======
+    "knex": "./node_modules/.bin/knex",
     "start": "./node_modules/.bin/webpack-dev-server"
->>>>>>> 0377a8c5ac5b38320c22c36e4685f817d59ec296
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tkg214/codeclass.git"
   },
   "dependencies": {
-<<<<<<< HEAD
     "brace": "^0.10.0",
     "keymirror": "^0.1.1",
     "knex": "^0.12.9",
     "pg": "^6.1.5",
-=======
->>>>>>> 0377a8c5ac5b38320c22c36e4685f817d59ec296
     "react": "^15.4.2",
     "react-ace": "^4.1.6",
     "react-dom": "^15.4.2",
