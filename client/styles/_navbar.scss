@@ -1,0 +1,13 @@
+.navbar-container{
+  position:relative;
+  z-index: 1000;
+}
+
+.navbar {
+  height: $nav-height;
+  margin-bottom: 0px;
+}
+
+.navbar-brand{
+  font-family: 'Lobster', sans-serif;
+}

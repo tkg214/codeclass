@@ -8,6 +8,7 @@ import 'brace/ext/language_tools';
 
 class EditorContainer extends Component {
 
+
   constructor() {
     super();
     this.width = $(window).width() - $('.chat-container').width();
