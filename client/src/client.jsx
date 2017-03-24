@@ -1,7 +1,7 @@
 // Application entry point
 
 // Load application styles
-require('./styles/application.scss');
+require('../styles/application.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';

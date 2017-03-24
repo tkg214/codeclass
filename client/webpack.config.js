@@ -5,19 +5,20 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     proxy: [{
-      context: ['/**', '/socket.io/**'],
+      context: ['/api/**', '/socket.io/**'],
       target: 'http://localhost:3000',
       secure: false
     }]
   },
   entry: './src/client.jsx',
   output: {
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../server/public')
+    publicPath: '/build/'
   },
   module: {
     loaders: [{
-      test: /\.jsx$/,
+      test: /\.jsx?$/,
       loader: 'babel-loader'
     },{
       test: /\.scss$/,
