@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var GitHubStrategy = require('passport-github2').Strategy;
 var request = require('request');
 
-
 // Passport session setup.
 // TODO: Serialize will store user ID
 // TODO: Deserialize will find user by ID

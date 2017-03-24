@@ -1,3 +1,4 @@
+
 html, body { height: 100%; }
 
 main {
@@ -26,4 +27,10 @@ button.btn {
 
 .form-group.gist-container{
   width: 100%;
+
+}
+
+.terminal{
+  height: 10vh;
+  overflow-y: scroll;
 }

@@ -6,6 +6,7 @@ class Terminal extends Component {
     return (
       <div className='terminal'>
 
+        <pre>{this.props.editor}</pre>
       </div>
     )
   }

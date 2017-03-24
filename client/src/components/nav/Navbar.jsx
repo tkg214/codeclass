@@ -6,25 +6,13 @@ class Navbar extends Component {
     return (
 
       <nav className="navbar navbar-default">
-  <div className="container-fluid">
-    <div className="navbar-header">
-      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-        <span className="sr-only">Toggle navigation</span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
-      </button>
-      <a className="navbar-brand" href="#">Waffle.io</a>
-    </div>
 
-    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-      
-      <ul className="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <a className="navbar-brand" href="#">Waffle.io</a>
+          </div>
+        </div>
+      </nav>
     )
   }
 }

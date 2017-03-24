@@ -8,22 +8,33 @@ import 'brace/ext/language_tools';
 
 class EditorContainer extends Component {
 
-  render() {
 
-    const value = 'Need to adjust layout for environment containers. The red borders are just for visual aid'
+  constructor() {
+    super();
+    this.width = $(window).width() - $('.chat-container').width();
+  }
+
+  render() {
     return (
       <div className='editor-container'>
         <AceEditor
-          id = "editor"
           className ='editor'
           mode="javascript"
           theme="monokai"
           name="blah2"
           fontSize={10}
-          defaultValue={value}
+
+          onChange={this._onChange.bind(this)}
+          width={`${this.width}`}
+          value={this.props.editor}
         />
       </div>
     )
+  }
+
+
+  _onChange(newValue) {
+    this.props.actions.updateEditorValues(newValue)
   }
 }
 
