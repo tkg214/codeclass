@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ChatHeader from './ChatHeader.jsx';
 import UserCountContainer from './UserCountContainer.jsx';
 import ControlContainer from './ControlContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
@@ -9,6 +10,7 @@ class ChatContainer extends Component {
   render() {
     return (
       <div className='chat-container'>
+        <ChatHeader/>
         <UserCountContainer/>
         <ControlContainer/>
         <MessageListContainer/>

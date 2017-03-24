@@ -14,6 +14,7 @@ class EditorContainer extends Component {
     return (
       <div className='editor-container'>
         <AceEditor
+          id = "editor"
           className ='editor'
           mode="javascript"
           theme="monokai"

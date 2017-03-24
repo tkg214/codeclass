@@ -1,0 +1,67 @@
+.chat-container{
+  width: 25%;
+  height: 100px;
+  background-color: rgba(#eeeeee, 0.65);
+  color: #FFFFFF;
+  float: right;
+  padding: 10px 10px 10px 10px;
+  // flex: 3;
+  overflow: auto;
+  // right: 0;
+}
+
+.chat-toggle-button{
+  background-color: #17a3dd;
+  border-radius: 0%;
+  color: #FFFFFF;
+
+}
+.control-container {
+}
+.message-compose-container{
+  display: block;
+  bottom: 0;
+  width: 100%;
+
+}
+
+.chat-header{
+  width: 100%;
+}
+
+.message-list-container {
+  border-radius: 0%;
+  color: black;
+  height: 300px!important;
+  overflow-y: scroll;
+  width: 100%;
+  word-wrap: break-word
+}
+
+.chatbar-message{
+  color: #000000;
+  width: 100%;
+}
+.chatbar-button{
+  color: #FFFFFF;
+  display: inline-block;
+  // background-color: #17a3dd;
+  border-radius: 0%;
+}
+.user-avatar{
+  border-radius: 50%;
+  border: 2px solid #FFF;
+  display: inline-block;;
+  margin: 5px;
+  height: 60px;
+  white-space: nowrap;
+  // max-height: 70px;
+  // max-width: 70px;
+}
+.user-count-container {
+  height: 100px;
+  white-space: nowrap;
+  overflow:scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
