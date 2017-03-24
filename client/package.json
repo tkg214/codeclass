@@ -4,7 +4,8 @@
   "description": "Lighthouse Labs final project",
   "scripts": {
     "lint": "eslint src",
-    "start": "node server.js"
+    "start": "node server.js",
+    "knex": "./node_modules/.bin/knex"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,8 @@
   "dependencies": {
     "brace": "^0.10.0",
     "keymirror": "^0.1.1",
+    "knex": "^0.12.9",
+    "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-ace": "^4.1.6",
     "react-dom": "^15.4.2",

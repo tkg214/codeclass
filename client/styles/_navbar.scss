@@ -5,9 +5,31 @@
 
 .navbar {
   height: $nav-height;
-  margin-bottom: 0px;
 }
 
 .navbar-brand{
   font-family: 'Lobster', sans-serif;
+  font-size: 2.5em;
+}
+.navbar-container {
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar {
+    height: $nav-height;
+    margin-bottom: 0;
+}
+//
+.waffle {
+//     // background: -webkit-gradient( linear, left top, left bottom, from(#7F0000), color-stop(50%, #BF0000), color-stop(50%, #FF0000), to(#400000));
+//     // background: -webkit-linear-gradient(top, #fff, #777 50%, #666 50%, #BFAC12);
+//     // background: linear-gradient(top, #fff, #777 50%, #666 50%, #111);
+//     -webkit-background-clip: text;
+//     font-family: 'Lobster', sans-serif;
+//     background-clip: text;
+//     color: transparent;
+//     font-size: 1.5em;
+//     text-align: center;
+//     white-space: nowrap;
 }
