@@ -6,7 +6,6 @@ import ChatContainer from './chat/ChatContainer.jsx';
 class RoomApp extends Component {
 
   render() {
-    const { socket } = this.props;
     return (
       <div>
         <Navbar/>

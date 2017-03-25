@@ -15,7 +15,7 @@ class EnvContainer extends Component {
           <button className='btn btn-primary btn-sm'>Run</button>
         </div>
         <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
-        <Terminal editor={this.props.editor.value}/>
+        <Terminal/>
       </div>
     )
   }
