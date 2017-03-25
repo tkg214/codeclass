@@ -11,7 +11,6 @@ $(function() {
       $('.message-list-container').css('height', mvh + 'vh')
   }
 
-
   $(document).ready(SetHeight);
   $(window).resize(SetHeight);
 

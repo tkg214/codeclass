@@ -8,9 +8,6 @@ import * as Actions from '../../actions/editor';
 
 class EnvContainer extends Component {
   render() {
-
-    const { editorValues, dispatch } = this.props
-    const actions = bindActionCreators(Actions, dispatch);
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
