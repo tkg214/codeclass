@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express       = require('express');
-const app = express();
+const app           = express();
 const server        = require('http').Server(app);
 
 const bodyParser    = require('body-parser');
@@ -99,16 +99,22 @@ function ensureAuthenticated(req, res, next) {
   // res.redirect('/login');
 }
 
+//Define request-local variables
+app.use(function(req, res, next){
+  res.locals.user = req.user;
+  next();
+});
+
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+  res.render('index');
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user });
+  res.render('login');
 });
 
 app.get('/rooms', ensureAuthenticated, function(req, res){
-  res.render('rooms', { user: req.user });
+  res.render('rooms');
 });
 
 app.get('/logout', function(req, res){
