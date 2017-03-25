@@ -83,20 +83,19 @@ app.get('/auth/github',
 //   login page. Otherwise, the primary route function will be called,
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+  passport.authenticate('github'), function(req, res) {
+    res.redirect(req.session.returnTo || '/');
+    delete req.session.returnTo;
   });
 
-  // Simple route middleware to ensure user is authenticated.
   // Pass this function to routes that needs to be protected.
   // If the request is authenticated (typically via a persistent login session),
   // the request will proceed. Otherwise, the user will be redirected to the
   // url passed to res.redirect()
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  return next();
-  // res.redirect('/login');
+  res.req.session.returnTo = req.path;
+  res.redirect('/login');
 }
 
 //Define request-local variables
@@ -113,7 +112,7 @@ app.get('/login', function(req, res){
   res.render('login');
 });
 
-app.get('/rooms', ensureAuthenticated, function(req, res){
+app.get('/rooms', function(req, res){
   res.render('rooms');
 });
 
