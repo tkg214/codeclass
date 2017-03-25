@@ -1,7 +1,7 @@
 room: {
-  authorization: boolean, //to determine if owner or not
-  editorLocked: boolean,
-  chatLocked: boolean,
+  isAuthorized: boolean, //to determine if owner or not
+  isEditorLocked: boolean,
+  isChatLocked: boolean,
   editorValue: string,
   terminalValue: string,
   usersOnline: {
@@ -22,6 +22,6 @@ room: {
     mode: string, //from language
     tabSize: number,
     defaultValue: string, //from editorValue,
-    readOnly: boolean //from editorLocked
+    isReadOnly: boolean //from editorLocked
   }
 }
