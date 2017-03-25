@@ -27,7 +27,6 @@ class EditorContainer extends Component {
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
-
         />
       </div>
     )

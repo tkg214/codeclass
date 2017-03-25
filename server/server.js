@@ -1,12 +1,18 @@
 require('dotenv').config();
 
-var express = require('express');
+var app = require('express')();
+var server = require('http').Server(app);
 var passport = require('passport');
 var util = require('util');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var GitHubStrategy = require('passport-github2').Strategy;
 var request = require('request');
+const path = require('path');
+
+server.listen(3000, () =>
+  console.log("App listening on port 3000")
+);
 
 // Passport session setup.
 // TODO: Serialize will store user ID
@@ -34,8 +40,6 @@ passport.use(new GitHubStrategy({
     return done(null, profile);
   }
 ));
-
-var app = express();
 
 // configure Express
 app.set('views', __dirname + '/views');
@@ -78,7 +82,8 @@ app.get('/auth/github/callback',
   // url passed to res.redirect()
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
+  return next() //TODO change this as temp
+  // res.redirect('/login');
 }
 
 app.get('/', function(req, res){
@@ -98,46 +103,47 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+// TODO REMOVE temp room for react mounting
+app.get('/api/temproom', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
+});
 
 
 //Posting gist to github on behlaf of current user
+//
+// function makeGistPostOptions(request) {
+//   return {
+//     url: "https://api.github.com/gists",
+//     headers: {
+//       "User-Agent": request.user.username,
+//       "Authorization": `token ${request.user.token}`
+//     },
+//     "body": JSON.stringify({
+//       "files": {
+//         "file1.txt": {
+//           "content": "TEST CONTENT"
+//         }
+//       }
+//     })
+//   };
+// }
 
-function makeGistPostOptions(request) {
-  return {
-    url: "https://api.github.com/gists",
-    headers: {
-      "User-Agent": request.user.username,
-      "Authorization": `token ${request.user.token}`
-    },
-    "body": JSON.stringify({
-      "files": {
-        "file1.txt": {
-          "content": "TEST CONTENT"
-        }
-      }
-    })
-  };
-}
 
-// Test posting a gist for the currently authentictaed user
-app.get('/gists', function (req, res) {
-  request.post(makeGistPostOptions(req), function(error, response, body) {
-    if (!error) {
-      console.log('statusCode:', response.statusCode);
-      res.send("Success!");
-    } else {
-      console.log('error:', error);
-    }
-  });
-});
+// // Test posting a gist for the currently authentictaed user
+// app.get('/gists', function (req, res) {
+//   request.post(makeGistPostOptions(req), function(error, response, body) {
+//     if (!error) {
+//       console.log('statusCode:', response.statusCode);
+//       res.send("Success!");
+//     } else {
+//       console.log('error:', error);
+//     }
+//   });
+// });
 
 // For socket io
-const server = require('http').Server(app);
+// const server = require('http').Server(app);
 const io = require('socket.io')(server);
-
-server.listen(3000, () =>
-  console.log("App listening on port 3000")
-);
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
@@ -147,8 +153,13 @@ io.on('connection', (socket) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
-        console.log('UPDATE')
-        socket.emit('action', action)
+        socket.broadcast.emit('action', action)
+      }
+      case 'TOGGLE_EDITOR_LOCK': {
+        socket.broadcast.emit('action', action)
+      }
+      case 'TOGGLE_CHAT_LOCK': {
+        socket.broadcast.emit('action', action)
       }
     }
   });
