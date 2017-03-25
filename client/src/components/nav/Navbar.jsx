@@ -9,7 +9,7 @@ class Navbar extends Component {
 
         <div className="container-fluid">
           <div className="navbar-header">
-            <a className="navbar-brand" href="#">Waffle.io</a>
+            <a className="navbar-brand" href="#"><p className="waffle">Waffle.io</p></a>
           </div>
         </div>
       </nav>
