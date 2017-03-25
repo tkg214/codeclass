@@ -104,7 +104,7 @@ app.get('/logout', function(req, res){
 
 // TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  res.sendFile('/Users/ktakagi/lighthouse/codeclass/server/views/temproom.html');
+  res.sendFile(process.env.TEMPROOM);
 });
 
 
