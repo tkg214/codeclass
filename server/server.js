@@ -84,14 +84,14 @@ app.get('/auth/github',
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
   passport.authenticate('github'), function(req, res) {
-    res.redirect(req.session.returnTo || '/');
+    res.redirect(req.session.returnTo || '/login');
     delete req.session.returnTo;
   });
 
   // Pass this function to routes that needs to be protected.
-  // If the request is authenticated (typically via a persistent login session),
-  // the request will proceed. Otherwise, the user will be redirected to the
-  // url passed to res.redirect()
+  // If the request is authenticated the request will proceed.
+  // Otherwise, the user will be redirected to the url passed to res.redirect()
+  // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.req.session.returnTo = req.path;
@@ -123,11 +123,12 @@ app.get('/logout', function(req, res){
 
 // TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
+  //res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
+  res.render('show_room');
 });
 
 
-//Posting gist to github on behlaf of current user
+//Posting gist to github on behalf of current user
 //
 // function makeGistPostOptions(request) {
 //   return {

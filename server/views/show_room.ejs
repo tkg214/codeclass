@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CodeClass</title>
+    <% include ./partials/_head.ejs %>
+  </head>
+  <header>
+    <% include ./partials/_nav.ejs %>
+  </header>
+  <body>
+    <div id="react-root"></div>
+    <% include ./partials/_scripts.ejs %>
+    <script src='/scripts/app.js'></script>
+    <script src="/build/bundle.js"></script>
+  </body>
+</html>
