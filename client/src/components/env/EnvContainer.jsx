@@ -18,7 +18,7 @@ class EnvContainer extends Component {
           <GistContainer/>
           <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm'>{chatButton}</button>
           <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm'>{editorButton}</button>
-          <button className='btn btn-primary btn-sm'>Run</button>
+          <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
         </div>
         <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
         <Terminal/>
@@ -35,7 +35,13 @@ class EnvContainer extends Component {
     e.preventDefault();
     this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked);
   }
+
+  _onRunClick(e) {
+    e.preventDefault();
+    this.props.actions.executeCode("some code");
+  }
 }
+
 
 function mapStateToProps(state) {
   return {

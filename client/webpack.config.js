@@ -11,7 +11,10 @@ module.exports = {
       secure: false
     }]
   },
-  entry: './src/client.jsx',
+  entry: [
+    'webpack/hot/dev-server',
+    './src/client.jsx'
+  ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',

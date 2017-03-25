@@ -34,3 +34,13 @@ export function toggleChatLock(isChatLocked) {
     })
   }
 }
+
+export function executeCode(code) {
+  return dispatch => {
+    dispatch({
+      type: 'CLICK_RUN_BUTTON',
+      meta: {remote: true}
+    });
+    setTimeout(dispatch({type: 'EXECUTE_CODE', payload: code}), 1000);
+  }
+}
