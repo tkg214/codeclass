@@ -4,7 +4,6 @@ class MessageListContainer extends Component {
 
   render() {
     return (
-
       <div className="message-list-container well">
         <p>this is the ChatLog OODfosjdiofjosdfjsdfoijsdfosjdfsdfiosjdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
       </div>

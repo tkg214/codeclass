@@ -6,5 +6,6 @@ export default function reducer(state={
       return {...state, value: action.payload.value}
     }
   }
-  return state
+  return state;
+
 }
