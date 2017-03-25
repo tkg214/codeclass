@@ -8,6 +8,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var GitHubStrategy = require('passport-github2').Strategy;
 var request = require('request');
+const path = require('path');
 
 server.listen(3000, () =>
   console.log("App listening on port 3000")
@@ -104,7 +105,8 @@ app.get('/logout', function(req, res){
 
 // TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  res.sendFile('/Users/ktakagi/lighthouse/codeclass/server/views/temproom.html');
+  console.log("get path");
+  res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
 });
 
 
