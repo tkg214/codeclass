@@ -1,18 +1,31 @@
 require('dotenv').config();
 
-var app = require('express')();
-var server = require('http').Server(app);
-var passport = require('passport');
-var util = require('util');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var GitHubStrategy = require('passport-github2').Strategy;
-var request = require('request');
-const path = require('path');
+const express       = require('express');
+const app = express();
+const server        = require('http').Server(app);
+
+const bodyParser    = require('body-parser');
+const GitHubStrategy = require('passport-github2').Strategy;
+const io            = require('socket.io')(server);
+const passport      = require('passport');
+const path          = require('path');
+const request       = require('request');
+const sass          = require("node-sass-middleware");
+const session       = require('express-session');
+const util          = require('util');
 
 server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
+
+//Sass middleware
+app.use("/styles", sass({
+  src: __dirname + "/../client/styles",
+  dest: __dirname + "/public/styles",
+  debug: true,
+  outputStyle: 'expanded'
+}));
+app.use(express.static("public"));
 
 // Passport session setup.
 // TODO: Serialize will store user ID
@@ -82,7 +95,7 @@ app.get('/auth/github/callback',
   // url passed to res.redirect()
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  return next() //TODO change this as temp
+  return next();
   // res.redirect('/login');
 }
 
@@ -143,7 +156,7 @@ app.get('/api/temproom', (req, res) => {
 
 // For socket io
 // const server = require('http').Server(app);
-const io = require('socket.io')(server);
+// const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
@@ -152,18 +165,18 @@ io.on('connection', (socket) => {
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
-      case 'UPDATE_EDITOR_VALUES': {
-        socket.broadcast.emit('action', action)
-      }
-      case 'TOGGLE_EDITOR_LOCK': {
-        socket.broadcast.emit('action', action)
-      }
-      case 'TOGGLE_CHAT_LOCK': {
-        socket.broadcast.emit('action', action)
+    case 'UPDATE_EDITOR_VALUES': {
+      socket.broadcast.emit('action', action);
+    }
+    case 'TOGGLE_EDITOR_LOCK': {
+      socket.broadcast.emit('action', action);
+    }
+    case 'TOGGLE_CHAT_LOCK': {
+      socket.broadcast.emit('action', action);
       }
     }
   });
   socket.on('close', () => {
-    console.log('Closed Connection :(')
-  })
+    console.log('Closed Connection :(');
+  });
 });
