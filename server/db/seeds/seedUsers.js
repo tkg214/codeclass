@@ -29,7 +29,7 @@ exports.seed = function(knex, Promise) {
           github_login: 'tester523',
           github_avatar: 'https://s-media-cache-ak0.pinimg.com/564x/a5/0e/0e/a50e0ec8f06c96a0e914464712dcfafb.jpg',
           github_name: 'Don Burks'
-        }),
+        })
       ]);
     });
 };

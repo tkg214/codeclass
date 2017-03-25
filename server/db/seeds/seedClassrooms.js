@@ -46,7 +46,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: true,
           chatLocked: true,
           user_id: 4,
-        }),
+        })
       ]);
     });
 };
