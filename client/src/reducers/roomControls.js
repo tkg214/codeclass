@@ -1,6 +1,6 @@
 export default function reducer(state={
-  isEditorLocked: false,
-  isChatLocked: false
+  isEditorLocked: true,
+  isChatLocked: true
 }, action) {
   switch (action.type) {
     case 'TOGGLE_EDITOR_LOCK':
@@ -10,3 +10,5 @@ export default function reducer(state={
   }
   return state
 }
+
+// add logic here to control state of room

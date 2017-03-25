@@ -11,6 +11,7 @@ export function updateEditorValues(val) {
 }
 
 export function toggleEditorLock(isEditorLocked) {
+  console.log(isEditorLocked)
   return dispatch => {
     dispatch({
       type: 'TOGGLE_EDITOR_LOCK',

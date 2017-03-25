@@ -157,6 +157,9 @@ io.on('connection', (socket) => {
       case 'TOGGLE_EDITOR_LOCK': {
         socket.broadcast.emit('action', action)
       }
+      case 'TOGGLE_CHAT_LOCK': {
+        socket.broadcast.emit('action', action)
+      }
     }
   });
   socket.on('close', () => {

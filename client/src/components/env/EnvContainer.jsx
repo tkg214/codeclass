@@ -28,12 +28,12 @@ class EnvContainer extends Component {
 
   _onEditorToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleEditorLock(this.isEditorLocked);
+    this.props.actions.toggleEditorLock(this.props.roomControls.isEditorLocked);
   }
 
   _onChatToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleChatLock(this.isChatLocked);
+    this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked);
   }
 }
 
