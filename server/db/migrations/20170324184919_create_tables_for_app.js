@@ -14,24 +14,20 @@ exports.up = function(knex, Promise) {
       table.string('language_id').notNullable();
       table.boolean('editorLocked').notNullable();
       table.boolean('chatLocked').notNullable();
-      table.integer('user_id').unsigned();
-      table.foreign('user_id').references('users.id');
+      table.integer('user_id').unsigned().notNullable();
     }),
 
     knex.schema.createTable("edits", (table) => {
       table.increments();
       table.text('content').notNullable();
-      table.integer('classroom_id').unsigned();
-      table.foreign('classroom_id').references('classrooms.id');
+      table.integer('classroom_id').unsigned().notNullable();
     }),
 
     knex.schema.createTable("messages", (table) => {
       table.increments();
       table.text('content').notNullable();
       table.integer('user_id').unsigned();
-      table.foreign('user_id').references('users.id');
-      table.integer('classroom_id').unsigned();
-      table.foreign('classroom_id').references('classrooms.id');
+      table.integer('classroom_id').unsigned().notNullable();
     })
 
 

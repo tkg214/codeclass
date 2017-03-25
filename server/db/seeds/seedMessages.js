@@ -69,7 +69,7 @@ exports.seed = function(knex, Promise) {
           content: "Those guys are inside you building a piece of shit Ethan! They're inside you building a monument to compromise! Fuck them, fuck those people, fuck this whole thing Ethan. Yea. If you spend all day shuffling words around you can make anything sound bad, Morty. The trick to cereal is keeping 70% of it above the milk. I'd like to order one large person with extra people please. white people, no no no black people... and hispanic on half.",
           user_id: 1,
           classroom_id:5
-        }),
+        })
       ]);
     });
 };
