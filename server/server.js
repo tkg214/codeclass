@@ -152,7 +152,9 @@ io.on('connection', (socket) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
-        console.log('UPDATE')
+        socket.broadcast.emit('action', action)
+      }
+      case 'TOGGLE_EDITOR_LOCK': {
         socket.broadcast.emit('action', action)
       }
     }
