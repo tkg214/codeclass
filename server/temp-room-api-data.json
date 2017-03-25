@@ -1,0 +1,40 @@
+{
+  "isAuthorized": true,
+  "isEditorLocked": true,
+  "isChatLocked": false,
+  "editorValue": "hello world",
+  "terminalValue": "terminal output",
+  "usersOnline": [{
+    "name": "Ken",
+    "avatarURL": "https://avatars3.githubusercontent.com/u/24704531?v=3&s=460"
+  },{
+    "name": "Danton",
+    "avatarURL": "https://avatars3.githubusercontent.com/u/24704531?v=3&s=460"
+  }],
+  "messages": [{
+    "content": "test message 1",
+    "name": "Ken",
+    "timestamp": 1490425034
+    },{
+    "content": "test message 2",
+    "name": "Danton",
+    "timestamp": 1490428888
+  },{
+    "content": "test message 3",
+    "name": "Sharon",
+    "timestamp": 1490428890
+    },{
+    "content": "test message 4",
+    "name": "Chunky",
+    "timestamp": 1490429000
+  }],
+  "isScrolled": true,
+  "language": "javascript",
+  "userSettings": {
+    "theme": "monokai",
+    "mode": "javascript",
+    "tabSize": 2,
+    "defaultValue": "hello world",
+    "isReadOnly": "true"
+  }
+}

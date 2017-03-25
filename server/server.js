@@ -145,21 +145,28 @@ app.get('/api/temproom', (req, res) => {
 // const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+//Temp data
+const room = require('./temp-room-api-data.json');
+
 io.on('connection', (socket) => {
   console.log('New Connection :)');
-  // socket.emit('action', { type: 'NEW_CONNECTION', payload: {data: 'hello'} });
+  let action = {type: 'UPDATE_ROOM_STATE', payload: room}
+  socket.emit('action', action);
 
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
-        socket.broadcast.emit('action', action)
+        socket.broadcast.emit('action', action);
+        break;
       }
       case 'TOGGLE_EDITOR_LOCK': {
-        socket.broadcast.emit('action', action)
+        socket.broadcast.emit('action', action);
+        break;
       }
       case 'TOGGLE_CHAT_LOCK': {
-        socket.broadcast.emit('action', action)
+        socket.broadcast.emit('action', action);
+        break;
       }
     }
   });
