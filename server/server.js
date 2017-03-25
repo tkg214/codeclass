@@ -153,7 +153,7 @@ io.on('connection', (socket) => {
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
         console.log('UPDATE')
-        socket.('action', action)
+        socket.broadcast.emit('action', action)
       }
     }
   });
