@@ -1,3 +1,4 @@
+import axios from 'axios';
 export function updateEditorValues(val) {
   return dispatch => {
     dispatch({
@@ -37,10 +38,21 @@ export function toggleChatLock(isChatLocked) {
 
 export function executeCode(code) {
   return dispatch => {
-    dispatch({
-      type: 'CLICK_RUN_BUTTON',
-      meta: {remote: true}
+    // dispatch({
+    //   type: 'CLICK_RUN_BUTTON',
+    //   meta: {remote: true}
+    // });
+    axios.post('http://52.33.39.121/api', {
+      lang : "javascript",
+      code : code
+    })
+    .then(function (response) {
+      console.log(response);
+      dispatch({type: 'EXECUTE_CODE', meta: {remote: true},  payload: response.data});
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    setTimeout(dispatch({type: 'EXECUTE_CODE', payload: code}), 1000);
+    
   }
 }

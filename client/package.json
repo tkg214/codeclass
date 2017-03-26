@@ -11,6 +11,7 @@
     "url": "https://github.com/tkg214/codeclass.git"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "react": "^15.4.2",
     "react-ace": "^4.1.6",
     "react-dom": "^15.4.2",

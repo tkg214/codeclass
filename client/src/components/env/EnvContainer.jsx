@@ -4,6 +4,7 @@ import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+// import axios from 'axios';
 import * as Actions from '../../actions/editor';
 
 class EnvContainer extends Component {
@@ -38,7 +39,7 @@ class EnvContainer extends Component {
 
   _onRunClick(e) {
     e.preventDefault();
-    this.props.actions.executeCode("some code");
+    this.props.actions.executeCode(this.props.editor.value);
   }
 }
 
