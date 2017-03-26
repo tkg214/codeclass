@@ -200,6 +200,10 @@ io.on('connection', (socket) => {
         socket.emit('action', action);
         break;
       }
+      case 'SEND_OUTGOING_MESSAGE': {
+        socket.broadcast.emit('action', action);
+        break;
+      }
     }
   });
   socket.on('close', () => {
