@@ -1,7 +1,7 @@
 {
   "isAuthorized": true,
   "isEditorLocked": true,
-  "isChatLocked": false,
+  "isChatLocked": true,
   "editorValue": "hello world",
   "terminalValue": "terminal output",
   "usersOnline": [{
