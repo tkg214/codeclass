@@ -7,7 +7,7 @@
     <% if (!user) { %>
       <li><a href="/login">Log In</a></li>
     <% } else { %>
-      <li><a href="#">Hey, <%= user.username %></a></li>
+      <li><a href="#">Hey, <%= user.github_login %></a></li>
       <li><a href="/logout">Log Out</a></li>
     <% } %>
   </ul>
