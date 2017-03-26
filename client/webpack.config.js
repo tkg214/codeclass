@@ -6,7 +6,7 @@ module.exports = {
   devServer: {
     host: "0.0.0.0",
     proxy: [{
-      context: ['/api/**', '/socket.io/**'],
+      context: ['/rooms/**', '/api/**', '/socket.io/**'],
       target: 'http://localhost:3000',
       secure: false
     }]

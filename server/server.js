@@ -19,11 +19,6 @@ const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const knexLogger    = require('knex-logger');
 
-server.listen(3000, () =>
-  console.log("App listening on port 3000")
-);
-
-
 app.use(knexLogger(knex));
 
 //Sass middleware
@@ -85,8 +80,6 @@ app.use(passport.initialize());
 // Use passport.session middleware for persistent login sessions.
 app.use(passport.session());
 
-// Uncomment to serve static assets
-//app.use(express.static(__dirname + '/public'));
 
 // The first step in GitHub authentication will involve redirecting
 // the user to github.com. After authorization, GitHub will redirect the user
@@ -145,42 +138,33 @@ app.get('/api/temproom', (req, res) => {
   res.render('show_room');
 });
 
+app.get('/rooms/:key', (req, res) => {
+  res.render('show_room');
+});
 
-//Posting gist to github on behalf of current user
-//
-// function makeGistPostOptions(request) {
-//   return {
-//     url: "https://api.github.com/gists",
-//     headers: {
-//       "User-Agent": request.user.username,
-//       "Authorization": `token ${request.user.token}`
-//     },
-//     "body": JSON.stringify({
-//       "files": {
-//         "file1.txt": {
-//           "content": "TEST CONTENT"
-//         }
-//       }
-//     })
-//   };
-// }
+app.post('/rooms', (req, res) => {
+  knex('classrooms')
+      .insert({
+        topic: req.body.topic,
+        language_id: req.body.language,
+        editorLocked: true,
+        chatLocked: false,
+        user_id: req.user.id,
+        //TODO Import sanitizeURL function from module
+        url_string: req.body.topic
+          .replace(/[^a-zA-Z0-9]+/g, '-')
+          .replace(/^\-|\-$/g, '')
+          .toLowerCase()
+      })
+      .returning('url_string')
+      .then((url_string) => {
+        res.redirect(`/rooms/${url_string[0]}`);
+      });
+});
 
-
-// // Test posting a gist for the currently authentictaed user
-// app.get('/gists', function (req, res) {
-//   request.post(makeGistPostOptions(req), function(error, response, body) {
-//     if (!error) {
-//       console.log('statusCode:', response.statusCode);
-//       res.send("Success!");
-//     } else {
-//       console.log('error:', error);
-//     }
-//   });
-// });
-
-// For socket io
-// const server = require('http').Server(app);
-// const io = require('socket.io')(server);
+server.listen(3000, () =>
+  console.log("App listening on port 3000")
+);
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
