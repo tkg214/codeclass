@@ -188,7 +188,6 @@ io.on('connection', (socket) => {
       // console.log('Action received on server: ', action)
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
-          console.log(action.room)
           // if user = authorized user, then emit the action
           socket.broadcast.to(action.room).emit('action', action);
           break;
@@ -205,6 +204,10 @@ io.on('connection', (socket) => {
           socket.broadcast.to(action.room).emit('action', action);
           break;
         }
+        case 'SEND_OUTGOING_MESSAGE': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
         case 'CHANGE_EDITOR_THEME': {
           socket.emit('action', action);
           break;
@@ -212,9 +215,7 @@ io.on('connection', (socket) => {
       }
     });
 
-  })
-  console.log('New Connection :)');
-
+  });
   socket.on('close', () => {
     console.log('Closed Connection :(');
   });
