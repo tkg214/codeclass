@@ -4,12 +4,12 @@ import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import axios from 'axios';
 import * as Actions from '../../actions/editor';
 
 class EnvContainer extends Component {
 
   render() {
+    console.log('this.props.terminal: ', this.props.terminal);
     let { roomControls } = this.props;
     let editorButton = roomControls.isEditorLocked ? 'EDITOR LOCK MODE' : 'EDITOR EDIT MODE'
     let chatButton = roomControls.isChatLocked ? 'CHAT LOCK MODE' : 'CHAT EDIT MODE'
@@ -22,7 +22,7 @@ class EnvContainer extends Component {
           <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
         </div>
         <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
-        <Terminal/>
+        <Terminal terminal={this.props.terminal}/>
       </div>
     )
   }
@@ -47,7 +47,8 @@ class EnvContainer extends Component {
 function mapStateToProps(state) {
   return {
     editor: state.editor,
-    roomControls: state.roomControls
+    roomControls: state.roomControls,
+    terminal: state.terminal
    }
 }
 

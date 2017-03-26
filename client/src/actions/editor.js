@@ -38,10 +38,6 @@ export function toggleChatLock(isChatLocked) {
 
 export function executeCode(code) {
   return dispatch => {
-    // dispatch({
-    //   type: 'CLICK_RUN_BUTTON',
-    //   meta: {remote: true}
-    // });
     axios.post('http://52.33.39.121/api', {
       lang : "javascript",
       code : code
@@ -51,7 +47,7 @@ export function executeCode(code) {
       dispatch({type: 'EXECUTE_CODE', meta: {remote: true},  payload: response.data});
     })
     .catch(function (error) {
-      console.log(error);
+      dispatch({type: 'EXECUTE_CODE_ERR', meta: {remote: true},  payload: error});
     });
     
   }
