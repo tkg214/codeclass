@@ -129,9 +129,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-// TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  //res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
   res.render('show_room');
 });
 
@@ -179,15 +177,10 @@ io.on('connection', (socket) => {
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
-    case 'UPDATE_EDITOR_VALUES': {
+    case 'UPDATE_EDITOR_VALUES':
+    case 'TOGGLE_CHAT_LOCK':
+    case 'TOGGLE_EDITOR_LOCK':
       socket.broadcast.emit('action', action);
-    }
-    case 'TOGGLE_EDITOR_LOCK': {
-      socket.broadcast.emit('action', action);
-    }
-    case 'TOGGLE_CHAT_LOCK': {
-      socket.broadcast.emit('action', action);
-      }
     }
   });
   socket.on('close', () => {

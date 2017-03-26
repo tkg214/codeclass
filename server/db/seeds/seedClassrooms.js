@@ -10,42 +10,42 @@ exports.seed = function(knex, Promise) {
           language_id: 'javascript',
           editorLocked: false,
           chatLocked: false,
-          user_id: 5,
+          user_id: 5
         }),
         knex('classrooms').insert({
           topic: 'Magic for Beginners: Ruby',
           language_id: 'ruby',
           editorLocked: false,
           chatLocked: false,
-          user_id: 5,
+          user_id: 5
         }),
         knex('classrooms').insert({
           topic: 'Python',
           language_id: 'python',
           editorLocked: false,
           chatLocked: false,
-          user_id: 5,
+          user_id: 5
         }),
         knex('classrooms').insert({
           topic: 'Editor Locked:JS',
           language_id: 'javascript',
           editorLocked: true,
           chatLocked: false,
-          user_id: 2,
+          user_id: 2
         }),
         knex('classrooms').insert({
           topic: 'Chat Locked: Ruby',
           language_id: 'ruby',
           editorLocked: false,
           chatLocked: true,
-          user_id: 3,
+          user_id: 3
         }),
         knex('classrooms').insert({
           topic: 'Both Locked: Python',
           language_id: 'python',
           editorLocked: true,
           chatLocked: true,
-          user_id: 4,
+          user_id: 4
         })
       ]);
     });
