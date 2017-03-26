@@ -36,18 +36,17 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Passport session setup.
-// TODO: Serialize will store user ID
-// TODO: Deserialize will find user by ID
-// For now, entire github profile is serialized and deserialized
-//   and deserialized.
+//Serialize stores an ID in the user's session object.
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user[0].github_id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+//Deserialize retrieves the user's details based on the passport session ID.
+passport.deserializeUser(function(session_github_id, done) {
+  knex('users').where('github_id', session_github_id).then(user => {
+    done(null, user[0]);
+  });
 });
-
 
 // Use the GitHubStrategy within Passport.
 passport.use(new GitHubStrategy({
@@ -56,9 +55,22 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 },
   function(accessToken, refreshToken, profile, done) {
-    profile.token = accessToken;
-    // TODO: Rather than return github profile, lookup user in database and return that
-    return done(null, profile);
+    knex('users').where('github_id', profile.id).then(user => {
+      if (user.length === 0) {
+        knex('users').insert({
+          github_login: profile.username,
+          github_avatar: profile._json.avatar_url,
+          github_name: profile.displayName,
+          github_id: profile.id,
+          github_access_token: accessToken
+        }).returning('github_id')
+          .then((user) => {
+            return done(null, user);
+          });
+      } else {
+        return done(null, user);
+      }
+    });
   }
 ));
 
