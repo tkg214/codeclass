@@ -11,11 +11,11 @@ class Terminal extends Component {
       <div className='terminal'>
         <div className='output-container'>
           {this.props.terminal.map((outputs) => {
-            if (outputs.response.stdout) {
-              return <pre key={outputs.timestamp}> > {outputs.response.stdout}</pre>
-            }
             if (outputs.response.stderr) {
               return <pre key={outputs.timestamp}>{outputs.response.stderr}</pre>
+            }
+            if (outputs.response.stdout) {
+              return <pre key={outputs.timestamp}> > {outputs.response.stdout}</pre>
             }
           })}
         </div>
