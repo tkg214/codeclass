@@ -5,14 +5,13 @@ export function updateEditorValues(val) {
       type: 'UPDATE_EDITOR_VALUES',
       meta: {remote: true},
       payload: {
-        value: val
+        editorValue: val
       }
     })
   }
 }
 
 export function toggleEditorLock(isEditorLocked) {
-  console.log(isEditorLocked)
   return dispatch => {
     dispatch({
       type: 'TOGGLE_EDITOR_LOCK',
@@ -48,6 +47,19 @@ export function executeCode(code) {
     .catch(function (error) {
       dispatch({type: 'EXECUTE_CODE_ERR', meta: {remote: true},  payload: error});
     });
-    
+  }
+}    
+
+export function changeEditorTheme(theme) {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_EDITOR_THEME',
+      meta: {remote: true},
+      payload: {
+        userSettings: {
+          theme
+        }
+      }
+    })
   }
 }

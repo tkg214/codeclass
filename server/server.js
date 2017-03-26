@@ -57,6 +57,7 @@ passport.use(new GitHubStrategy({
 },
   function(accessToken, refreshToken, profile, done) {
     profile.token = accessToken;
+    console.log(profile);
     // TODO: Rather than return github profile, lookup user in database and return that
     return done(null, profile);
   }
@@ -169,17 +170,21 @@ app.get('/api/temproom', (req, res) => {
 // });
 
 // For socket io
-// const server = require('http').Server(app);
-// const io = require('socket.io')(server);
+// TODO use middleware here to authenticate user on each socket request
+
+//Temp data
+const room = require('./temp-room-api-data.json');
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
-  // socket.emit('action', { type: 'NEW_CONNECTION', payload: {data: 'hello'} });
+  let action = {type: 'UPDATE_ROOM_STATE', payload: room}
+  socket.emit('action', action);
 
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
+        // if user = authorized user, then emit the action
         socket.broadcast.emit('action', action);
         break;
       }
@@ -191,13 +196,15 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('action', action);
         break;
       }
+
       case 'EXECUTE_CODE' : {
         socket.broadcast.emit('action', action);
         break;
       }
       
-      default : {
-        //default
+      case 'CHANGE_EDITOR_THEME': {
+        socket.emit('action', action);
+        break;
       }
     }
   });
