@@ -9,13 +9,10 @@ class RoomApp extends Component {
 
   render() {
     return (
-      <div>
-        <Navbar/>
-        <main>
-          <EnvContainer/>
-          <ChatContainer/>
-        </main>
-      </div>
+      <main>
+        <EnvContainer/>
+        <ChatContainer/>
+      </main>
     )
   }
 }

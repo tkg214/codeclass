@@ -4,7 +4,7 @@ export function updateEditorValues(val) {
       type: 'UPDATE_EDITOR_VALUES',
       meta: {remote: true},
       payload: {
-        value: val
+        editorValue: val
       }
     })
   }
@@ -29,6 +29,20 @@ export function toggleChatLock(isChatLocked) {
       meta: {remote: true},
       payload: {
         isChatLocked: isChatLocked ? false : true
+      }
+    })
+  }
+}
+
+export function changeEditorTheme(theme) {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_EDITOR_THEME',
+      meta: {remote: true},
+      payload: {
+        userSettings: {
+          theme
+        }
       }
     })
   }

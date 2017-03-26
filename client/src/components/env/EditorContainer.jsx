@@ -4,6 +4,13 @@ import brace from 'brace';
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
+import 'brace/theme/github';
+import 'brace/theme/tomorrow';
+import 'brace/theme/kuroir';
+import 'brace/theme/terminal';
+import 'brace/theme/solarized_light';
+import 'brace/theme/solarized_dark';
+
 import 'brace/ext/language_tools';
 
 class EditorContainer extends Component {
@@ -14,19 +21,19 @@ class EditorContainer extends Component {
   }
 
   render() {
-    const { editor } = this.props;
-
+    const { editor, roomControls } = this.props;
     return (
       <div className='editor-container'>
         <AceEditor
           className ='editor'
-          mode="javascript"
-          theme="monokai"
+          mode={roomControls.language}
+          theme={roomControls.userSettings.theme}
           name="blah2"
           fontSize={10}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
+          readOnly={roomControls.isEditorLocked}
         />
       </div>
     )
