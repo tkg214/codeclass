@@ -19,10 +19,13 @@ const app = document.getElementById('react-root');
 
 // Instantiate socket and use socket as middleware in redux flow
 // See ./socketMiddleware.js for middleware
+const room = window.location.pathname.split('/');
+// console.log('room url: ', room[2])
 const socket = io();
+socket.emit('join', room[2])
 
 const createStoreWithMiddleware = applyMiddleware(
-  socketMiddleware(socket), promise(), thunk, logger()
+  socketMiddleware(socket), thunk, logger()
 )(createStore);
 const store = createStoreWithMiddleware(reducer);
 
