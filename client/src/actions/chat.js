@@ -1,5 +1,4 @@
 export function sendMessage(content){
-  console.log(content)
   return dispatch => {
     dispatch({
       type: 'SEND_OUTGOING_MESSAGE',
@@ -9,18 +8,7 @@ export function sendMessage(content){
         // user_id: 1,
         // classroom_id will be passed down from iniitial state.
         // classroom_id: 2,
-        content
-      }
-    })
-  }
-}
-
-export function receiveMessage(content){
-  return dispatch => {
-    dispatch({
-      type: 'RECEIVE_INCOMING_MESSAGE',
-      payload: {
-        // user_id,
+        id: Date.now(),
         content
       }
     })

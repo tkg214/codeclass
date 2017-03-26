@@ -24,8 +24,7 @@ class ChatContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    messages: state.messages,
-    roomControls: state.roomControls
+    chat: state.chat
    }
 }
 
