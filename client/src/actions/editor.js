@@ -1,3 +1,4 @@
+import axios from 'axios';
 export function updateEditorValues(val) {
   return dispatch => {
     dispatch({
@@ -33,6 +34,21 @@ export function toggleChatLock(isChatLocked) {
     })
   }
 }
+
+export function executeCode(code) {
+  return dispatch => {
+    axios.post('http://52.33.39.121/api', {
+      lang : "javascript",
+      code : code
+    })
+    .then(function (response) {
+      dispatch({type: 'EXECUTE_CODE', meta: {remote: true},  payload: response.data});
+    })
+    .catch(function (error) {
+      dispatch({type: 'EXECUTE_CODE_ERR', meta: {remote: true},  payload: error});
+    });
+  }
+}    
 
 export function changeEditorTheme(theme) {
   return dispatch => {

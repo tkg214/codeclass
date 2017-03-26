@@ -32,11 +32,11 @@ class EnvContainer extends Component {
             <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm'>{editorButton}</button>
           }
           {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
-            <button className='btn btn-primary btn-sm'>Run</button>
+            <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
           }
         </div>
         <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
-        <Terminal/>
+        <Terminal terminal={this.props.terminal}/>
       </div>
     )
   }
@@ -57,12 +57,19 @@ class EnvContainer extends Component {
     e.preventDefault();
     this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked);
   }
+
+  _onRunClick(e) {
+    e.preventDefault();
+    this.props.actions.executeCode(this.props.editor.editorValue);
+  }
 }
+
 
 function mapStateToProps(state) {
   return {
     editor: state.editor,
-    roomControls: state.roomControls
+    roomControls: state.roomControls,
+    terminal: state.terminal
    }
 }
 
