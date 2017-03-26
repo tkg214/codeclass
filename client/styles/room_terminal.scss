@@ -1,5 +1,9 @@
 .terminal {
   background-color: #141414;
-  color: #fff;
   height: 200px;
+  padding: 10px;
+  p {
+    color: #fff;
+    font-family: 'Ubuntu Mono', monospace;
+  }
 }

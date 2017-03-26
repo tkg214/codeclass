@@ -6,11 +6,18 @@ class Terminal extends Component {
     return (
       <div className='terminal'>
         {this.props.terminal.map((outputs) => {
-          console.log('output: ', outputs);
+          
           if (outputs.response.stdout) {
-            return <p key={outputs.timestamp}> > {outputs.response.stdout}</p>
+            const stdOut = outputs.response.stdout.replace(/\n/g, "<br />");
+            console.log(stdOut);
+            return <code key={outputs.timestamp}> > {stdOut}</code>
           }
-       
+
+          if (outputs.response.stdrr) {
+            const stdErr = outputs.response.stderr;
+            console.log(stdErr);
+            return <code key={outputs.timestamp}> > {outputs.response.stderr}</code>
+          }
         })}
       </div>
     )

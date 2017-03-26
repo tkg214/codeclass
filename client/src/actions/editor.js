@@ -43,7 +43,6 @@ export function executeCode(code) {
       code : code
     })
     .then(function (response) {
-      console.log(response);
       dispatch({type: 'EXECUTE_CODE', meta: {remote: true},  payload: response.data});
     })
     .catch(function (error) {
