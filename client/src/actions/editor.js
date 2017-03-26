@@ -4,7 +4,7 @@ export function updateEditorValues(val) {
       type: 'UPDATE_EDITOR_VALUES',
       meta: {remote: true},
       payload: {
-        value: val
+        editorValue: val
       }
     })
   }

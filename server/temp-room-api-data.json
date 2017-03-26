@@ -3,7 +3,10 @@
   "isEditorLocked": true,
   "isChatLocked": true,
   "editorValue": "hello world",
-  "terminalValue": "terminal output",
+  "terminalValues": [{
+    "terminalValue": "",
+    "timestamp": 0
+  }],
   "usersOnline": [{
     "name": "Ken",
     "avatarURL": "https://avatars3.githubusercontent.com/u/24704531?v=3&s=460"

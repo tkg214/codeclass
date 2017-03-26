@@ -9,11 +9,10 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    let { roomControls } = this.props;
-    console.log(roomControls)
-
+    let { editor, roomControls } = this.props;
     let editorButton = roomControls.isEditorLocked ? 'Editor Locked' : 'Editor Unlocked'
     let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
+    const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal']
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
@@ -21,15 +20,9 @@ class EnvContainer extends Component {
           <div className="btn-group">
             <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
-              <li><a onClick={this._onThemeChangeClick.bind(this)}>Monokai</a></li>
-              <li><a >GitHub</a></li>
-              <li><a >Tomorrow</a></li>
-              <li><a >Kuroir</a></li>
-              <li><a >xCode</a></li>
-              <li><a >Textmate</a></li>
-              <li><a >Solarized Dark</a></li>
-              <li><a >Solarized Light</a></li>
-              <li><a >Terminal</a></li>
+              {themes.map((theme, i) => {
+                return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
+              })}
             </ul>
           </div>
           {roomControls.isAuthorized &&
@@ -42,7 +35,7 @@ class EnvContainer extends Component {
             <button className='btn btn-primary btn-sm'>Run</button>
           }
         </div>
-        <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
+        <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
         <Terminal/>
       </div>
     )
@@ -50,7 +43,8 @@ class EnvContainer extends Component {
 
   _onThemeChangeClick(e) {
     e.preventDefault();
-    const theme = e.target.text.toLowerCase();
+    const text = e.target.text.toLowerCase();
+    const theme = text.split(' ').join('_');
     this.props.actions.changeEditorTheme(theme);
   }
 

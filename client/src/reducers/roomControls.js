@@ -47,6 +47,9 @@ export default function reducer(state=initialState, action) {
     case 'TOGGLE_CHAT_LOCK': {
       return {...state, isChatLocked: action.payload.isChatLocked}
     }
+    case 'CHANGE_EDITOR_THEME': {
+      return {...state, userSettings: action.payload.userSettings}
+    }
     default: return state;
   }
   return state

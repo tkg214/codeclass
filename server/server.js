@@ -189,6 +189,7 @@ io.on('connection', (socket) => {
         break;
       }
       case 'CHANGE_EDITOR_THEME': {
+        console.log(action)
         socket.emit('action', action);
         break;
       }
