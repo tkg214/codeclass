@@ -9,21 +9,43 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    let { roomControls } = this.props;
-    let editorButton = roomControls.isEditorLocked ? 'EDITOR LOCK MODE' : 'EDITOR EDIT MODE'
-    let chatButton = roomControls.isChatLocked ? 'CHAT LOCK MODE' : 'CHAT EDIT MODE'
+    let { editor, roomControls } = this.props;
+    let editorButton = roomControls.isEditorLocked ? 'Editor Locked' : 'Editor Unlocked'
+    let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
+    const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal']
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
           <GistContainer/>
-          <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm'>{chatButton}</button>
-          <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm'>{editorButton}</button>
-          <button className='btn btn-primary btn-sm'>Run</button>
+          <div className="btn-group">
+            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
+            <ul className="dropdown-menu">
+              {themes.map((theme, i) => {
+                return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
+              })}
+            </ul>
+          </div>
+          {roomControls.isAuthorized &&
+            <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm'>{chatButton}</button>
+          }
+          {roomControls.isAuthorized &&
+            <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm'>{editorButton}</button>
+          }
+          {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
+            <button className='btn btn-primary btn-sm'>Run</button>
+          }
         </div>
-        <EditorContainer actions={this.props.actions} editor={this.props.editor.value}/>
+        <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
         <Terminal/>
       </div>
     )
+  }
+
+  _onThemeChangeClick(e) {
+    e.preventDefault();
+    const text = e.target.text.toLowerCase();
+    const theme = text.split(' ').join('_');
+    this.props.actions.changeEditorTheme(theme);
   }
 
   _onEditorToggleClick(e) {

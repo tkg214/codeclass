@@ -1,18 +1,39 @@
 require('dotenv').config();
 
-var app = require('express')();
-var server = require('http').Server(app);
-var passport = require('passport');
-var util = require('util');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var GitHubStrategy = require('passport-github2').Strategy;
-var request = require('request');
-const path = require('path');
+const express       = require('express');
+const app           = express();
+const server        = require('http').Server(app);
+
+const bodyParser    = require('body-parser');
+const GitHubStrategy = require('passport-github2').Strategy;
+const io            = require('socket.io')(server);
+const passport      = require('passport');
+const path          = require('path');
+const request       = require('request');
+const sass          = require("node-sass-middleware");
+const session       = require('express-session');
+const util          = require('util');
+
+const ENV           = process.env.ENV || "development";
+const knexConfig    = require("./knexfile");
+const knex          = require("knex")(knexConfig[ENV]);
+const knexLogger    = require('knex-logger');
 
 server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
+
+
+app.use(knexLogger(knex));
+
+//Sass middleware
+app.use("/styles", sass({
+  src: __dirname + "/../client/styles",
+  dest: __dirname + "/public/styles",
+  debug: true,
+  outputStyle: 'expanded'
+}));
+app.use(express.static("public"));
 
 // Passport session setup.
 // TODO: Serialize will store user ID
@@ -36,6 +57,7 @@ passport.use(new GitHubStrategy({
 },
   function(accessToken, refreshToken, profile, done) {
     profile.token = accessToken;
+    console.log(profile);
     // TODO: Rather than return github profile, lookup user in database and return that
     return done(null, profile);
   }
@@ -70,32 +92,37 @@ app.get('/auth/github',
 //   login page. Otherwise, the primary route function will be called,
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+  passport.authenticate('github'), function(req, res) {
+    res.redirect(req.session.returnTo || '/rooms');
+    delete req.session.returnTo;
   });
 
-  // Simple route middleware to ensure user is authenticated.
   // Pass this function to routes that needs to be protected.
-  // If the request is authenticated (typically via a persistent login session),
-  // the request will proceed. Otherwise, the user will be redirected to the
-  // url passed to res.redirect()
+  // If the request is authenticated the request will proceed.
+  // Otherwise, the user will be redirected to the url passed to res.redirect()
+  // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  return next() //TODO change this as temp
-  // res.redirect('/login');
+  req.session.returnTo = req.path;
+  res.redirect('/login');
 }
 
+//Define request-local variables
+app.use(function(req, res, next){
+  res.locals.user = req.user;
+  next();
+});
+
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+  res.render('index');
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user });
+  res.render('login');
 });
 
 app.get('/rooms', ensureAuthenticated, function(req, res){
-  res.render('rooms', { user: req.user });
+  res.render('rooms');
 });
 
 app.get('/logout', function(req, res){
@@ -105,11 +132,12 @@ app.get('/logout', function(req, res){
 
 // TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
+  //res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
+  res.render('show_room');
 });
 
 
-//Posting gist to github on behlaf of current user
+//Posting gist to github on behalf of current user
 //
 // function makeGistPostOptions(request) {
 //   return {
@@ -142,28 +170,39 @@ app.get('/api/temproom', (req, res) => {
 // });
 
 // For socket io
-// const server = require('http').Server(app);
-const io = require('socket.io')(server);
+// TODO use middleware here to authenticate user on each socket request
+
+//Temp data
+const room = require('./temp-room-api-data.json');
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
-  // socket.emit('action', { type: 'NEW_CONNECTION', payload: {data: 'hello'} });
+  let action = {type: 'UPDATE_ROOM_STATE', payload: room}
+  socket.emit('action', action);
 
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
-        socket.broadcast.emit('action', action)
+        // if user = authorized user, then emit the action
+        socket.broadcast.emit('action', action);
+        break;
       }
       case 'TOGGLE_EDITOR_LOCK': {
-        socket.broadcast.emit('action', action)
+        socket.broadcast.emit('action', action);
+        break;
       }
       case 'TOGGLE_CHAT_LOCK': {
-        socket.broadcast.emit('action', action)
+        socket.broadcast.emit('action', action);
+        break;
+      }
+      case 'CHANGE_EDITOR_THEME': {
+        socket.emit('action', action);
+        break;
       }
     }
   });
   socket.on('close', () => {
-    console.log('Closed Connection :(')
-  })
+    console.log('Closed Connection :(');
+  });
 });
