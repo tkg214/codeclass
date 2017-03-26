@@ -2,8 +2,12 @@
   background-color: #141414;
   height: 200px;
   padding: 10px;
-  p {
-    color: #fff;
-    font-family: 'Ubuntu Mono', monospace;
-  }
+ 
+}
+
+pre {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 12px;
 }
