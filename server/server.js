@@ -14,9 +14,17 @@ const sass          = require("node-sass-middleware");
 const session       = require('express-session');
 const util          = require('util');
 
+const ENV           = process.env.ENV || "development";
+const knexConfig    = require("./knexfile");
+const knex          = require("knex")(knexConfig[ENV]);
+const knexLogger    = require('knex-logger');
+
 server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
+
+
+app.use(knexLogger(knex));
 
 //Sass middleware
 app.use("/styles", sass({
@@ -84,7 +92,7 @@ app.get('/auth/github',
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
   passport.authenticate('github'), function(req, res) {
-    res.redirect(req.session.returnTo || '/login');
+    res.redirect(req.session.returnTo || '/rooms');
     delete req.session.returnTo;
   });
 
@@ -94,7 +102,7 @@ app.get('/auth/github/callback',
   // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.req.session.returnTo = req.path;
+  req.session.returnTo = req.path;
   res.redirect('/login');
 }
 
@@ -112,7 +120,7 @@ app.get('/login', function(req, res){
   res.render('login');
 });
 
-app.get('/rooms', function(req, res){
+app.get('/rooms', ensureAuthenticated, function(req, res){
   res.render('rooms');
 });
 
