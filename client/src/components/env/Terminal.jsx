@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 
 class Terminal extends Component {
 
+  componentDidUpdate() {
+    this.outputsEnd.scrollIntoView({behaviour: "smooth"});
+  } 
+  
   render() {
     return (
       <div className='terminal'>
-        {this.props.terminal.map((outputs) => {
-          
-          if (outputs.response.stdout) {
-            const stdOut = outputs.response.stdout.replace(/\n/g, "<br />");
-            console.log(stdOut);
-            return <code key={outputs.timestamp}> > {stdOut}</code>
-          }
-
-          if (outputs.response.stdrr) {
-            const stdErr = outputs.response.stderr;
-            console.log(stdErr);
-            return <code key={outputs.timestamp}> > {outputs.response.stderr}</code>
-          }
-        })}
+        <div className='output-container'>
+          {this.props.terminal.map((outputs) => {
+            if (outputs.response.stdout) {
+              return <pre key={outputs.timestamp}> > {outputs.response.stdout}</pre>
+            }
+            if (outputs.response.stderr) {
+              return <pre key={outputs.timestamp}>{outputs.response.stderr}</pre>
+            }
+          })}
+        </div>
+        <div ref={(el) => { this.outputsEnd = el; }}></div>
       </div>
     )
   }
