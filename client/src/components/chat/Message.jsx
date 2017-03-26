@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 class Message extends Component {
   render () {
-    <div className='message'>
-      {}
-      This is a MESSAGE
-    </div>
-
+    return (
+      <div>
+        {this.props.content}
+      </div>
+    )
   }
 }
 
-export Message default ;
+export default Message;
