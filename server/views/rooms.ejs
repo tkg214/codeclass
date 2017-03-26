@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Code Class | Rooms</title>
+		<% include ./partials/_head.ejs %>
+	</head>
+	<body>
+		<header>
+			<% include ./partials/_nav.ejs %>
+		</header>
+		<div class="container">
+	    <section class="room-select">
+				<div class="row">
+		      <div class="panel panel-default">
+		        <h1>Classroom</h1>
+						<p>For controlling the participation of connected members</p>
+						 <a class="btn btn-primary" data-toggle="modal" data-target="#classroom-modal">Create classroom</a>
+		      </div>
+		      <div class="panel panel-default">
+		        <h1>Meeting</h1>
+						<p>For unrestricted code collaboration</p>
+		      </div>
+		    </a>
+			</div>
+	    </section>
+	</div>
+	<% include ./partials/_new_classroom_modal %>
+	</body>
+	<% include ./partials/_scripts.ejs %>
+</html>

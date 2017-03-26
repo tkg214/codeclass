@@ -8,7 +8,7 @@ class GistContainer extends Component {
 
         <div className='input-group'>
           <input type='text' placeholder='Enter Gist Name' className='form-control'/>
-          <button className='btn btn-primary btn-sm' type='button'>Save</button>
+          <button className='btn btn-primary btn-sm gist-button' type='button'>Save</button>
         </div>
       </div>
     )
