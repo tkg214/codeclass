@@ -9,7 +9,6 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    console.log('this.props.terminal: ', this.props.terminal);
     let { roomControls } = this.props;
     let editorButton = roomControls.isEditorLocked ? 'EDITOR LOCK MODE' : 'EDITOR EDIT MODE'
     let chatButton = roomControls.isChatLocked ? 'CHAT LOCK MODE' : 'CHAT EDIT MODE'
