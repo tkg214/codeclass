@@ -36,14 +36,14 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Passport session setup.
-//Serialize stores an ID in the user's session object.
-passport.serializeUser(function(user, done) {
-  done(null, user[0].github_id);
+// Serialize stores an ID in the user's session object.
+passport.serializeUser(function(id, done) {
+  done(null, id);
 });
 
 //Deserialize retrieves the user's details based on the passport session ID.
-passport.deserializeUser(function(session_github_id, done) {
-  knex('users').where('github_id', session_github_id).then(user => {
+passport.deserializeUser(function(id, done) {
+  knex('users').where('github_id', id).then(user => {
     done(null, user[0]);
   });
 });
@@ -64,11 +64,11 @@ passport.use(new GitHubStrategy({
           github_id: profile.id,
           github_access_token: accessToken
         }).returning('github_id')
-          .then((user) => {
-            return done(null, user);
+          .then((github_id) => {
+            return done(null, github_id[0]);
           });
       } else {
-        return done(null, user);
+        return done(null, user[0].github_id);
       }
     });
   }
@@ -124,19 +124,19 @@ app.use(function(req, res, next){
   next();
 });
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.get('/login', function(req, res){
+app.get('/login', function(req, res) {
   res.render('login');
 });
 
-app.get('/rooms', ensureAuthenticated, function(req, res){
+app.get('/rooms', ensureAuthenticated, function(req, res) {
   res.render('rooms');
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
