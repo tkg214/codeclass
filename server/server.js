@@ -201,12 +201,10 @@ io.on('connection', (socket) => {
           socket.broadcast.to(action.room).emit('action', action);
           break;
         }
-
         case 'EXECUTE_CODE' : {
           socket.broadcast.to(action.room).emit('action', action);
           break;
         }
-
         case 'CHANGE_EDITOR_THEME': {
           socket.emit('action', action);
           break;
