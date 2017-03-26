@@ -12,23 +12,26 @@ class EnvContainer extends Component {
     let { roomControls } = this.props;
     console.log(roomControls)
 
-    let editorButton = roomControls.isEditorLocked ? 'EDITOR LOCK MODE' : 'EDITOR EDIT MODE'
-    let chatButton = roomControls.isChatLocked ? 'CHAT LOCK MODE' : 'CHAT EDIT MODE'
+    let editorButton = roomControls.isEditorLocked ? 'Editor Locked' : 'Editor Unlocked'
+    let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
           <GistContainer/>
           <div className="btn-group">
-            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown-menu">Settings<span className="caret"></span></a>
+            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li className="divider"></li>
-              <li><a href="#">Separated link</a></li>
+              <li><a onClick={this._onThemeChangeClick.bind(this)}>Monokai</a></li>
+              <li><a >GitHub</a></li>
+              <li><a >Tomorrow</a></li>
+              <li><a >Kuroir</a></li>
+              <li><a >xCode</a></li>
+              <li><a >Textmate</a></li>
+              <li><a >Solarized Dark</a></li>
+              <li><a >Solarized Light</a></li>
+              <li><a >Terminal</a></li>
             </ul>
           </div>
-
           {roomControls.isAuthorized &&
             <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm'>{chatButton}</button>
           }
@@ -43,6 +46,12 @@ class EnvContainer extends Component {
         <Terminal/>
       </div>
     )
+  }
+
+  _onThemeChangeClick(e) {
+    e.preventDefault();
+    const theme = e.target.text.toLowerCase();
+    this.props.actions.changeEditorTheme(theme);
   }
 
   _onEditorToggleClick(e) {

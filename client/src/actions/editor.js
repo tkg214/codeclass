@@ -33,3 +33,17 @@ export function toggleChatLock(isChatLocked) {
     })
   }
 }
+
+export function changeEditorTheme(theme) {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_EDITOR_THEME',
+      meta: {remote: true},
+      payload: {
+        userSettings: {
+          theme
+        }
+      }
+    })
+  }
+}
