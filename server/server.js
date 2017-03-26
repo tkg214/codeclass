@@ -171,7 +171,6 @@ io.on('connection', (socket) => {
   socket.on('action', (action) => {
     // console.log('Action received on server: ', action)
     switch(action.type) {
-<<<<<<< HEAD
       case 'UPDATE_EDITOR_VALUES': {
         socket.broadcast.emit('action', action);
         break;
