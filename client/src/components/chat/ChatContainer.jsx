@@ -11,12 +11,12 @@ import MessageComposeContainer from './MessageComposeContainer.jsx';
 class ChatContainer extends Component {
 
   render() {
-    const { chat } = this.props
+    let { chat } = this.props;
 
     return (
       <div className='chat-container'>
         <ChatHeader />
-        <UserCountContainer />
+        <UserCountContainer chat={chat} />
         <MessageListContainer chat={chat}/>
         <MessageComposeContainer actions={this.props.actions}/>
       </div>

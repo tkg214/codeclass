@@ -1,12 +1,19 @@
 export default function reducer(state ={
-  messages: []
+  messages: [],
+  usersOnline: [1]
 }, action) {
 
   switch(action.type) {
     case 'SEND_OUTGOING_MESSAGE': {
       const newMessages = [...state.messages];
-      newMessages.push(action.payload)
+      newMessages.push(action.payload);
       return {...state, messages: newMessages}
+      break;
+    }
+    case 'UPDATE_USERS_ONLINE': {
+
+      return {...state, usersOnline: action.payload}
+      break;
     }
   }
   return state;

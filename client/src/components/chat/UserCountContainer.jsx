@@ -3,17 +3,11 @@ import React, { Component } from 'react';
 class UserCountContainer extends Component {
 
   render() {
+    const { chat } = this.props;
+    console.log(chat.usersOnline.usersOnline);
     return (
       <div className='user-count-container'>
-
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-        <img src="http://www.fillmurray.com/100/100" className="user-avatar img-responsive"></img>
-
+        {chat.usersOnline.usersOnline}
       </div>
     )
   }
