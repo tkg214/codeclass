@@ -13,6 +13,7 @@ class EnvContainer extends Component {
     let editorButton = roomControls.isEditorLocked ? 'Editor Locked' : 'Editor Unlocked'
     let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
     const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal']
+    const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
@@ -22,6 +23,14 @@ class EnvContainer extends Component {
             <ul className="dropdown-menu">
               {themes.map((theme, i) => {
                 return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
+              })}
+            </ul>
+          </div>
+          <div className="btn-group">
+            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Font Size<span className="caret"></span></a>
+            <ul className="dropdown-menu">
+              {fontSizes.map((fontSize, i) => {
+                return <li key={i}><a onClick={this._onFontSizeChangeClick.bind(this)}>{fontSize}</a></li>
               })}
             </ul>
           </div>
@@ -46,6 +55,12 @@ class EnvContainer extends Component {
     const text = e.target.text.toLowerCase();
     const theme = text.split(' ').join('_');
     this.props.actions.changeEditorTheme(theme);
+  }
+
+  _onFontSizeChangeClick(e) {
+    e.preventDefault();
+    const fontSize = e.target.text;
+    this.props.actions.changeFontSize(fontSize);
   }
 
   _onEditorToggleClick(e) {

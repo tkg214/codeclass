@@ -12,8 +12,8 @@ class ChatContainer extends Component {
 
   render() {
 
-    const { chat, roomControls } = this.props;
-
+    const { chat, roomControls } = this.props
+    console.log(chat);
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
     let visibility = roomControls.isChatVisible ? 'show' : 'hide'
 

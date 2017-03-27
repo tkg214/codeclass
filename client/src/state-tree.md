@@ -19,9 +19,8 @@ room: {
   language: string,
   userSettings: {
     theme: string,
+    fontSize: number,
     mode: string, //from language
-    tabSize: number,
-    defaultValue: string, //from editorValue,
-    isReadOnly: boolean //from editorLocked
+    tabSize: number
   }
 }
