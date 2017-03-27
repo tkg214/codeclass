@@ -166,7 +166,7 @@ app.post('/rooms', (req, res) => {
 // TODO use middleware here to authenticate user on each socket request
 
 //Temp data
-const roomData = require('./temp-room-api-data.json');
+// const roomData = require('./temp-room-api-data.json');
 server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
@@ -176,16 +176,26 @@ io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.join(room)
     // TODO create knex query that returns everything in temp-room-api-data
-    // knex('classrooms')
-    //   .select('id', 'user_id', 'editorLocked as isEditorLocked', 'chatLocked as isChatLocked', 'language_id as language')
-    //   .where('url_string', room)
-    //   .then((data) => {
-    //     // TODO add logic to determine who user is to show isAutherized value, then add to data
-    //     let action = {type: 'UPDATE_ROOM_STATE', payload: data}
-    //     socket.emit('action', action)
-    // })
-    let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-    socket.emit('action', action);
+    knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
+      .then((data) => {
+        let roomData = {
+          isEditorLocked: data.rows[0].editorLocked,
+          isChatLocked: data.rows[0].chatLocked,
+          editorValue: data.rows[0].content,
+          language: data.rows[0].language_id
+        }
+        knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.url_string = ?', room)
+        .then((data) => {
+          roomData.messages = data.rows
+          console.log(roomData)
+          let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
+          socket.emit('action', action)
+        })
+
+        // TODO add logic to determine who user is to show isAutherized value, then add to data
+    })
+    // let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
+    // socket.emit('action', action);
 
     socket.on('action', (action) => {
       // console.log('Action received on server: ', action)
@@ -246,6 +256,11 @@ io.on('connection', (socket) => {
           //   .update({
           //     theme: action.payload.theme
           //   })
+          break;
+        }
+        case 'CHANGE_FONT_SIZE': {
+          socket.emit('action', action);
+          // TODO create knex
           break;
         }
       }

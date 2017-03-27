@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class Terminal extends Component {
 
   componentDidUpdate() {
-    this.outputsEnd.scrollIntoView({behaviour: "smooth"});
-  } 
-  
+    // this.outputsEnd.scrollIntoView({behaviour: "smooth"});
+  }
+
   render() {
     return (
       <div className='terminal'>

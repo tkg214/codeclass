@@ -1,27 +1,15 @@
 //TODO normalize this
 const initialState = {
-  isChatVisible: true,
+  isChatVisible: false,
   isAuthorized: true,
   isEditorLocked: true,
   isChatLocked: true,
-  editorValue: '',
-  terminalValue: '',
-  usersOnline: [{
-    name: '',
-    avatarURL: ''
-  }],
-  messages: [{
-    content: '',
-    name: '',
-    timestamp: 0
-  }],
-  isScrolled: true,
   language: '',
   userSettings: [{
     theme: '',
     mode: '',
+    fontSize: 10,
     tabSize: 2,
-    defaultValue: '',
     isReadOnly: false
   }]
 }
@@ -33,10 +21,6 @@ export default function reducer(state=initialState, action) {
         isAuthorized: action.payload.isAuthorized,
         isEditorLocked: action.payload.isEditorLocked,
         isChatLocked: action.payload.isChatLocked,
-        editorValue: action.payload.editorValue,
-        terminalValue: action.payload.terminalValue,
-        usersOnline: action.payload.usersOnline,
-        messages: action.payload.messages,
         isScrolled: action.payload.isScrolled,
         language: action.payload.language,
         userSettings: action.payload.userSettings
@@ -53,6 +37,9 @@ export default function reducer(state=initialState, action) {
     }
     case 'TOGGLE_CHAT_CONTAINER': {
       return {...state, isChatVisible: action.payload.isChatVisible}
+    }
+    case 'CHANGE_FONT_SIZE': {
+      return {...state, userSettings: action.payload.userSettings}
     }
     default: return state;
   }

@@ -37,6 +37,7 @@
     "theme": "monokai",
     "mode": "javascript",
     "tabSize": 2,
+    "fontSize": 10,
     "defaultValue": "hello world",
     "isReadOnly": "true"
   }
