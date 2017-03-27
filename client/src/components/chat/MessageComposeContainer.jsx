@@ -31,7 +31,6 @@ class MessageComposeContainer extends Component {
 
   _onKeyUp(e) {
     if (e.keyCode === 13) {
-      console.log('hit')
       e.preventDefault();
       this.props.actions.sendMessage(e.target.value);
       this.setState({input: ''});

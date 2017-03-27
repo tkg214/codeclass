@@ -5,10 +5,12 @@ import chat from './chat';
 import editor from './editor';
 import roomControls from './roomControls';
 import terminal from './terminal';
+import gist from './gist'
 
 export default combineReducers({
   chat,
   editor,
   roomControls,
-  terminal
+  terminal,
+  gist
 });
