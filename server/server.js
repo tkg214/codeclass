@@ -183,12 +183,29 @@ io.on('connection', (socket) => {
     socket.on('action', (action) => {
       // console.log('Action received on server: ', action)
       switch(action.type) {
-        case 'CHANGE_EDITOR_THEME': {
-          socket.emit('action', action);
+        case 'UPDATE_EDITOR_VALUES': {
+          // if user = authorized user, then emit the action
+          socket.broadcast.to(action.room).emit('action', action);
           break;
         }
-        default: {
+        case 'TOGGLE_EDITOR_LOCK': {
           socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'TOGGLE_CHAT_LOCK': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'EXECUTE_CODE' : {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'SEND_OUTGOING_MESSAGE': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'CHANGE_EDITOR_THEME': {
+          socket.emit('action', action);
           break;
         }
       }
