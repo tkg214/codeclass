@@ -19,11 +19,6 @@ const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const knexLogger    = require('knex-logger');
 
-server.listen(3000, () =>
-  console.log("App listening on port 3000")
-);
-
-
 app.use(knexLogger(knex));
 
 //Sass middleware
@@ -36,18 +31,17 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Passport session setup.
-// TODO: Serialize will store user ID
-// TODO: Deserialize will find user by ID
-// For now, entire github profile is serialized and deserialized
-//   and deserialized.
-passport.serializeUser(function(user, done) {
-  done(null, user);
+// Serialize stores an ID in the user's session object.
+passport.serializeUser(function(id, done) {
+  done(null, id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+//Deserialize retrieves the user's details based on the passport session ID.
+passport.deserializeUser(function(id, done) {
+  knex('users').where('github_id', id).then(user => {
+    done(null, user[0]);
+  });
 });
-
 
 // Use the GitHubStrategy within Passport.
 passport.use(new GitHubStrategy({
@@ -56,10 +50,22 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 },
   function(accessToken, refreshToken, profile, done) {
-    profile.token = accessToken;
-    console.log(profile);
-    // TODO: Rather than return github profile, lookup user in database and return that
-    return done(null, profile);
+    knex('users').where('github_id', profile.id).then(user => {
+      if (user.length === 0) {
+        knex('users').insert({
+          github_login: profile.username,
+          github_avatar: profile._json.avatar_url,
+          github_name: profile.displayName,
+          github_id: profile.id,
+          github_access_token: accessToken
+        }).returning('github_id')
+          .then((github_id) => {
+            return done(null, github_id[0]);
+          });
+      } else {
+        return done(null, user[0].github_id);
+      }
+    });
   }
 ));
 
@@ -74,8 +80,6 @@ app.use(passport.initialize());
 // Use passport.session middleware for persistent login sessions.
 app.use(passport.session());
 
-// Uncomment to serve static assets
-//app.use(express.static(__dirname + '/public'));
 
 // The first step in GitHub authentication will involve redirecting
 // the user to github.com. After authorization, GitHub will redirect the user
@@ -113,73 +117,65 @@ app.use(function(req, res, next){
   next();
 });
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.get('/login', function(req, res){
+app.get('/login', function(req, res) {
   res.render('login');
 });
 
-app.get('/rooms', ensureAuthenticated, function(req, res){
+app.get('/rooms', ensureAuthenticated, function(req, res) {
   res.render('rooms');
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
 
-// TODO REMOVE temp room for react mounting
 app.get('/api/temproom', (req, res) => {
-  //res.sendFile(path.join(__dirname, 'views', 'temproom.html'));
   res.render('show_room');
 });
 
+app.get('/rooms/:key', (req, res) => {
+  res.render('show_room');
+});
 
-//Posting gist to github on behalf of current user
-//
-// function makeGistPostOptions(request) {
-//   return {
-//     url: "https://api.github.com/gists",
-//     headers: {
-//       "User-Agent": request.user.username,
-//       "Authorization": `token ${request.user.token}`
-//     },
-//     "body": JSON.stringify({
-//       "files": {
-//         "file1.txt": {
-//           "content": "TEST CONTENT"
-//         }
-//       }
-//     })
-//   };
-// }
-
-
-// // Test posting a gist for the currently authentictaed user
-// app.get('/gists', function (req, res) {
-//   request.post(makeGistPostOptions(req), function(error, response, body) {
-//     if (!error) {
-//       console.log('statusCode:', response.statusCode);
-//       res.send("Success!");
-//     } else {
-//       console.log('error:', error);
-//     }
-//   });
-// });
+app.post('/rooms', (req, res) => {
+  knex('classrooms')
+      .insert({
+        topic: req.body.topic,
+        language_id: req.body.language,
+        editorLocked: true,
+        chatLocked: false,
+        user_id: req.user.id,
+        //TODO Import sanitizeURL function from module
+        url_string: req.body.topic
+          .replace(/[^a-zA-Z0-9]+/g, '-')
+          .replace(/^\-|\-$/g, '')
+          .toLowerCase()
+      })
+      .returning('url_string')
+      .then((url_string) => {
+        res.redirect(`/rooms/${url_string[0]}`);
+      });
+});
 
 // For socket io
 // TODO use middleware here to authenticate user on each socket request
 
 //Temp data
 const roomData = require('./temp-room-api-data.json');
-let roomSpace;
+server.listen(3000, () =>
+  console.log("App listening on port 3000")
+);
+
 
 io.on('connection', (socket) => {
 
   socket.on('join', (room) => {
-
+    console.log(room);
     socket.join(room)
     let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
     socket.emit('action', action);
