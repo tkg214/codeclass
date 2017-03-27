@@ -151,6 +151,7 @@ app.get('/api/temproom', (req, res) => {
 });
 
 app.get('/rooms/:key', (req, res) => {
+  // console.log(req.user);
   res.render('show_room');
 });
 
