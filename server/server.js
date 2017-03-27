@@ -174,6 +174,8 @@ server.listen(3000, () =>
 
 io.on('connection', (socket) => {
   console.log('New Connection :)');
+  console.log(Object.keys(io.sockets.adapter.rooms).length);
+  socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
   let action = {type: 'UPDATE_ROOM_STATE', payload: room};
   socket.emit('action', action);
 
@@ -202,10 +204,18 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('action', action);
         break;
       }
+      case 'UPDATE_USERS_ONLINE': {
+        socket.broadcast.emit('action', action);
+        break;
+
+      }
 
     }
   });
-  socket.on('close', () => {
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
+    console.log(Object.keys(io.sockets.adapter.rooms).length);
+
     console.log('Closed Connection :(');
   });
 });
