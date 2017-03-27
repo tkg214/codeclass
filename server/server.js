@@ -172,11 +172,13 @@ server.listen(3000, () =>
 );
 
 
+
 io.on('connection', (socket) => {
 
   socket.on('join', (room) => {
     console.log('New Connection :)');
     console.log(room);
+    let temporaryUserStorage = [];
     // console.log(Object.keys(io.sockets.adapter.rooms).length);
     socket.join(room)
     // socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
@@ -213,6 +215,8 @@ io.on('connection', (socket) => {
         }
         case 'UPDATE_USERS_ONLINE': {
           console.log("UPDATED  USERS ONLINE");
+          temporaryUserStorage.push(action.payload.usersOnline);
+          action.payload.usersOnline = temporaryUserStorage;
           socket.broadcast.emit('action', action);
           break;
         }

@@ -18,13 +18,13 @@ class ChatContainer extends Component {
     let visibility = roomControls.isChatVisible ? 'show' : 'hide'
 
     return (
-      <div>
+      <div className={'chat-container ' + visibility}>
         <button
           className="btn btn-default btn-sm chat-toggle-button"
           onClick={this._handleClick.bind(this)}
           >{chatToggleButton}
         </button>
-        <div className='chat-container' className={visibility}>
+      <div>
           <UserCountContainer chat={chat} actions={this.props.actions}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions}/>

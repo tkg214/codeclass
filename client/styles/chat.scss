@@ -1,11 +1,11 @@
 .chat-container{
   width: 25%;
-  height: 100%;
+  // height: 100%;
   background-color: rgba(#eeeeee, 0.65);
   color: #FFFFFF;
   float: right;
-  padding: 10px 10px 10px 10px;
-  // flex: 3;
+  // padding: 10px 10px 10px 10px;
+  flex: 3;
   overflow: auto;
   // right: 0;
 }
@@ -34,7 +34,7 @@
 .message-list-container {
   border-radius: 0%;
   color: black;
-  height: 300px!important;
+  min-height: 200px!important;
   overflow-y: scroll;
   width: 100%;
   word-wrap: break-word
@@ -66,4 +66,31 @@
   overflow:scroll;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+
+.bubble{
+    background-color: #F2F2F2;
+    // border-radius: 5px;
+    box-shadow: 0px 0px 6px #B2B2B2;
+    min-height: 50px;
+    margin: 20px;
+    padding: 5px;
+    width:  90%;
+}
+
+.bubble::after {
+    background-color: #F2F2F2;
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    content: "\00a0";
+    display: block;
+    height: 20px;
+    right: calc(-100% + 5px);
+    position: relative;
+    top: -5px;
+    transform:             rotate( -135deg );
+        -moz-transform:    rotate( -135deg );
+        -ms-transform:     rotate( -135deg );
+        -o-transform:      rotate( -135deg );
+        -webkit-transform: rotate( -135deg );
+    width:  20px;
 }

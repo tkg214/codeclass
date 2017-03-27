@@ -14,7 +14,6 @@ export default function reducer(state ={
       // console.log('this is payload', action.payload)
       const newUsers = [...state.usersOnline];
       newUsers.push(action.payload)
-      console.log(newUsers);
       return {...state, usersOnline: newUsers}
       break;
     }

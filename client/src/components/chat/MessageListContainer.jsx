@@ -6,7 +6,7 @@ class MessageListContainer extends Component {
   render() {
     const { chat } = this.props;
     return (
-      <div className="message-list-container well">
+      <div className="message-list-container">
         {chat.messages.map( (message) => {
           return <Message key={message.id} content={message.content}/>
         })}

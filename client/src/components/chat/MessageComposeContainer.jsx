@@ -13,7 +13,7 @@ class MessageComposeContainer extends Component {
 
     return (
       <div className='message-compose-container'>
-        <input
+        <textarea
           className="chatbar-message"
           placeholder="Chat Bar"
           onKeyUp={this._onKeyUp.bind(this)}
