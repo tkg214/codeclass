@@ -57,9 +57,8 @@ export function changeEditorTheme(theme) {
       type: 'CHANGE_EDITOR_THEME',
       meta: {remote: true},
       payload: {
-        userSettings: {
-          theme
-        }}
+        userSettings: {theme}
+      }
     })
   }
 }
@@ -86,5 +85,17 @@ export function saveToGist(gistName) {
     //       isGistSaved: false
     //     }});
     // });
+  }
+}
+
+export function changeFontSize(fontSize) {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_FONT_SIZE',
+      meta: {remote: true},
+      payload: {
+        userSettings: {fontSize}
+      }
+    })
   }
 }

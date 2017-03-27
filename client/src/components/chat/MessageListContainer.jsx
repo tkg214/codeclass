@@ -8,6 +8,7 @@ class MessageListContainer extends Component {
     return (
       <div className="message-list-container well">
         {chat.messages.map( (message) => {
+          console.log(message);
           return <Message key={message.id} content={message.content}/>
         })}
       </div>
