@@ -166,48 +166,53 @@ app.post('/rooms', (req, res) => {
 // TODO use middleware here to authenticate user on each socket request
 
 //Temp data
-const room = require('./temp-room-api-data.json');
+const roomData = require('./temp-room-api-data.json');
 server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
 
 
 io.on('connection', (socket) => {
-  console.log('New Connection :)');
-  let action = {type: 'UPDATE_ROOM_STATE', payload: room};
-  socket.emit('action', action);
 
-  socket.on('action', (action) => {
-    // console.log('Action received on server: ', action)
-    switch(action.type) {
+  socket.on('join', (room) => {
+    console.log(room);
+    socket.join(room)
+    let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
+    socket.emit('action', action);
 
-      case 'UPDATE_EDITOR_VALUES': {
-        // if user = authorized user, then emit the action
-        socket.broadcast.emit('action', action);
-        break;
+    socket.on('action', (action) => {
+      // console.log('Action received on server: ', action)
+      switch(action.type) {
+        case 'UPDATE_EDITOR_VALUES': {
+          // if user = authorized user, then emit the action
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'TOGGLE_EDITOR_LOCK': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'TOGGLE_CHAT_LOCK': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'EXECUTE_CODE' : {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'SEND_OUTGOING_MESSAGE': {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
+        case 'CHANGE_EDITOR_THEME': {
+          socket.emit('action', action);
+          break;
+        }
       }
-      case 'TOGGLE_EDITOR_LOCK': {
-        socket.broadcast.emit('action', action);
-        break;
-      }
-      case 'TOGGLE_CHAT_LOCK': {
-        socket.broadcast.emit('action', action);
-        break;
-      }
-      case 'CHANGE_EDITOR_THEME': {
-        socket.emit('action', action);
-        break;
-      }
-      case 'SEND_OUTGOING_MESSAGE': {
-        socket.broadcast.emit('action', action);
-        break;
-      }
+    });
 
-    }
   });
   socket.on('close', () => {
     console.log('Closed Connection :(');
   });
 });
-
-// FIX YOUR GITHUB
