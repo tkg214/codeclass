@@ -171,29 +171,56 @@ server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
 
-
 io.on('connection', (socket) => {
 
   socket.on('join', (room) => {
-    console.log(room);
     socket.join(room)
+    // TODO create knex query that returns everything in temp-room-api-data
+    // knex('classrooms')
+    //   .select('id', 'user_id', 'editorLocked as isEditorLocked', 'chatLocked as isChatLocked', 'language_id as language')
+    //   .where('url_string', room)
+    //   .then((data) => {
+    //     // TODO add logic to determine who user is to show isAutherized value, then add to data
+    //     let action = {type: 'UPDATE_ROOM_STATE', payload: data}
+    //     socket.emit('action', action)
+    // })
     let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
     socket.emit('action', action);
 
     socket.on('action', (action) => {
       // console.log('Action received on server: ', action)
+      console.log(action)
+
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
           // if user = authorized user, then emit the action
           socket.broadcast.to(action.room).emit('action', action);
+          // TODO create knex insert that inserts into edits table based on classroom_id (store classroom_id in memory)
+          // knex('edits')
+          //   .insert({
+          //     content: action.payload.editorValue,
+          //     classroom_id: // TODO add id
+          //   })
           break;
         }
         case 'TOGGLE_EDITOR_LOCK': {
           socket.broadcast.to(action.room).emit('action', action);
+          // TODO create knex edit that updates editorLocked in classroom table based on classroom_id
+          // knex('classrooms')
+          //   .where('id', '=', // TODO add id )
+          //   .update({
+          //     editorLocked: action.payload.isEditorLocked
+          //   })
           break;
         }
         case 'TOGGLE_CHAT_LOCK': {
           socket.broadcast.to(action.room).emit('action', action);
+          // TODO create knex edit that updates chatLocked in clasroom table based on classroom_id
+          // knex('classrooms')
+          //   .where('id', '=', // TODO add id )
+          //   .update({
+          //     chatLocked: action.payload.isChatLocked
+          //   })
           break;
         }
         case 'EXECUTE_CODE' : {
@@ -202,10 +229,23 @@ io.on('connection', (socket) => {
         }
         case 'SEND_OUTGOING_MESSAGE': {
           socket.broadcast.to(action.room).emit('action', action);
+          // TODO create knex insert that inserts into messages table based on classroom_id and user
+          // knex('messages')
+          //   .insert({
+          //     user_id: //TODO add id,
+          //     content: action.payload.content,
+          //     classroom_id: //TODO add id
+          //   })
           break;
         }
         case 'CHANGE_EDITOR_THEME': {
           socket.emit('action', action);
+          // TODO create knex edit that inserts into users table based on user_id (need to create column in users table)
+          // knex('users')
+          //   .where('id', '=', // TODO add id)),
+          //   .update({
+          //     theme: action.payload.theme
+          //   })
           break;
         }
       }
