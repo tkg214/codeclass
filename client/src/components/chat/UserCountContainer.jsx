@@ -19,9 +19,11 @@ class UserCountContainer extends Component {
     console.log('object', chat)
     return (
       <div className='user-count-container'>
+        <ul className='user-list'>
           {chat.usersOnline.map( (user) => {
             return <User key={user.id} content={user.usersOnline}/>
           })}
+          </ul>
         </div>
     )
   }
