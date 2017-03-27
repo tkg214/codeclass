@@ -184,12 +184,13 @@ server.listen(3000, () =>
 );
 
 
-let temporaryUserStorage = [];
 io.on('connection', (socket) => {
-  socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
 
+  let temporaryUserStorage = [];
   socket.on('join', (room) => {
-    socket.join(room)
+    socket.broadcast.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
+    socket.join(room);
+    console.log(room);
     // TODO create knex query that returns everything in temp-room-api-data
     knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
       .then((data) => {
@@ -199,7 +200,6 @@ io.on('connection', (socket) => {
           editorValue: data.rows[0].content,
           language: data.rows[0].language_id
         }
-        console.log(roomData);
         knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.url_string = ?', room)
         .then((data) => {
           roomData.messages = data.rows
@@ -281,9 +281,9 @@ io.on('connection', (socket) => {
         }
         case 'UPDATE_USERS_ONLINE': {
           console.log("UPDATED  USERS ONLINE");
-          temporaryUserStorage.push(action.payload.usersOnline);
-          action.payload.usersOnline = temporaryUserStorage;
-          socket.broadcast.emit('action', action);
+          // temporaryUserStorage.push(action.payload.usersOnline);
+          action.payload.usersOnline = 10;
+          socket.broadcast.to(action.room).emit('action', action);
           break;
         }
       }
@@ -292,6 +292,7 @@ io.on('connection', (socket) => {
   });
   socket.on('disconnect', () => {
     // socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
+    temporaryUserStorage.shift();
     console.log(Object.keys(io.sockets.adapter.rooms).length);
 
     console.log('Closed Connection :(');

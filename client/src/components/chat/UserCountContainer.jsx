@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import User from './User.jsx';
 class UserCountContainer extends Component {
 
+  // constructor(){
+  //   super();
+  //   this.state = {
+  //     users: 0
+  //   }
+  // }
+  //
+  // componentWillMount(){
+  //   console.log('component did mount');
+  //   this.props.actions.updateUsers('bob');
+  // }
 
   render() {
     const { chat } = this.props;

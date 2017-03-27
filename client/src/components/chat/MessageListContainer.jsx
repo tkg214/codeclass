@@ -11,7 +11,7 @@ class MessageListContainer extends Component {
 
           console.log(message);
           return <Message key={message.timestamp} content={message.content}/>
-        })} */}
+        })} 
       </div>
     )
   }

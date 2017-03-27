@@ -19,6 +19,7 @@ class MessageComposeContainer extends Component {
           onKeyUp={this._onKeyUp.bind(this)}
           value={this.state.input}
           onChange={this._handleChange.bind(this)}
+          maxLength="500"
           />
         <button onClick={this._handleSubmit.bind(this)} className="btn btn-default btn-sm chatbar-button">Send</button>
       </div>
