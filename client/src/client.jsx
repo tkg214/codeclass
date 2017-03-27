@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
+import './app';
 
 const app = document.getElementById('react-root');
 

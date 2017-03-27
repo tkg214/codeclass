@@ -22,14 +22,15 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
+    // Prevent looking for rooms/mode-mode.js or rooms/theme-theme as html
+    // if (!roomControls.language || !roomControls.userSettings.theme) return null;
     return (
       <div className='editor-container'>
         <AceEditor
           className ='editor'
           mode={roomControls.language}
           theme={roomControls.userSettings.theme}
-          name="blah2"
-          fontSize={10}
+          fontSize={30}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
@@ -42,6 +43,18 @@ class EditorContainer extends Component {
   _onChange(newValue) {
     this.props.actions.updateEditorValues(newValue)
   }
+}
+
+EditorContainer.propTypes = {
+  roomControls: React.PropTypes.shape({
+    language: React.PropTypes.string.isRequired,
+    isEditorLocked: React.PropTypes.bool.isRequired,
+    userSettings: React.PropTypes.shape({
+      theme: React.PropTypes.string.isRequired
+    })
+  }),
+  editor: React.PropTypes.string,
+  actions: React.PropTypes.object
 }
 
 export default EditorContainer;

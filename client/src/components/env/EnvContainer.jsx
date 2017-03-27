@@ -35,7 +35,9 @@ class EnvContainer extends Component {
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
           }
         </div>
-        <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
+        {roomControls.language &&
+          <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
+        }
         <Terminal terminal={this.props.terminal}/>
       </div>
     )

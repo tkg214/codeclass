@@ -17,13 +17,13 @@ const initialState = {
   }],
   isScrolled: true,
   language: '',
-  userSettings: [{
+  userSettings: {
     theme: '',
     mode: '',
     tabSize: 2,
     defaultValue: '',
     isReadOnly: false
-  }]
+  }
 }
 
 export default function reducer(state=initialState, action) {
