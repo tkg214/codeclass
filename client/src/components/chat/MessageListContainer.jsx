@@ -8,9 +8,10 @@ class MessageListContainer extends Component {
     return (
       <div className="message-list-container">
         {chat.messages.map( (message) => {
+
           console.log(message);
-          return <Message key={message.id} content={message.content}/>
-        })}
+          return <Message key={message.timestamp} content={message.content}/>
+        })} */}
       </div>
     )
   }
