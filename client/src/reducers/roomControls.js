@@ -1,5 +1,6 @@
 //TODO normalize this
 const initialState = {
+  isChatVisible: true,
   isAuthorized: true,
   isEditorLocked: true,
   isChatLocked: true,
@@ -49,6 +50,9 @@ export default function reducer(state=initialState, action) {
     }
     case 'CHANGE_EDITOR_THEME': {
       return {...state, userSettings: action.payload.userSettings}
+    }
+    case 'TOGGLE_CHAT_CONTAINER': {
+      return {...state, isChatVisible: action.payload.isChatVisible}
     }
     default: return state;
   }

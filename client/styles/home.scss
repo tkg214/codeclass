@@ -6,6 +6,14 @@ button.btn {
   border-radius: 0%;
 }
 
+.hide {
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
+}
+
 .env-container {
   flex: 7.5;
 }
