@@ -7,10 +7,10 @@ class MessageListContainer extends Component {
     const { chat } = this.props;
     return (
       <div className="message-list-container well">
-        {chat.messages.map( (message) => {
+        {/* {chat.messages.map( (message) => {
           console.log(message);
-          return <Message key={message.id} content={message.content}/>
-        })}
+          return <Message key={message.timestamp} content={message.content}/>
+        })} */}
       </div>
     )
   }

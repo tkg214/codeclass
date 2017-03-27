@@ -22,7 +22,7 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-    if (!roomControls.theme || !roomControls.mode ) return <div></div>;
+    // if (!roomControls.theme || !roomControls.mode ) return <div></div>;
     // {Number(roomControls.userSettings.fontSize)}
     // {roomControls.userSettings.theme}
 

@@ -11,13 +11,13 @@ import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
+import './app';
 
 const app = document.getElementById('react-root');
 
 // Instantiate socket and use socket as middleware in redux flow
 // See ./socketMiddleware.js for middleware
 const room = window.location.href;
-console.log(room)
 const socket = io();
 socket.emit('join', room)
 
