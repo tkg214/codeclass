@@ -185,8 +185,8 @@ server.listen(3000, () =>
 
 
 let temporaryUserStorage = [];
-// socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
 io.on('connection', (socket) => {
+  socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
 
   socket.on('join', (room) => {
     socket.join(room)
@@ -199,6 +199,7 @@ io.on('connection', (socket) => {
           editorValue: data.rows[0].content,
           language: data.rows[0].language_id
         }
+        console.log(roomData);
         knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.url_string = ?', room)
         .then((data) => {
           roomData.messages = data.rows
