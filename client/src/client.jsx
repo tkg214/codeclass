@@ -1,8 +1,5 @@
 // Application entry point
 
-// Load application styles
-require('../styles/application.scss');
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

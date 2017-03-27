@@ -23,7 +23,7 @@ app.use(knexLogger(knex));
 
 //Sass middleware
 app.use("/styles", sass({
-  src: __dirname + "/../client/styles",
+  src: __dirname + "/scss",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
@@ -107,6 +107,7 @@ app.get('/auth/github/callback',
   // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
+  console.log(req.headers);
   req.session.returnTo = req.path;
   res.redirect('/login');
 }
