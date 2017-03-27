@@ -12,7 +12,7 @@ class ChatContainer extends Component {
 
   render() {
 
-    const { chat, roomControls } = this.props
+    const { chat, roomControls } = this.props;
 
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
     let visibility = roomControls.isChatVisible ? 'show' : 'hide'
@@ -25,7 +25,7 @@ class ChatContainer extends Component {
           >{chatToggleButton}
         </button>
         <div className='chat-container' className={visibility}>
-          <UserCountContainer chat={chat}/>
+          <UserCountContainer chat={chat} actions={this.props.actions}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions}/>
         </div>

@@ -177,9 +177,9 @@ io.on('connection', (socket) => {
   socket.on('join', (room) => {
     console.log('New Connection :)');
     console.log(room);
-    console.log(Object.keys(io.sockets.adapter.rooms).length);
+    // console.log(Object.keys(io.sockets.adapter.rooms).length);
     socket.join(room)
-    socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
+    // socket.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
     let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
     socket.emit('action', action);
 
@@ -212,6 +212,7 @@ io.on('connection', (socket) => {
           break;
         }
         case 'UPDATE_USERS_ONLINE': {
+          console.log("UPDATED  USERS ONLINE");
           socket.broadcast.emit('action', action);
           break;
         }
@@ -220,7 +221,7 @@ io.on('connection', (socket) => {
 
   });
   socket.on('disconnect', () => {
-    socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
+    // socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
     console.log(Object.keys(io.sockets.adapter.rooms).length);
 
     console.log('Closed Connection :(');

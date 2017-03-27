@@ -14,7 +14,7 @@ export function sendMessage(content){
     })
   }
 }
-export function updateUsers(user){
+export function updateUsers(usersOnline){
   return dispatch => {
     dispatch({
       type: 'UPDATE_USERS_ONLINE',
@@ -25,7 +25,7 @@ export function updateUsers(user){
         // classroom_id will be passed down from iniitial state.
         // classroom_id: 2,
         id: Date.now(),
-        user
+        usersOnline
       }
     })
   }
