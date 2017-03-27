@@ -18,19 +18,9 @@ $(function() {
     $('.editor').css('width', wh + 'wh');
   }
 
-  function setOtherHeight(){
-    const oh = $('.chat-container').height();
-    const evh = ((oh - e) / oh) * 100 - 0.1;
-    const mvh = ((oh - m) / oh) * 100 - 0.1;
-    $('.message-list-container').css('height', mvh + 'vh');
-    $('.editor').css('height', evh + 'vh');
-  }
-
   $(document).ready(setHeight)
   $(window).resize(setHeight);
   $(document).ready(setWidth);
   $(window).resize(setWidth);
-  // $(document).ready(setOtherHeight);
-  // $(window).resize(setOtherHeight);
 
 });

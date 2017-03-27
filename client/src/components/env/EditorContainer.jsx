@@ -22,10 +22,10 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-
-    console.log(this.props)
+    if (!roomControls.theme || !roomControls.mode ) return <div></div>;
     // {Number(roomControls.userSettings.fontSize)}
     // {roomControls.userSettings.theme}
+
     return (
       <div className='editor-container'>
         <AceEditor
