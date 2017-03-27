@@ -16,7 +16,7 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          <GistContainer/>
+          <GistContainer actions={this.props.actions} gist={this.props.gist}/>
           <div className="btn-group">
             <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
@@ -69,7 +69,8 @@ function mapStateToProps(state) {
   return {
     editor: state.editor,
     roomControls: state.roomControls,
-    terminal: state.terminal
+    terminal: state.terminal,
+    gist: state.gist
    }
 }
 

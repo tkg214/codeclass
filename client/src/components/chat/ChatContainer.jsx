@@ -11,22 +11,39 @@ import MessageComposeContainer from './MessageComposeContainer.jsx';
 class ChatContainer extends Component {
 
   render() {
-    let { chat } = this.props;
+
+    const { chat, roomControls } = this.props
+
+    let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
+    let visibility = roomControls.isChatVisible ? 'show' : 'hide'
 
     return (
-      <div className='chat-container'>
-        <ChatHeader />
-        <UserCountContainer chat={chat} />
-        <MessageListContainer chat={chat}/>
-        <MessageComposeContainer actions={this.props.actions}/>
+      <div>
+        <button
+          className="btn btn-default btn-sm chat-toggle-button"
+          onClick={this._handleClick.bind(this)}
+          >{chatToggleButton}
+        </button>
+        <div className='chat-container' className={visibility}>
+          <UserCountContainer chat={chat}/>
+          <MessageListContainer chat={chat}/>
+          <MessageComposeContainer actions={this.props.actions}/>
+        </div>
       </div>
     )
   }
+
+  _handleClick(e) {
+    e.preventDefault();
+    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible)
+  }
+
 }
 
 function mapStateToProps(state) {
   return {
-    chat: state.chat
+    chat: state.chat,
+    roomControls: state.roomControls
    }
 }
 

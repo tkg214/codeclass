@@ -3,16 +3,18 @@ room: {
   isEditorLocked: boolean,
   isChatLocked: boolean,
   editorValue: string,
-  terminalValue: string,
-  usersOnline: {
+  usersOnline: {[
+    id: number,
     name: string,
     avatarURL: string
-  },
-  messages: {
+  ]},
+  messages: {[
+    id: number,
     content: string,
     name: string,
+    avatarURL: string,
     timestamp: number
-  },
+  ]},
   isScrolled: boolean //to autoscroll to bottom,
   language: string,
   userSettings: {

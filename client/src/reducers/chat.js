@@ -11,6 +11,7 @@ export default function reducer(state ={
       break;
     }
     case 'UPDATE_USERS_ONLINE': {
+      console.log('users received', action.payload);
 
       return {...state, usersOnline: action.payload}
       break;

@@ -14,7 +14,6 @@ export function sendMessage(content){
     })
   }
 }
-
 export function updateUsers(user){
   return dispatch => {
     dispatch({
@@ -27,6 +26,16 @@ export function updateUsers(user){
         // classroom_id: 2,
         id: Date.now(),
         user
+      }
+    })
+  }
+}
+export function toggleChatContainer(isChatVisible){
+  return dispatch => {
+    dispatch({
+      type: 'TOGGLE_CHAT_CONTAINER',
+      payload: {
+        isChatVisible: isChatVisible ? false : true
       }
     })
   }

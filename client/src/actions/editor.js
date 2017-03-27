@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export function updateEditorValues(val) {
   return dispatch => {
     dispatch({
@@ -48,7 +49,7 @@ export function executeCode(code) {
       dispatch({type: 'EXECUTE_CODE_ERR', meta: {remote: true},  payload: error});
     });
   }
-}    
+}
 
 export function changeEditorTheme(theme) {
   return dispatch => {
@@ -58,8 +59,32 @@ export function changeEditorTheme(theme) {
       payload: {
         userSettings: {
           theme
-        }
-      }
+        }}
     })
+  }
+}
+
+export function saveToGist(gistName) {
+  return dispatch => {
+    dispatch({
+      type: 'GIST_SAVED',
+      payload: {
+        isGistSaved: true
+      }});
+    // axios.post(ENTER API, {
+    //   // ENTER DETAILS
+    // }).then( (response) => {
+    //   dispatch({
+    //     type: 'GIST_SAVED',
+    //     payload: {
+    //       isGistSaved: true
+    //     }});
+    // }).catch( (error) => {
+    //   dispatch({
+    //     type: 'GIST_ERROR',
+    //     payload: {
+    //       isGistSaved: false
+    //     }});
+    // });
   }
 }
