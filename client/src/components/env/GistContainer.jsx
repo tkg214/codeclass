@@ -13,18 +13,21 @@ class GistContainer extends Component {
     const { gist } = this.props;
 
     return (
-      <div className='form-group gist-container'>
-        <div className='input-group'>
+      <div className='col-lg-6'>
+        <div className='input-group gist-container'>
           <input
             type='text'
             placeholder='Enter Gist Name'
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
-            className='form-control'/>
-          <button
-            className='btn btn-primary btn-sm gist-button'
-            onClick={this._handleClick.bind(this)}
-            type='button'>Save</button>
+            className='form-control input-sm'/>
+          <span className='input-group-btn'>
+            <button
+              className='btn btn-primary btn-sm gist-button'
+              onClick={this._handleClick.bind(this)}
+              type='button'>Save
+            </button>
+          </span>
         </div>
       </div>
     )

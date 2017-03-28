@@ -14,36 +14,44 @@ class EnvContainer extends Component {
     let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
     const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal']
     const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+
+    // TODO change dropdown menu buttons to work for entire
+
     return (
       <div className='env-container'>
-        <div className='env-nav-container'>
+        <div className='env-nav-container row'>
           <GistContainer actions={this.props.actions} gist={this.props.gist} language={roomControls.language} editor={editor.editorValue}/>
-          <div className="btn-group">
-            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
-            <ul className="dropdown-menu">
-              {themes.map((theme, i) => {
-                return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
-              })}
-            </ul>
+          <div className='col-lg-6'>
+            <div className='env-nav-controls'>
+              <div className="btn-group env-btn btn btn-primary btn-sm">
+                <a className="dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
+                <ul className="dropdown-menu">
+                  {themes.map((theme, i) => {
+                    return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
+                  })}
+                </ul>
+              </div>
+              <div className="btn-group env-btn btn btn-primary btn-sm">
+                <a className="dropdown-toggle" data-toggle="dropdown">Font Size<span className="caret"></span></a>
+                <ul className="dropdown-menu">
+                  {fontSizes.map((fontSize, i) => {
+                    return <li key={i}><a onClick={this._onFontSizeChangeClick.bind(this)}>{fontSize}</a></li>
+                  })}
+                </ul>
+              </div>
+              {roomControls.isAuthorized &&
+                <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'>{chatButton}</button>
+              }
+              {roomControls.isAuthorized &&
+                <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'>{editorButton}</button>
+              }
+              {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
+                <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'>Run</button>
+              }
+            </div>
           </div>
-          <div className="btn-group">
-            <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Font Size<span className="caret"></span></a>
-            <ul className="dropdown-menu">
-              {fontSizes.map((fontSize, i) => {
-                return <li key={i}><a onClick={this._onFontSizeChangeClick.bind(this)}>{fontSize}</a></li>
-              })}
-            </ul>
-          </div>
-          {roomControls.isAuthorized &&
-            <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm'>{chatButton}</button>
-          }
-          {roomControls.isAuthorized &&
-            <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm'>{editorButton}</button>
-          }
-          {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
-            <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
-          }
         </div>
+
         <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
         <Terminal terminal={this.props.terminal}/>
       </div>

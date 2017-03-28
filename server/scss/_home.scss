@@ -22,10 +22,11 @@ button.btn {
  flex: 7.5;
 }
 
-.terminal{
-  overflow-y: scroll;
+.editor-container {
+  margin: 0 1em;
 }
 
-.gist-button{
-  display: inline-block;
+.terminal {
+  overflow-y: scroll;
+  margin: 0 1em;
 }
