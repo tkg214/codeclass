@@ -319,43 +319,48 @@ io.on('connection', (socket) => {
       console.log('Action received on server: ', action);
       switch(action.type) {
       case 'UPDATE_EDITOR_VALUES': {
-        // if user = authorized user, then emit the action
-        knex('edits')
-          .insert({
-            classroom_id: action.payload.roomID,
-            content: action.payload.editorValue
-          })
-          .then(() => {
-            socket.broadcast.to(action.room).emit('action', action);
-          });
-        break;
-      }
-      case 'INSERT_EDITOR_VALUES': {
-        // TODO if user is owner, then insert into db
+        if (roomOwnerID === clientData.id) {
+          knex('edits')
+            .insert({
+              classroom_id: action.payload.roomID,
+              content: action.payload.editorValue
+            })
+            .then(() => {
+              socket.broadcast.to(action.room).emit('action', action);
+            });
+          break;
+        }
         break;
       }
       case 'TOGGLE_EDITOR_LOCK': {
-        // TODO create knex edit that updates editorLocked in classroom table based on classroom_id
-        knex('classrooms')
-          .where({id: action.payload.roomID})
-          .update({editorLocked: action.payload.isEditorLocked})
-          .then(() => {
-            socket.broadcast.to(action.room).emit('action', action);
-          });
+        if (roomOwnerID === clientData.id) {
+          knex('classrooms')
+            .where({id: action.payload.roomID})
+            .update({editorLocked: action.payload.isEditorLocked})
+            .then(() => {
+              socket.broadcast.to(action.room).emit('action', action);
+            });
+          break;
+        }
         break;
       }
       case 'TOGGLE_CHAT_LOCK': {
-        // TODO create knex edit that updates chatLocked in clasroom table based on classroom_id
-        knex('classrooms')
-          .where({id: action.payload.roomID})
-          .update({chatLocked: action.payload.isChatLocked})
-          .then(() => {
-            socket.broadcast.to(action.room).emit('action', action);
-          });
+        if (roomOwnerID === clientData.id) {
+          knex('classrooms')
+            .where({id: action.payload.roomID})
+            .update({chatLocked: action.payload.isChatLocked})
+            .then(() => {
+              socket.broadcast.to(action.room).emit('action', action);
+            });
+          break;
+        }
         break;
       }
       case 'EXECUTE_CODE' : {
-        socket.broadcast.to(action.room).emit('action', action);
+        if (roomOwnerID === clientData.id) {
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
         break;
       }
       case 'SEND_OUTGOING_MESSAGE': {
