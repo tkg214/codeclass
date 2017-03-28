@@ -5,13 +5,11 @@ const initialState = {
   isEditorLocked: true,
   isChatLocked: true,
   language: '',
-  userSettings: [{
+  userSettings: {
     theme: '',
-    mode: '',
     fontSize: 10,
     tabSize: 2,
-    isReadOnly: false
-  }]
+  }
 }
 
 export default function reducer(state=initialState, action) {

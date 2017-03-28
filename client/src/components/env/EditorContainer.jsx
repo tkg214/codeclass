@@ -22,18 +22,15 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-    // if (!roomControls.theme || !roomControls.mode ) return <div></div>;
-    // {Number(roomControls.userSettings.fontSize)}
-    // {roomControls.userSettings.theme}
 
     return (
       <div className='editor-container'>
         <AceEditor
           className ='editor'
           mode={roomControls.language}
-          theme='monokai'
+          theme={roomControls.userSettings.theme}
           name="blah2"
-          fontSize='12'
+          fontSize={Number(roomControls.userSettings.fontSize)}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
