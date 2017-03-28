@@ -42,7 +42,7 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue)
+    this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
   }
 }
 

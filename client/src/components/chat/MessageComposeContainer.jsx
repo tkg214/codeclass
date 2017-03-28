@@ -33,14 +33,14 @@ class MessageComposeContainer extends Component {
   _onKeyUp(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
-      this.props.actions.sendMessage(e.target.value);
+      this.props.actions.sendMessage(e.target.value, this.props.roomID);
       this.setState({input: ''});
     }
   }
 
   _handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.sendMessage(this.state.input);
+    this.props.actions.sendMessage(this.state.input, this.props.roomID);
     this.setState({input: ''})
   }
 }

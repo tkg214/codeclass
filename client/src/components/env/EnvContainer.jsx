@@ -44,9 +44,7 @@ class EnvContainer extends Component {
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
           }
         </div>
-        {roomControls.language &&
-          <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
-        }
+        <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
         <Terminal terminal={this.props.terminal}/>
       </div>
     )
@@ -67,12 +65,12 @@ class EnvContainer extends Component {
 
   _onEditorToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleEditorLock(this.props.roomControls.isEditorLocked);
+    this.props.actions.toggleEditorLock(this.props.roomControls.isEditorLocked, this.props.roomControls.roomID);
   }
 
   _onChatToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked);
+    this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked, this.props.roomControls.roomID);
   }
 
   _onRunClick(e) {
