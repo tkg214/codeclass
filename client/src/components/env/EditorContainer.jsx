@@ -24,7 +24,6 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-    console.log(roomControls.language)
 
     return (
       <div className='editor-container'>
@@ -32,7 +31,6 @@ class EditorContainer extends Component {
           className ='editor'
           mode={roomControls.language}
           theme={roomControls.userSettings.theme}
-          name="blah2"
           fontSize={Number(roomControls.userSettings.fontSize)}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
@@ -46,6 +44,18 @@ class EditorContainer extends Component {
   _onChange(newValue) {
     this.props.actions.updateEditorValues(newValue)
   }
+}
+
+EditorContainer.propTypes = {
+  roomControls: React.PropTypes.shape({
+    language: React.PropTypes.string.isRequired,
+    isEditorLocked: React.PropTypes.bool.isRequired,
+    userSettings: React.PropTypes.shape({
+      theme: React.PropTypes.string.isRequired
+    })
+  }),
+  editor: React.PropTypes.string,
+  actions: React.PropTypes.object
 }
 
 export default EditorContainer;
