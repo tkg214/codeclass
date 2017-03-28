@@ -155,9 +155,9 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-// app.get('/api/temproom', (req, res) => {
-//   res.render('show_room');
-// });
+app.get('/users/:id', (req, res) => {
+  res.render('show_user');
+});
 
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
