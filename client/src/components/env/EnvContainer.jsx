@@ -16,7 +16,7 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          <GistContainer actions={this.props.actions} gist={this.props.gist}/>
+          <GistContainer actions={this.props.actions} gist={this.props.gist} language={roomControls.language} editor={editor.editorValue}/>
           <div className="btn-group">
             <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">

@@ -64,27 +64,26 @@ export function changeEditorTheme(theme) {
   }
 }
 
-export function saveToGist(gistName) {
+export function saveToGist(gistName, content, language) {
   return dispatch => {
-    dispatch({
-      type: 'GIST_SAVED',
-      payload: {
-        isGistSaved: true
+    axios.post('/savegist', {
+      data: {
+        title: gistName,
+        content,
+        language
+      }
+    }).then((response) => {
+      dispatch({
+        type: 'GIST_SAVED',
+        payload: {
+          isGistSaved: true
       }});
-    // axios.post(ENTER API, {
-    //   // ENTER DETAILS
-    // }).then( (response) => {
-    //   dispatch({
-    //     type: 'GIST_SAVED',
-    //     payload: {
-    //       isGistSaved: true
-    //     }});
-    // }).catch( (error) => {
-    //   dispatch({
-    //     type: 'GIST_ERROR',
-    //     payload: {
-    //       isGistSaved: false
-    //     }});
-    // });
+    }).catch((error) => {
+      dispatch({
+        type: 'GIST_ERROR',
+        payload: {
+          isGistSaved: false
+      }});
+    });
   }
 }
