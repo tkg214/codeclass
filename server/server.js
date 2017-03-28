@@ -287,7 +287,7 @@ io.on('connection', (socket) => {
     console.log(clients);
     console.log("action payload content: ", clients[room]);
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
-    // socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    
     
     //Get current state of room on new connection 
     dbHelper.setRoomData(room, clientData, broadcastRoomData);
@@ -372,10 +372,6 @@ io.on('connection', (socket) => {
             })
           break;
         }
-        // case 'UPDATE_USERS_ONLINE': {
-        //   socket.broadcast.to(action.room).emit('action', action);
-        //   // break;
-        // }
       }
     });
 
@@ -396,11 +392,4 @@ io.on('connection', (socket) => {
 
   });
 
-
-  // socket.on('disconnect', () => {
-  
-  //   console.log('Closed Connection :(');
-  //   console.log("who left: ", socket.id);
-  //   // socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room].length}});
-  // });
 });
