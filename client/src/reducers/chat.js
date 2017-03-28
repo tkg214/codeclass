@@ -1,4 +1,4 @@
-export default function reducer(state ={
+export default function reducer(state = {
   messages: [],
   usersOnline: []
 }, action) {
@@ -10,7 +10,10 @@ export default function reducer(state ={
     }
     case 'SEND_OUTGOING_MESSAGE': {
       const newMessages = [...state.messages];
-      newMessages.push(action.payload);
+      console.log('TESTING',...state.messages);
+      console.log('payload', action.payload);
+      newMessages[0].push(action.payload);
+      console.log(newMessages);
       return {...state, messages: newMessages}
       break;
     }

@@ -16,7 +16,6 @@ class UserCountContainer extends Component {
 
   render() {
     const { chat } = this.props;
-    console.log('object', chat)
     return (
       <div className='user-count-container'>
         <ul className='user-list'>

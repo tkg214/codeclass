@@ -24,7 +24,7 @@ export function updateUsers(usersOnline){
         // user_id: 1,
         // classroom_id will be passed down from iniitial state.
         // classroom_id: 2,
-        id: Date.now(),
+        timestamp: Date.now(),
         usersOnline
       }
     })
