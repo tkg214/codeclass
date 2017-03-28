@@ -16,17 +16,15 @@ import axios from 'axios';
 
 const app = document.getElementById('react-root');
 
-// Instantiate socket and use socket as middleware in redux flow
-// See ./socketMiddleware.js for middleware
+//Get room url
 const room = window.location.pathname.split('/');
 
+//Get request to get token for current user
 axios.get('/api/get_token')
   .then(function (response) {
     if (response.error) {
       throw new Error(response.error);
     }
-    console.log("client.jsx ajax response: ", response);
-    console.log(response.data.token);
     connect_socket(response.data.token);
   })
   .catch(function (error) {
@@ -35,7 +33,6 @@ axios.get('/api/get_token')
 
 
 function connect_socket(token) {
-  console.log("opening socket now");
   const socket = io.connect('http://127.0.0.1:8080/rooms/', {
     query: 'token=' + token
   });

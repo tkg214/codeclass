@@ -19,7 +19,7 @@ const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const knexLogger    = require('knex-logger');
 
-//JSON WEB TOKEN 
+//JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
 const jwtSecret     = process.env.TOKEN_SECRET || "development";
 const socketioJwt   = require('socketio-jwt');
@@ -155,6 +155,7 @@ app.get('/logout', function(req, res) {
 //   res.render('show_room');
 // });
 
+//Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
   const user = req.user;
   if (user) {
@@ -163,15 +164,12 @@ app.get('/api/get_token', (req, res) => {
       github_login: user.github_login,
       github_avatar: user.github_avatar
     };
-  // we are sending the profile in the token
     const token = jwt.sign(profile, jwtSecret, { expiresIn: 60*60*5 });
-    console.log("getting a json token");
     res.json({token: token});
   }
 })
 
 app.get('/rooms/:key', (req, res) => {
-  console.log("req.user in /rooms/:key: ", req.user);
   res.render('show_room');
 });
 
@@ -195,8 +193,6 @@ app.post('/rooms', (req, res) => {
       });
 });
 
-// For socket io
-// TODO use middleware here to authenticate user on each socket request
 
 //Temp data
 const roomData = require('./temp-room-api-data.json');
@@ -204,16 +200,20 @@ server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
 
+/*  SOCKET  SERVER  STARTS  HERE */
+
+//Middleware to authenticate all connections
 io.use(socketioJwt.authorize({
   secret: jwtSecret,
   handshake: true
 }));
 
 io.on('connection', (socket) => {
-  console.log(socket.decoded_token.github_login, ' connected');
+  //socket.decoded_token contains user data in token
+  const clientData = socket.decoded_token;
+  console.log(socket.decoded_token.github_login, ' is now connected');
 
   socket.on('join', (room) => {
-    console.log(room);
     socket.join(room)
     let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
     socket.emit('action', action);
