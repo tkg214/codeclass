@@ -188,7 +188,7 @@ io.on('connection', (socket) => {
 
   let temporaryUserStorage = [];
   socket.on('join', (room) => {
-    socket.broadcast.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
+    socket.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
     socket.join(room);
     console.log(room);
     // TODO create knex query that returns everything in temp-room-api-data

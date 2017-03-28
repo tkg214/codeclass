@@ -4,7 +4,7 @@ class Message extends Component {
   render () {
     return (
       <div className="bubble">
-        UserName<br></br>
+        {this.props.name}<br></br>
         {this.props.content}
       </div>
     )
