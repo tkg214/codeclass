@@ -11,6 +11,9 @@
   <body>
     <section id="user-classroms">
       <p>Wassup</p>
+      <% classrooms.forEach((classroom) => { %>
+        <p><%= classroom.topic %></p>
+      <% }) %>
     </section>
     <% include ./partials/_scripts.ejs %>
   </body>
