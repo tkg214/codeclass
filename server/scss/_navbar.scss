@@ -3,7 +3,8 @@
   z-index: 1000;
 }
 
-.navbar {
+nav {
+  background-color: tomato;
   height: $nav-height;
 }
 
@@ -14,11 +15,6 @@
 .navbar-container {
     position: relative;
     z-index: 1000;
-}
-
-.navbar {
-    height: $nav-height;
-    margin-bottom: 0;
 }
 //
 .waffle {

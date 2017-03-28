@@ -1,9 +1,13 @@
 main {
   display: flex;
+  background-color: brown;
 }
 
 button.btn {
   border-radius: 0%;
+}
+.editor {
+  height: $editor-height;
 }
 
 .hide {
@@ -15,15 +19,8 @@ button.btn {
 }
 
 .env-container {
-  flex: 7.5;
-}
-
-.env-nav-container {
-
-}
-
-.form-group.gist-container{
-
+ background-color: rgb(190, 212, 85);
+ flex: 7.5;
 }
 
 .terminal{

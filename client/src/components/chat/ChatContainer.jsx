@@ -11,20 +11,21 @@ import MessageComposeContainer from './MessageComposeContainer.jsx';
 class ChatContainer extends Component {
 
   render() {
+
     const { chat, roomControls } = this.props
     console.log(chat);
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
     let visibility = roomControls.isChatVisible ? 'show' : 'hide'
 
     return (
-      <div>
+      <div className={'chat-container ' }>
         <button
           className="btn btn-default btn-sm chat-toggle-button"
           onClick={this._handleClick.bind(this)}
           >{chatToggleButton}
         </button>
-        <div className='chat-container' className={visibility}>
-          <UserCountContainer />
+      <div>
+          <UserCountContainer chat={chat} actions={this.props.actions}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions}/>
         </div>

@@ -183,10 +183,14 @@ server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
 
+
 io.on('connection', (socket) => {
 
+  let temporaryUserStorage = [];
   socket.on('join', (room) => {
-    socket.join(room)
+    socket.broadcast.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
+    socket.join(room);
+    console.log(room);
     // TODO create knex query that returns everything in temp-room-api-data
     knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
       .then((data) => {
@@ -275,11 +279,22 @@ io.on('connection', (socket) => {
           // TODO create knex
           break;
         }
+        case 'UPDATE_USERS_ONLINE': {
+          console.log("UPDATED  USERS ONLINE");
+          // temporaryUserStorage.push(action.payload.usersOnline);
+          action.payload.usersOnline = 10;
+          socket.broadcast.to(action.room).emit('action', action);
+          break;
+        }
       }
     });
 
   });
-  socket.on('close', () => {
+  socket.on('disconnect', () => {
+    // socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
+    temporaryUserStorage.shift();
+    console.log(Object.keys(io.sockets.adapter.rooms).length);
+
     console.log('Closed Connection :(');
   });
 });
