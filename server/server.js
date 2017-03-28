@@ -168,10 +168,10 @@ app.get('/api/get_token', (req, res) => {
       github_login: user.github_login,
       github_avatar: user.github_avatar
     };
-    const token = jwt.sign(profile, jwtSecret, { expiresIn: 60*60*5 });
+    const token = jwt.sign(profile, jwtSecret, { expiresIn: 60 * 60 * 5 });
     res.json({token: token});
   }
-})
+});
 
 app.get('/rooms/:key', (req, res) => {
   res.render('show_room');
@@ -186,14 +186,14 @@ app.post('/rooms', (req, res) => {
         chatLocked: false,
         user_id: req.user.id,
         //TODO Import sanitizeURL function from module
-        url_string: req.body.topic
+        room_key: req.body.topic
           .replace(/[^a-zA-Z0-9]+/g, '-')
           .replace(/^\-|\-$/g, '')
           .toLowerCase()
       })
-      .returning('url_string')
-      .then((url_string) => {
-        res.redirect(`/rooms/${url_string[0]}`);
+      .returning('room_key')
+      .then((room_key) => {
+        res.redirect(`/rooms/${room_key[0]}`);
       });
 });
 
@@ -279,119 +279,124 @@ io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
     socket.join(room);
-    // TODO create knex query that returns everything in temp-room-api-data
-    knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
-      .then((data) => {
+    knex('classrooms')
+      .leftOuterJoin('edits', 'classrooms.id', 'edits.classroom_id')
+      .select('classrooms.*', 'edits.content')
+      .where('room_key', room)
+      .orderBy('edits.created_at', 'desc')
+      .limit(1)
+      .then(data => {
         let roomData = {
-          roomOwnerID: data.rows[0].user_id,
-          isEditorLocked: data.rows[0].editorLocked,
-          isChatLocked: data.rows[0].chatLocked,
-          editorValue: data.rows[0].content,
-          language: data.rows[0].language_id,
-          roomID: data.rows[0].id
-        }
-        knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.url_string = ?', room)
+          roomOwnerID: data[0].user_id,
+          isEditorLocked: data[0].editorLocked,
+          isChatLocked: data[0].chatLocked,
+          editorValue: data[0].content,
+          language: data[0].language_id,
+          roomID: data[0].id
+        };
+        console.log(roomData);
+        knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
         .then((data) => {
-          roomData.messages = data.rows
+          roomData.messages = data.rows;
           knex.raw('select * from users where github_login= ?', clientData.github_login)
           .then((data) => {
             roomData.userSettings = {
               theme: data.rows[0].editor_theme,
               fontSize: data.rows[0].font_size
-            }
+            };
             roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
-            delete roomData.roomOwnerID
-
-            let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-            socket.emit('action', action)
+            delete roomData.roomOwnerID;
+            let action = {type: 'UPDATE_ROOM_STATE', payload: roomData};
+            socket.emit('action', action);
             // TODO emit to all in room the updated list of users
-          })
-        })
-    })
+          });
+        });
+      });
     // IF user is not owner and updates editor, what should happen?
     // Autherization for room owner on editor locked and editor chat updates
 
     socket.on('action', (action) => {
-      console.log('Action received on server: ', action)
+      console.log('Action received on server: ', action);
       switch(action.type) {
-        case 'UPDATE_EDITOR_VALUES': {
-          // if user = authorized user, then emit the action
-          knex('edits')
-            .insert({
-              classroom_id: action.payload.roomID,
-              content: action.payload.editorValue
-            })
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
-          break;
-        }
-        case 'INSERT_EDITOR_VALUES': {
-          // TODO if user is owner, then insert into db
-        }
-        case 'TOGGLE_EDITOR_LOCK': {
-          // TODO create knex edit that updates editorLocked in classroom table based on classroom_id
-          knex('classrooms')
-            .where({id: action.payload.roomID})
-            .update({editorLocked: action.payload.isEditorLocked})
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
-          break;
-        }
-        case 'TOGGLE_CHAT_LOCK': {
-          // TODO create knex edit that updates chatLocked in clasroom table based on classroom_id
-          knex('classrooms')
-            .where({id: action.payload.roomID})
-            .update({chatLocked: action.payload.isChatLocked})
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
-          break;
-        }
-        case 'EXECUTE_CODE' : {
-          socket.broadcast.to(action.room).emit('action', action);
-          break;
-        }
-        case 'SEND_OUTGOING_MESSAGE': {
-          // TODO create knex insert that inserts into messages table based on classroom_id and user
-          knex('messages')
-            .insert({
-              user_id: clientData.id,
-              content: action.payload.content,
-              classroom_id: action.payload.roomID
-            })
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
-          break;
-        }
-        case 'CHANGE_EDITOR_THEME': {
-          // TODO do we need to do a promise here?
-          knex('users')
-            .where({id: clientData.id})
-            .update({editor_theme: action.payload.userSettings.theme})
-            .then(() => {
-              socket.emit('action', action);
-            })
-          break;
-        }
-        case 'CHANGE_FONT_SIZE': {
-          knex('users')
-            .where({id: clientData.id})
-            .update({font_size: action.payload.userSettings.fontSize})
-            .then(() => {
-              socket.emit('action', action);
-            })
-          break;
-        }
-        case 'UPDATE_USERS_ONLINE': {
-          console.log("UPDATED  USERS ONLINE");
-          // temporaryUserStorage.push(action.payload.usersOnline);
-          action.payload.usersOnline = 10;
-          socket.broadcast.to(action.room).emit('action', action);
-          break;
-        }
+      case 'UPDATE_EDITOR_VALUES': {
+        // if user = authorized user, then emit the action
+        knex('edits')
+          .insert({
+            classroom_id: action.payload.roomID,
+            content: action.payload.editorValue
+          })
+          .then(() => {
+            socket.broadcast.to(action.room).emit('action', action);
+          });
+        break;
+      }
+      case 'INSERT_EDITOR_VALUES': {
+        // TODO if user is owner, then insert into db
+        break;
+      }
+      case 'TOGGLE_EDITOR_LOCK': {
+        // TODO create knex edit that updates editorLocked in classroom table based on classroom_id
+        knex('classrooms')
+          .where({id: action.payload.roomID})
+          .update({editorLocked: action.payload.isEditorLocked})
+          .then(() => {
+            socket.broadcast.to(action.room).emit('action', action);
+          });
+        break;
+      }
+      case 'TOGGLE_CHAT_LOCK': {
+        // TODO create knex edit that updates chatLocked in clasroom table based on classroom_id
+        knex('classrooms')
+          .where({id: action.payload.roomID})
+          .update({chatLocked: action.payload.isChatLocked})
+          .then(() => {
+            socket.broadcast.to(action.room).emit('action', action);
+          });
+        break;
+      }
+      case 'EXECUTE_CODE' : {
+        socket.broadcast.to(action.room).emit('action', action);
+        break;
+      }
+      case 'SEND_OUTGOING_MESSAGE': {
+        // TODO create knex insert that inserts into messages table based on classroom_id and user
+        knex('messages')
+          .insert({
+            user_id: clientData.id,
+            content: action.payload.content,
+            classroom_id: action.payload.roomID
+          })
+          .then(() => {
+            socket.broadcast.to(action.room).emit('action', action);
+          });
+        break;
+      }
+      case 'CHANGE_EDITOR_THEME': {
+        // TODO do we need to do a promise here?
+        knex('users')
+          .where({id: clientData.id})
+          .update({editor_theme: action.payload.userSettings.theme})
+          .then(() => {
+            socket.emit('action', action);
+          });
+        break;
+      }
+      case 'CHANGE_FONT_SIZE': {
+        knex('users')
+          .where({id: clientData.id})
+          .update({font_size: action.payload.userSettings.fontSize})
+          .then(() => {
+            socket.emit('action', action);
+          });
+        break;
+      }
+      case 'UPDATE_USERS_ONLINE': {
+        console.log("UPDATED  USERS ONLINE");
+        // temporaryUserStorage.push(action.payload.usersOnline);
+        action.payload.usersOnline = 10;
+        socket.broadcast.to(action.room).emit('action', action);
+        break;
+      }
       }
     });
 
