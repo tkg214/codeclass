@@ -24,7 +24,11 @@ const jwt           = require('jsonwebtoken');
 const jwtSecret     = process.env.TOKEN_SECRET || "development";
 const socketioJwt   = require('socketio-jwt');
 
+//Modules
+const dbHelper      = require('./data-helpers')(knex);
+
 app.use(knexLogger(knex));
+app.set('view engine', 'ejs');
 
 //Sass middleware
 app.use("/styles", sass({
@@ -248,8 +252,6 @@ app.post('/savegist', function (req, res) {
   });
 });
 
-// For socket io
-// TODO use middleware here to authenticate user on each socket request
 
 //Temp data
 // const roomData = require('./temp-room-api-data.json');
@@ -265,52 +267,35 @@ io.use(socketioJwt.authorize({
   handshake: true
 }));
 
+//in-memory storage of people in classroom
+const clients = {};
+
 io.on('connection', (socket) => {
   //socket.decoded_token contains user data in token
   const clientData = socket.decoded_token;
-  console.log(clientData.github_login, ' is now connected');
-
-  // id: user.id,
-  // github_login: user.github_login,
-  // github_avatar: user.github_avatar
-
-  let temporaryUserStorage = [];
-
+ 
+  //When user joins a room
   socket.on('join', (room) => {
-    socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
-    socket.join(room);
-    // TODO create knex query that returns everything in temp-room-api-data
-    knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
-      .then((data) => {
-        let roomData = {
-          roomOwnerID: data.rows[0].user_id,
-          isEditorLocked: data.rows[0].editorLocked,
-          isChatLocked: data.rows[0].chatLocked,
-          editorValue: data.rows[0].content,
-          language: data.rows[0].language_id,
-          roomID: data.rows[0].id
-        }
-        knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.url_string = ?', room)
-        .then((data) => {
-          roomData.messages = data.rows
-          knex.raw('select * from users where github_login= ?', clientData.github_login)
-          .then((data) => {
-            roomData.userSettings = {
-              theme: data.rows[0].editor_theme,
-              fontSize: data.rows[0].font_size
-            }
-            roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
-            delete roomData.roomOwnerID
 
-            let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-            socket.emit('action', action)
-            // TODO emit to all in room the updated list of users
-          })
-        })
-    })
-    // IF user is not owner and updates editor, what should happen?
+    socket.join(room);   
+    console.log(`${clientData.github_login} is now connected to room ${room}`);
+
+    if (!clients.hasOwnProperty(room)) {
+      clients[room] = [];
+    }
+    clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
+    console.log(clients);
+    socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    
+    //Get current state of room on new connection 
+    dbHelper.setRoomData(room, clientData, broadcastRoomData);
+    function broadcastRoomData(roomData) {
+      let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
+      socket.emit('action', action)
+    }
+    
+    
     // Autherization for room owner on editor locked and editor chat updates
-
     socket.on('action', (action) => {
       console.log('Action received on server: ', action)
       switch(action.type) {
@@ -386,21 +371,29 @@ io.on('connection', (socket) => {
           break;
         }
         case 'UPDATE_USERS_ONLINE': {
-          console.log("UPDATED  USERS ONLINE");
-          // temporaryUserStorage.push(action.payload.usersOnline);
-          action.payload.usersOnline = 10;
           socket.broadcast.to(action.room).emit('action', action);
           break;
         }
       }
     });
 
-  });
-  socket.on('disconnect', () => {
-    // socket.broadcast.emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: Object.keys(io.sockets.adapter.rooms).length}})
-    temporaryUserStorage.shift();
+    socket.on('disconnect', () => {
+      console.log('Closed Connection :(');
+      const clientIndex = clients[room].findIndex(client => client.id === socket.id);
+      if (clientIndex > -1) {
+        clients[room].splice(clientIndex, 1);
+      }
+      console.log(clients);
+      socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    });
 
-    console.log('Closed Connection :(');
-    // TODO emit to all in room updated list
   });
+
+
+  // socket.on('disconnect', () => {
+  
+  //   console.log('Closed Connection :(');
+  //   console.log("who left: ", socket.id);
+  //   // socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room].length}});
+  // });
 });
