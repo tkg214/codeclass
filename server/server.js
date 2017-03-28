@@ -220,7 +220,7 @@ io.on('connection', (socket) => {
   let temporaryUserStorage = [];
 
   socket.on('join', (room) => {
-    socket.broadcast.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
+    socket.to(room).emit('action',{type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: 10}});
     socket.join(room);
     // TODO create knex query that returns everything in temp-room-api-data
     knex.raw('select c.*, e.content from classrooms c join edits e on c.id=e.classroom_id where c.url_string = ? order by e.created_at desc limit 1', room)
