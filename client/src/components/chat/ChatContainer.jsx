@@ -15,11 +15,11 @@ class ChatContainer extends Component {
     const { chat, roomControls } = this.props
     console.log(chat.messages);
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
-    let visibility = roomControls.isChatVisible ? 'slide-out-right' : 'slide-in-right'
+    let visibility = roomControls.isChatVisible ? 'close' : 'show'
     console.log(visibility);
 
     return (
-      <div className={'chat-container ' +  visibility }>
+      <div className={'chat-container ' + visibility }>
         <button
           className="btn btn-default btn-sm chat-toggle-button"
           onClick={this._handleClick.bind(this)}
@@ -28,7 +28,7 @@ class ChatContainer extends Component {
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions}/>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer actions={this.props.actions}/>
+          <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </div>
       </div>
     )

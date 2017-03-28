@@ -3,6 +3,8 @@ import AceEditor from 'react-ace';
 import brace from 'brace';
 
 import 'brace/mode/javascript';
+import 'brace/mode/ruby';
+import 'brace/mode/python';
 import 'brace/theme/monokai';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
@@ -22,18 +24,14 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-    // if (!roomControls.theme || !roomControls.mode ) return <div></div>;
-    // {Number(roomControls.userSettings.fontSize)}
-    // {roomControls.userSettings.theme}
 
     return (
       <div className='editor-container'>
         <AceEditor
           className ='editor'
           mode={roomControls.language}
-          theme='monokai'
-          name="blah2"
-          fontSize='12'
+          theme={roomControls.userSettings.theme}
+          fontSize={Number(roomControls.userSettings.fontSize)}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
@@ -44,8 +42,20 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue)
+    this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
   }
+}
+
+EditorContainer.propTypes = {
+  roomControls: React.PropTypes.shape({
+    language: React.PropTypes.string.isRequired,
+    isEditorLocked: React.PropTypes.bool.isRequired,
+    userSettings: React.PropTypes.shape({
+      theme: React.PropTypes.string.isRequired
+    })
+  }),
+  editor: React.PropTypes.string,
+  actions: React.PropTypes.object
 }
 
 export default EditorContainer;
