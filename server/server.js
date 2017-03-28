@@ -325,7 +325,6 @@ io.on('connection', (socket) => {
             })
           break;
         }
-<<<<<<< HEAD
         case 'UPDATE_USERS_ONLINE': {
           console.log("UPDATED  USERS ONLINE");
           // temporaryUserStorage.push(action.payload.usersOnline);
@@ -333,7 +332,6 @@ io.on('connection', (socket) => {
           socket.broadcast.to(action.room).emit('action', action);
           break;
         }
-=======
         // case 'RECEIVE_TOKEN' : {
         //   console.log("token received");
         //   break;
@@ -342,7 +340,6 @@ io.on('connection', (socket) => {
         //   console.log("token error");
         //   break;
         // }
->>>>>>> CC-17/socket-to-db
       }
     });
 

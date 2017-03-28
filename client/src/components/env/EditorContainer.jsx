@@ -3,6 +3,8 @@ import AceEditor from 'react-ace';
 import brace from 'brace';
 
 import 'brace/mode/javascript';
+import 'brace/mode/ruby';
+import 'brace/mode/python';
 import 'brace/theme/monokai';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
@@ -22,6 +24,7 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
+    console.log(roomControls.language)
 
     return (
       <div className='editor-container'>
