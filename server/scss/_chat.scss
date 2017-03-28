@@ -50,14 +50,15 @@
 .user-avatar{
   border-radius: 50%;
   border: 2px solid #FFF;
-  display: inline-block;;
   margin: 5px;
+  margin-left: auto;
   height: 60px;
   white-space: nowrap;
+  z-index: 20;
   // max-height: 70px;
   // max-width: 70px;
 }
-.user-count-container {
+.bubble::after .user-count-container {
   height: 100px;
   white-space: nowrap;
   overflow:scroll;
@@ -73,12 +74,14 @@
   background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
   background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
   background: linear-gradient(top, #dedede 0%, #ffffff 100%);
-  margin: 20px;
+  margin: 10px;
+  margin-bottom: 0px;
   width: 90%;
   padding: 5px;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px ;
   border-radius: 10px;
+
 }
 
 .bubble::after {
@@ -92,6 +95,7 @@
   border-width: 10px;
   border-style: solid;
   border-color: transparent #FFF #FFF transparent;
+
 }
 
 
