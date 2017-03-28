@@ -14,6 +14,7 @@ import socketMiddleware from './socketMiddleware.js';
 import './helpers/resize.js';
 import axios from 'axios';
 
+
 const app = document.getElementById('react-root');
 
 //Get room url

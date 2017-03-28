@@ -17,7 +17,7 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          <GistContainer actions={this.props.actions} gist={this.props.gist}/>
+          <GistContainer actions={this.props.actions} gist={this.props.gist} language={roomControls.language} editor={editor.editorValue}/>
           <div className="btn-group">
             <a className="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
@@ -44,7 +44,9 @@ class EnvContainer extends Component {
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm'>Run</button>
           }
         </div>
-        <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
+        {roomControls.language &&
+          <EditorContainer actions={this.props.actions} editor={editor.editorValue} roomControls={roomControls}/>
+        }
         <Terminal terminal={this.props.terminal}/>
       </div>
     )
