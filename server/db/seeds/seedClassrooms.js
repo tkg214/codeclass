@@ -11,7 +11,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: false,
           chatLocked: false,
           user_id: 5,
-          url_string: 'http://localhost:8080/rooms/javascript101'
+          url_string: 'http://127.0.0.1:8080/rooms/javascript101'
         }),
         knex('classrooms').insert({
           topic: 'Magic for Beginners: Ruby',
@@ -19,7 +19,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: false,
           chatLocked: false,
           user_id: 5,
-          url_string: 'http://localhost:8080/rooms/magicforbeginnersruby'
+          url_string: 'http://127.0.0.1:8080/rooms/magicforbeginnersruby'
         }),
         knex('classrooms').insert({
           topic: 'Python',
@@ -27,7 +27,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: false,
           chatLocked: false,
           user_id: 5,
-          url_string: 'http://localhost:8080/rooms/python'
+          url_string: 'http://127.0.0.1:8080/rooms/python'
         }),
         knex('classrooms').insert({
           topic: 'Editor Locked:JS',
@@ -35,7 +35,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: true,
           chatLocked: false,
           user_id: 2,
-          url_string: 'http://localhost:8080/rooms/js'
+          url_string: 'http://127.0.0.1:8080/rooms/js'
         }),
         knex('classrooms').insert({
           topic: 'Chat Locked: Ruby',
@@ -43,7 +43,7 @@ exports.seed = function(knex, Promise) {
           editorLocked: false,
           chatLocked: true,
           user_id: 3,
-          url_string: 'http://localhost:8080/rooms/ruby'
+          url_string: 'http://127.0.0.1:8080/rooms/ruby'
         }),
         knex('classrooms').insert({
           topic: 'Both Locked: Python',
