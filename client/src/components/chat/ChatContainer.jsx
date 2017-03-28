@@ -26,7 +26,7 @@ class ChatContainer extends Component {
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions}/>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer actions={this.props.actions}/>
+          <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </div>
       </div>
     )

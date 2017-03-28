@@ -1,15 +1,11 @@
-export function sendMessage(content){
+export function sendMessage(content, roomID){
   return dispatch => {
     dispatch({
       type: 'SEND_OUTGOING_MESSAGE',
       meta: {remote: true},
       payload: {
-        // user_id will be passed from req.session.user.id
-        // user_id: 1,
-        // classroom_id will be passed down from iniitial state.
-        // classroom_id: 2,
-        id: Date.now(),
-        content
+        content,
+        roomID
       }
     })
   }

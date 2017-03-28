@@ -4,22 +4,22 @@ const initialState = {
   isAuthorized: true,
   isEditorLocked: true,
   isChatLocked: true,
-  language: '',
   userSettings: {
-    theme: '',
-    fontSize: 10,
     tabSize: 2,
-  }
+    theme: 'monokai',
+    fontSize: 12,
+  },
+  language: 'markdown'
 }
 
 export default function reducer(state=initialState, action) {
   switch (action.type) {
     case 'UPDATE_ROOM_STATE': {
       return {...state,
+        roomID: action.payload.roomID,
         isAuthorized: action.payload.isAuthorized,
         isEditorLocked: action.payload.isEditorLocked,
         isChatLocked: action.payload.isChatLocked,
-        isScrolled: action.payload.isScrolled,
         language: action.payload.language,
         userSettings: action.payload.userSettings
       }

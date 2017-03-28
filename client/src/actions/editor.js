@@ -1,35 +1,38 @@
 import axios from 'axios';
 
-export function updateEditorValues(val) {
+export function updateEditorValues(editorValue, roomID) {
   return dispatch => {
     dispatch({
       type: 'UPDATE_EDITOR_VALUES',
       meta: {remote: true},
       payload: {
-        editorValue: val
+        roomID,
+        editorValue
       }
     })
   }
 }
 
-export function toggleEditorLock(isEditorLocked) {
+export function toggleEditorLock(isEditorLocked, roomID) {
   return dispatch => {
     dispatch({
       type: 'TOGGLE_EDITOR_LOCK',
       meta: {remote: true},
       payload: {
+        roomID,
         isEditorLocked: isEditorLocked ? false : true
       }
     })
   }
 }
 
-export function toggleChatLock(isChatLocked) {
+export function toggleChatLock(isChatLocked, roomID) {
   return dispatch => {
     dispatch({
       type: 'TOGGLE_CHAT_LOCK',
       meta: {remote: true},
       payload: {
+        roomID,
         isChatLocked: isChatLocked ? false : true
       }
     })
