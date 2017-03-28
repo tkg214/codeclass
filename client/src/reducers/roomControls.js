@@ -6,7 +6,10 @@ const initialState = {
   isChatLocked: true,
   userSettings: {
     tabSize: 2,
-  }
+    theme: 'monokai',
+    fontSize: 12,
+  },
+  language: 'markdown'
 }
 
 export default function reducer(state=initialState, action) {
