@@ -1,4 +1,4 @@
-export default function reducer(state ={
+export default function reducer(state = {
   messages: [],
   usersOnline: []
 }, action) {
