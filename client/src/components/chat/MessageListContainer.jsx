@@ -5,12 +5,12 @@ class MessageListContainer extends Component {
 
   render() {
     const { chat } = this.props;
-    console.log(chat.messages);
+    // console.log(chat.messages);
+    // console.log(message);
     return (
       <div className="message-list-container">
         {chat.messages.map( (message) => {
 
-          console.log(message);
           return <Message key={message.timestamp} content={message.content}/>
         })}
       </div>
