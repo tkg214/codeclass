@@ -32,19 +32,25 @@ axios.get('/api/get_token')
     console.log(error);
   });
 
+//Open socket connection to authenticated users
 function connect_socket(token) {
+  if (!token) {
+    console.log("no token");
+  }
   const socket = io.connect( {
     query: 'token=' + token
   });
 
-  socket.on('connect', function () {
+  socket.on('connect', function() {
     console.log('authenticated');
-  }).on('disconnect', function () {
+    socket.emit('join', room);
+  }).on('disconnect', function() {
     console.log('disconnected');
+    
   });
 
-  socket.emit('join', room)
 
+  
   const createStoreWithMiddleware = applyMiddleware(
     socketMiddleware(socket), thunk, logger()
   )(createStore);
