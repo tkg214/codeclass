@@ -297,8 +297,8 @@ io.on('connection', (socket) => {
         console.log(roomData);
         knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
         .then((data) => {
-          roomData.messages = data.rows;
-          knex.raw('select * from users where github_login= ?', clientData.github_login)
+          roomData.messages = data.rows
+          knex.raw('select * from users where id= ?', clientData.id)
           .then((data) => {
             roomData.userSettings = {
               theme: data.rows[0].editor_theme,
