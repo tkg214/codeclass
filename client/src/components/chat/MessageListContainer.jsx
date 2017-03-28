@@ -5,9 +5,7 @@ class MessageListContainer extends Component {
 
   render() {
     const { chat } = this.props;
-    console.log('THIS IS CHAT', chat);
     let mostRecentMessages = chat.messages[0] || [];
-    console.log(mostRecentMessages);
     return (
       <div className="message-list-container">
         {mostRecentMessages.map( (message) => {

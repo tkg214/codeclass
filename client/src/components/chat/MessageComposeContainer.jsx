@@ -11,7 +11,7 @@ class MessageComposeContainer extends Component {
 
   render() {
     const { roomControls } = this.props;
-    console.log(roomControls.isChatLocked)
+    // console.log(roomControls.isChatLocked)
     return (
       <div className='message-compose-container'>
         {!roomControls.isChatLocked &&

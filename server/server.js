@@ -285,7 +285,9 @@ io.on('connection', (socket) => {
     }
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
     console.log(clients);
-    socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    console.log("action payload content: ", clients[room]);
+    io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    // socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
     
     //Get current state of room on new connection 
     dbHelper.setRoomData(room, clientData, broadcastRoomData);
@@ -370,10 +372,10 @@ io.on('connection', (socket) => {
             })
           break;
         }
-        case 'UPDATE_USERS_ONLINE': {
-          socket.broadcast.to(action.room).emit('action', action);
-          break;
-        }
+        // case 'UPDATE_USERS_ONLINE': {
+        //   socket.broadcast.to(action.room).emit('action', action);
+        //   // break;
+        // }
       }
     });
 
@@ -382,6 +384,11 @@ io.on('connection', (socket) => {
       const clientIndex = clients[room].findIndex(client => client.id === socket.id);
       if (clientIndex > -1) {
         clients[room].splice(clientIndex, 1);
+      }
+
+      //If no users are in room, delete property from memory
+      if (clients[room].length === 0) {
+        delete clients[room];
       }
       console.log(clients);
       socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
