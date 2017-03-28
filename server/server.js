@@ -19,6 +19,11 @@ const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const knexLogger    = require('knex-logger');
 
+//JSON WEB TOKEN 
+const jwt           = require('jsonwebtoken');
+const jwtSecret     = process.env.TOKEN_SECRET || "development";
+const socketioJwt   = require('socketio-jwt');
+
 app.use(knexLogger(knex));
 
 //Sass middleware
@@ -146,12 +151,27 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-app.get('/api/temproom', (req, res) => {
-  res.render('show_room');
-});
+// app.get('/api/temproom', (req, res) => {
+//   res.render('show_room');
+// });
+
+app.get('/api/get_token', (req, res) => {
+  const user = req.user;
+  if (user) {
+    const profile = {
+      id: user.id,
+      github_login: user.github_login,
+      github_avatar: user.github_avatar
+    };
+  // we are sending the profile in the token
+    const token = jwt.sign(profile, jwtSecret, { expiresIn: 60*60*5 });
+    console.log("getting a json token");
+    res.json({token: token});
+  }
+})
 
 app.get('/rooms/:key', (req, res) => {
-  // console.log(req.user);
+  console.log("req.user in /rooms/:key: ", req.user);
   res.render('show_room');
 });
 
@@ -184,8 +204,13 @@ server.listen(3000, () =>
   console.log("App listening on port 3000")
 );
 
+io.use(socketioJwt.authorize({
+  secret: jwtSecret,
+  handshake: true
+}));
 
 io.on('connection', (socket) => {
+  console.log(socket.decoded_token.github_login, ' connected');
 
   socket.on('join', (room) => {
     console.log(room);
@@ -219,6 +244,14 @@ io.on('connection', (socket) => {
         }
         case 'CHANGE_EDITOR_THEME': {
           socket.emit('action', action);
+          break;
+        }
+        case 'RECEIVE_TOKEN' : {
+          console.log("token received");
+          break;
+        }
+        case 'RECEIVE_TOKEN_ERROR' : {
+          console.log("token error");
           break;
         }
       }
