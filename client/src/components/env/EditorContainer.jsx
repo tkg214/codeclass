@@ -5,6 +5,10 @@ import brace from 'brace';
 import 'brace/mode/javascript';
 import 'brace/mode/ruby';
 import 'brace/mode/python';
+
+//As a default setting
+import 'brace/mode/markdown';
+
 import 'brace/theme/monokai';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
@@ -24,7 +28,6 @@ class EditorContainer extends Component {
 
   render() {
     const { editor, roomControls } = this.props;
-
     return (
       <div className='editor-container'>
         <AceEditor
