@@ -24,7 +24,7 @@ class ChatContainer extends Component {
           <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 
         </button>
-      <div>
+        <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
