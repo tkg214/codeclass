@@ -13,14 +13,16 @@ button.btn {
   visibility: hidden;
 }
 
-
+.sm {
+  font-size: 0.65em;
+}
 
 .env-container {
  flex-grow: 3;
 }
 
 .editor-container {
-  margin: 0 1em;
+  margin: 0 $space;
 }
 
 .terminal {

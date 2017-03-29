@@ -10,8 +10,6 @@ class EnvContainer extends Component {
 
   render() {
     let { editor, roomControls } = this.props;
-    let editorButton = roomControls.isEditorLocked ? 'Editor Locked' : 'Editor Unlocked'
-    let chatButton = roomControls.isChatLocked ? 'Chat Locked' : 'Chat Unlocked'
     const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal']
     const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
 
@@ -24,7 +22,7 @@ class EnvContainer extends Component {
           <div className='col-lg-6'>
             <div className='env-nav-controls'>
               <div className="btn-group env-btn btn btn-primary btn-sm">
-                <a className="dropdown-toggle" data-toggle="dropdown">Theme<span className="caret"></span></a>
+                <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
                 <ul className="dropdown-menu">
                   {themes.map((theme, i) => {
                     return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
@@ -32,21 +30,27 @@ class EnvContainer extends Component {
                 </ul>
               </div>
               <div className="btn-group env-btn btn btn-primary btn-sm">
-                <a className="dropdown-toggle" data-toggle="dropdown">Font Size<span className="caret"></span></a>
+                <a className="dropdown-toggle" data-toggle="dropdown">A<span className='sm'> A</span>&ensp;Font Size<span className="caret"></span></a>
                 <ul className="dropdown-menu">
                   {fontSizes.map((fontSize, i) => {
                     return <li key={i}><a onClick={this._onFontSizeChangeClick.bind(this)}>{fontSize}</a></li>
                   })}
                 </ul>
               </div>
-              {roomControls.isAuthorized &&
-                <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'>{chatButton}</button>
+              {roomControls.isAuthorized && roomControls.isChatLocked &&
+                <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
               }
-              {roomControls.isAuthorized &&
-                <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'>{editorButton}</button>
+              {roomControls.isAuthorized && !roomControls.isChatLocked &&
+                <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
+              }
+              {roomControls.isAuthorized && roomControls.isEditorLocked &&
+                <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
+              }
+              {roomControls.isAuthorized && !roomControls.isEditorLocked &&
+                <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
               }
               {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
-                <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'>Run</button>
+                <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
               }
             </div>
           </div>
