@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import User from './User.jsx';
 class UserCountContainer extends Component {
 
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //     users: 0
-  //   }
-  // }
-  //
-  // componentWillMount(){
-  //   console.log('component did mount');
-  //   this.props.actions.updateUsers('bob');
-  // }
+
+  // {chat.usersOnline.map( (user) => {
+  //   return <User key={user.id} content={user.usersOnline}/></h1>
+  // })}
 
   render() {
     const { users } = this.props;

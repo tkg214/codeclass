@@ -159,9 +159,15 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-// app.get('/api/temproom', (req, res) => {
-//   res.render('show_room');
-// });
+app.get('/users/:username', (req, res) => {
+  const classrooms = knex('classrooms').where('user_id', 'in',
+    knex('users').where('github_login', req.params.username).select('id').limit(1)
+  );
+  const user = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
+  Promise.all([classrooms, user]).then((profileData) => {
+    res.render('show_user', {classrooms: profileData[0], user: (profileData[1])[0]});
+  });
+});
 
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
@@ -273,30 +279,33 @@ const clients = {};
 io.on('connection', (socket) => {
   //socket.decoded_token contains user data in token
   const clientData = socket.decoded_token;
- 
+  let roomOwnerID;
   //When user joins a room
   socket.on('join', (room) => {
-    socket.join(room);   
+    socket.join(room);
     console.log(`${clientData.github_login} is now connected to room ${room}`);
 
     if (!clients.hasOwnProperty(room)) {
       clients[room] = [];
     }
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
-    console.log(clients);
     console.log("action payload content: ", clients[room]);
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
-    
-    
-    //Get current state of room on new connection 
+
+
+    //Get current state of room on new connection
     dbHelper.setRoomData(room, clientData, broadcastRoomData);
     function broadcastRoomData(roomData) {
+      roomOwnerID = roomData.roomOwnerID;
+      delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       socket.emit('action', action)
     }
-    
+
     socket.on('action', (action) => {
       console.log('Action received on server: ', action);
+      console.log('roomOwnerID: ', roomOwnerID)
+      console.log('clientData: ', clientData.id)
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
           if (roomOwnerID === clientData.id) {

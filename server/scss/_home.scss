@@ -13,13 +13,10 @@ button.btn {
   visibility: hidden;
 }
 
-.show {
-  visibility: visible;
-}
+
 
 .env-container {
- // background-color: rgb(190, 212, 85);
- flex: 7.5;
+ flex-grow: 3;
 }
 
 .editor-container {
