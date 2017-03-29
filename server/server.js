@@ -137,7 +137,7 @@ app.use(function(req, res, next){
   //Define source of bundle.js depending on environment
   let bundleSrc;
   if(req.user) {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.ENV === 'production') {
       bundleSrc = '/bundle.js';
     } else {
       bundleSrc = 'http://localhost:8080/build/bundle.js';
