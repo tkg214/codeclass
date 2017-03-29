@@ -137,6 +137,16 @@ function ensureAuthenticated(req, res, next) {
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.user = req.user;
+  //Define source of bundle.js depending on environment
+  let bundleSrc;
+  if(req.user) {
+    if (process.env.NODE_ENV === 'production') {
+      bundleSrc = '/bundle.js';
+    } else {
+      bundleSrc = 'http://localhost:8080/build/bundle.js';
+    }
+    res.locals.bundleSrc = bundleSrc;
+  }
   next();
 });
 
@@ -189,7 +199,7 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
       if(results.length === 0) {
         res.redirect('/'); //should redirect to a 404 error page
         return;
-      } 
+      }
       res.render('show_room');
     });
 });
