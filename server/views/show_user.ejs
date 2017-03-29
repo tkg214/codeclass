@@ -9,13 +9,26 @@
     <% include ./partials/_nav.ejs %>
   </header>
   <body>
-    <section id="user-classroms">
-      <p>Wassup, <%= user.github_login %></p>
-      <img src=<%= user.github_avatar %> />
-      <p><% user.github_name %></p>
+    <section id="user-classroms" class="container">
+      <div class="jumbotron clearfix">
+        <div class="col-xs-2 col-sm-3">
+          <img class="img-circle img-responsive" src=<%= user.github_avatar %> />
+        </div>
+        <div class="col-xs-10 col-sm-9">
+          <h1><%= user.github_login %></h1>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2> My Classrooms </h2>
+        </div>
       <% classrooms.forEach((classroom) => { %>
-        <p><%= classroom.topic %></p>
+        <div class="panel-body">
+          <a  class="pull-left" href="/rooms/<%= classroom.room_key %>"><%= classroom.topic %></a>
+          <p class="pull-right"><%= classroom.created_at %></p>
+        </div>
       <% }) %>
+      </div>
     </section>
     <% include ./partials/_scripts.ejs %>
   </body>
