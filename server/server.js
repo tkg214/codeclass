@@ -172,10 +172,10 @@ app.get('/api/get_token', (req, res) => {
       github_login: user.github_login,
       github_avatar: user.github_avatar
     };
-    const token = jwt.sign(profile, jwtSecret, { expiresIn: 60*60*5 });
+    const token = jwt.sign(profile, jwtSecret, { expiresIn: 60 * 60 * 5 });
     res.json({token: token});
   }
-})
+});
 
 app.get('/rooms/:key', (req, res) => {
   res.render('show_room');
@@ -190,14 +190,14 @@ app.post('/rooms', (req, res) => {
         chatLocked: false,
         user_id: req.user.id,
         //TODO Import sanitizeURL function from module
-        url_string: req.body.topic
+        room_key: req.body.topic
           .replace(/[^a-zA-Z0-9]+/g, '-')
           .replace(/^\-|\-$/g, '')
           .toLowerCase()
       })
-      .returning('url_string')
-      .then((url_string) => {
-        res.redirect(`/rooms/${url_string[0]}`);
+      .returning('room_key')
+      .then((room_key) => {
+        res.redirect(`/rooms/${room_key[0]}`);
       });
 });
 
@@ -276,7 +276,6 @@ io.on('connection', (socket) => {
  
   //When user joins a room
   socket.on('join', (room) => {
-
     socket.join(room);   
     console.log(`${clientData.github_login} is now connected to room ${room}`);
 
@@ -296,48 +295,52 @@ io.on('connection', (socket) => {
       socket.emit('action', action)
     }
     
-    
-    // Autherization for room owner on editor locked and editor chat updates
     socket.on('action', (action) => {
-      console.log('Action received on server: ', action)
+      console.log('Action received on server: ', action);
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
-          // if user = authorized user, then emit the action
-          knex('edits')
-            .insert({
-              classroom_id: action.payload.roomID,
-              content: action.payload.editorValue
-            })
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
+          if (roomOwnerID === clientData.id) {
+            knex('edits')
+              .insert({
+                classroom_id: action.payload.roomID,
+                content: action.payload.editorValue
+              })
+              .then(() => {
+                socket.broadcast.to(action.room).emit('action', action);
+              });
+            break;
+          }
           break;
         }
-        case 'INSERT_EDITOR_VALUES': {
-          // TODO if user is owner, then insert into db
-        }
         case 'TOGGLE_EDITOR_LOCK': {
-          // TODO create knex edit that updates editorLocked in classroom table based on classroom_id
-          knex('classrooms')
-            .where({id: action.payload.roomID})
-            .update({editorLocked: action.payload.isEditorLocked})
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
+          if (roomOwnerID === clientData.id) {
+            knex('classrooms')
+              .where({id: action.payload.roomID})
+              .update({editorLocked: action.payload.isEditorLocked})
+              .then(() => {
+                socket.broadcast.to(action.room).emit('action', action);
+              });
+            break;
+          }
           break;
         }
         case 'TOGGLE_CHAT_LOCK': {
-          // TODO create knex edit that updates chatLocked in clasroom table based on classroom_id
-          knex('classrooms')
-            .where({id: action.payload.roomID})
-            .update({chatLocked: action.payload.isChatLocked})
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            })
+          if (roomOwnerID === clientData.id) {
+            knex('classrooms')
+              .where({id: action.payload.roomID})
+              .update({chatLocked: action.payload.isChatLocked})
+              .then(() => {
+                socket.broadcast.to(action.room).emit('action', action);
+              });
+            break;
+          }
           break;
         }
         case 'EXECUTE_CODE' : {
-          socket.broadcast.to(action.room).emit('action', action);
+          if (roomOwnerID === clientData.id) {
+            socket.broadcast.to(action.room).emit('action', action);
+            break;
+          }
           break;
         }
         case 'SEND_OUTGOING_MESSAGE': {
@@ -350,7 +353,7 @@ io.on('connection', (socket) => {
             })
             .then(() => {
               socket.broadcast.to(action.room).emit('action', action);
-            })
+            });
           break;
         }
         case 'CHANGE_EDITOR_THEME': {
@@ -360,7 +363,7 @@ io.on('connection', (socket) => {
             .update({editor_theme: action.payload.userSettings.theme})
             .then(() => {
               socket.emit('action', action);
-            })
+            });
           break;
         }
         case 'CHANGE_FONT_SIZE': {
@@ -369,7 +372,7 @@ io.on('connection', (socket) => {
             .update({font_size: action.payload.userSettings.fontSize})
             .then(() => {
               socket.emit('action', action);
-            })
+            });
           break;
         }
       }

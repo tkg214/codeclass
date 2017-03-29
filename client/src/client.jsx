@@ -17,8 +17,8 @@ import axios from 'axios';
 
 const app = document.getElementById('react-root');
 
-//Get room url
-const room = window.location.href;
+//Get the room_key from a url of thr structure http://host/rooms/:room_key
+const room = window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
 
 //Get request to get token for current user
 axios.get('/api/get_token')
