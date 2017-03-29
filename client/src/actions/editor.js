@@ -1,36 +1,56 @@
-export function updateEditorValues(val) {
+import axios from 'axios';
+
+export function updateEditorValues(editorValue, roomID) {
   return dispatch => {
     dispatch({
       type: 'UPDATE_EDITOR_VALUES',
       meta: {remote: true},
       payload: {
-        editorValue: val
+        roomID,
+        editorValue
       }
     })
   }
 }
 
-export function toggleEditorLock(isEditorLocked) {
+export function toggleEditorLock(isEditorLocked, roomID) {
   return dispatch => {
     dispatch({
       type: 'TOGGLE_EDITOR_LOCK',
       meta: {remote: true},
       payload: {
+        roomID,
         isEditorLocked: isEditorLocked ? false : true
       }
     })
   }
 }
 
-export function toggleChatLock(isChatLocked) {
+export function toggleChatLock(isChatLocked, roomID) {
   return dispatch => {
     dispatch({
       type: 'TOGGLE_CHAT_LOCK',
       meta: {remote: true},
       payload: {
+        roomID,
         isChatLocked: isChatLocked ? false : true
       }
     })
+  }
+}
+
+export function executeCode(code) {
+  return dispatch => {
+    axios.post('http://52.33.39.121/api', {
+      lang : "javascript",
+      code : code
+    })
+    .then(function (response) {
+      dispatch({type: 'EXECUTE_CODE', meta: {remote: true},  payload: response.data});
+    })
+    .catch(function (error) {
+      dispatch({type: 'EXECUTE_CODE_ERR', meta: {remote: true},  payload: error});
+    });
   }
 }
 
@@ -40,9 +60,43 @@ export function changeEditorTheme(theme) {
       type: 'CHANGE_EDITOR_THEME',
       meta: {remote: true},
       payload: {
-        userSettings: {
-          theme
-        }
+        userSettings: {theme}
+      }
+    })
+  }
+}
+
+export function saveToGist(gistName, content, language) {
+  return dispatch => {
+    axios.post('/savegist', {
+      data: {
+        title: gistName,
+        content,
+        language
+      }
+    }).then((response) => {
+      dispatch({
+        type: 'GIST_SAVED',
+        payload: {
+          isGistSaved: true
+      }});
+    }).catch((error) => {
+      dispatch({
+        type: 'GIST_ERROR',
+        payload: {
+          isGistSaved: false
+      }});
+    });
+  }
+}
+
+export function changeFontSize(fontSize) {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_FONT_SIZE',
+      meta: {remote: true},
+      payload: {
+        userSettings: {fontSize}
       }
     })
   }

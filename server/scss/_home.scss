@@ -1,0 +1,29 @@
+main {
+  display: flex;
+}
+
+button.btn {
+  border-radius: 0%;
+}
+.editor {
+  height: $editor-height;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+
+
+.env-container {
+ flex-grow: 3;
+}
+
+.editor-container {
+  margin: 0 1em;
+}
+
+.terminal {
+  overflow-y: scroll;
+  margin: 0 1em;
+}

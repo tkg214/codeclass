@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Navbar from './nav/Navbar.jsx';
 import EnvContainer from './env/EnvContainer.jsx';
 import ChatContainer from './chat/ChatContainer.jsx';
+import ChatBar from './chat/ChatBar.jsx';
 
 class RoomApp extends Component {
 
@@ -12,6 +13,7 @@ class RoomApp extends Component {
       <main>
         <EnvContainer/>
         <ChatContainer/>
+        <ChatBar/>
       </main>
     )
   }

@@ -3,6 +3,12 @@ import AceEditor from 'react-ace';
 import brace from 'brace';
 
 import 'brace/mode/javascript';
+import 'brace/mode/ruby';
+import 'brace/mode/python';
+
+//As a default setting
+import 'brace/mode/markdown';
+
 import 'brace/theme/monokai';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
@@ -28,8 +34,7 @@ class EditorContainer extends Component {
           className ='editor'
           mode={roomControls.language}
           theme={roomControls.userSettings.theme}
-          name="blah2"
-          fontSize={10}
+          fontSize={Number(roomControls.userSettings.fontSize)}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
           value={editor}
@@ -40,8 +45,20 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue)
+    this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
   }
+}
+
+EditorContainer.propTypes = {
+  roomControls: React.PropTypes.shape({
+    language: React.PropTypes.string.isRequired,
+    isEditorLocked: React.PropTypes.bool.isRequired,
+    userSettings: React.PropTypes.shape({
+      theme: React.PropTypes.string.isRequired
+    })
+  }),
+  editor: React.PropTypes.string,
+  actions: React.PropTypes.object
 }
 
 export default EditorContainer;

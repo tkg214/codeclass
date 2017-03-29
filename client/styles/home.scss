@@ -1,42 +1,64 @@
 
-html, body { height: 100%; }
-
-main {
-  display: flex;
-  height: 100%;
-}
-
-
-.env-container {
-  width: 75%;
-  height: calc(100% - $nav-height);
-}
-
-
-
-
-div#blah2{
-  width: 100%!important;
-}
-
-
 button.btn {
   border-radius: 0%;
 }
 
-.editor {
+.hide {
+  visibility: hidden;
 }
 
-.form-group.gist-container{
-  width: 100%;
+.show {
+  visibility: visible;
+}
 
+.env-container {
+ background-color: rgb(190, 212, 85);
+ flex: 7.5;
 }
 
 .terminal{
-  height: 10vh;
   overflow-y: scroll;
 }
 
 .gist-button{
   display: inline-block;
+}
+
+.scale-in-hor-right {
+	-webkit-animation: scale-in-hor-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	-moz-animation: scale-in-hor-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	animation: scale-in-hor-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes scale-in-hor-right {
+  0% {
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+    -webkit-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+    -webkit-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
+    opacity: 1;
+  }
+}
+@keyframes scale-in-hor-right {
+  0% {
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+    -webkit-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+    -webkit-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
+    opacity: 1;
+  }
 }

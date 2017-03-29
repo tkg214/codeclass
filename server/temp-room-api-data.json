@@ -17,19 +17,19 @@
   "messages": [{
     "content": "test message 1",
     "name": "Ken",
-    "timestamp": 1490425034
+    "id": 1490425034
     },{
     "content": "test message 2",
     "name": "Danton",
-    "timestamp": 1490428888
+    "id": 1490428888
   },{
     "content": "test message 3",
     "name": "Sharon",
-    "timestamp": 1490428890
+    "id": 1490428890
     },{
     "content": "test message 4",
     "name": "Chunky",
-    "timestamp": 1490429000
+    "id": 1490429000
   }],
   "isScrolled": true,
   "language": "javascript",
@@ -37,6 +37,7 @@
     "theme": "monokai",
     "mode": "javascript",
     "tabSize": 2,
+    "fontSize": 10,
     "defaultValue": "hello world",
     "isReadOnly": "true"
   }

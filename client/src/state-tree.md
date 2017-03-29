@@ -3,23 +3,24 @@ room: {
   isEditorLocked: boolean,
   isChatLocked: boolean,
   editorValue: string,
-  terminalValue: string,
-  usersOnline: {
+  usersOnline: {[
+    id: number,
     name: string,
     avatarURL: string
-  },
-  messages: {
+  ]},
+  messages: {[
+    id: number,
     content: string,
     name: string,
+    avatarURL: string,
     timestamp: number
-  },
+  ]},
   isScrolled: boolean //to autoscroll to bottom,
   language: string,
   userSettings: {
     theme: string,
+    fontSize: number,
     mode: string, //from language
-    tabSize: number,
-    defaultValue: string, //from editorValue,
-    isReadOnly: boolean //from editorLocked
+    tabSize: number
   }
 }

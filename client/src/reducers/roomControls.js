@@ -1,42 +1,25 @@
 //TODO normalize this
 const initialState = {
+  isChatVisible: false,
   isAuthorized: true,
   isEditorLocked: true,
   isChatLocked: true,
-  editorValue: '',
-  terminalValue: '',
-  usersOnline: [{
-    name: '',
-    avatarURL: ''
-  }],
-  messages: [{
-    content: '',
-    name: '',
-    timestamp: 0
-  }],
-  isScrolled: true,
-  language: '',
-  userSettings: [{
-    theme: '',
-    mode: '',
+  userSettings: {
     tabSize: 2,
-    defaultValue: '',
-    isReadOnly: false
-  }]
+    theme: 'monokai',
+    fontSize: 12,
+  },
+  language: 'markdown'
 }
 
 export default function reducer(state=initialState, action) {
   switch (action.type) {
     case 'UPDATE_ROOM_STATE': {
       return {...state,
+        roomID: action.payload.roomID,
         isAuthorized: action.payload.isAuthorized,
         isEditorLocked: action.payload.isEditorLocked,
         isChatLocked: action.payload.isChatLocked,
-        editorValue: action.payload.editorValue,
-        terminalValue: action.payload.terminalValue,
-        usersOnline: action.payload.usersOnline,
-        messages: action.payload.messages,
-        isScrolled: action.payload.isScrolled,
         language: action.payload.language,
         userSettings: action.payload.userSettings
       }
@@ -48,6 +31,12 @@ export default function reducer(state=initialState, action) {
       return {...state, isChatLocked: action.payload.isChatLocked}
     }
     case 'CHANGE_EDITOR_THEME': {
+      return {...state, userSettings: action.payload.userSettings}
+    }
+    case 'TOGGLE_CHAT_CONTAINER': {
+      return {...state, isChatVisible: action.payload.isChatVisible}
+    }
+    case 'CHANGE_FONT_SIZE': {
       return {...state, userSettings: action.payload.userSettings}
     }
     default: return state;
