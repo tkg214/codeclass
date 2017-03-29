@@ -19,10 +19,11 @@ button.btn {
  flex-grow: 3;
 }
 
-.terminal{
-  overflow-y: scroll;
+.editor-container {
+  margin: 0 1em;
 }
 
-.gist-button{
-  display: inline-block;
+.terminal {
+  overflow-y: scroll;
+  margin: 0 1em;
 }
