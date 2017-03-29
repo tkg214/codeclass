@@ -17,7 +17,13 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
-const knexLogger    = require('knex-logger');
+
+//Only use knexLogger in development
+if (process.env.ENV === 'development') {
+  const knexLogger = require('knex-logger');
+  app.use(knexLogger(knex));
+}
+
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
@@ -27,7 +33,6 @@ const socketioJwt   = require('socketio-jwt');
 //Modules
 const dbHelper      = require('./data-helpers')(knex);
 
-app.use(knexLogger(knex));
 app.set('view engine', 'ejs');
 
 //Sass middleware
