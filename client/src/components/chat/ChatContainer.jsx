@@ -14,7 +14,6 @@ class ChatContainer extends Component {
 
     const { chat, roomControls } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
-    console.log('chat-container', visibility);
 
     return (
       <div className={'chat-container ' + visibility }>
