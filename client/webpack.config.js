@@ -4,13 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   devServer: {
-    host: '0.0.0.0',
-    proxy: {
-      '**': {
-      target: 'http://localhost:3000',
-      secure: false
-      }
-    }
+    host: '0.0.0.0'
   },
   entry: './src/client.jsx',
   output: {
