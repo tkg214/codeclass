@@ -295,6 +295,7 @@ io.on('connection', (socket) => {
     if (!clients.hasOwnProperty(room)) {
       clients[room] = [];
     }
+
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
 
