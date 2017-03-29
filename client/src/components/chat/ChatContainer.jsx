@@ -13,17 +13,16 @@ class ChatContainer extends Component {
   render() {
 
     const { chat, roomControls } = this.props
-    console.log(chat.messages);
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
     let visibility = roomControls.isChatVisible ? 'close' : 'show'
-    console.log(visibility);
 
     return (
       <div className={'chat-container ' + visibility }>
         <button
-          className="btn btn-default btn-sm chat-toggle-button"
-          onClick={this._handleClick.bind(this)}
-          >{chatToggleButton}
+          className="btn btn-info chat-toggle-button"
+          onClick={this._handleClick.bind(this)}>
+          <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+
         </button>
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions}/>

@@ -5,3 +5,4 @@ $env-height: calc(100vh-3em);
 $controller-height: 3em;
 $terminal-height: 200px;
 $editor-height: calc($env-height - $controller-height - $terminal-height);
+$chat-notifcation-bar-width: 50px;
