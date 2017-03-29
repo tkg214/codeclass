@@ -273,30 +273,33 @@ const clients = {};
 io.on('connection', (socket) => {
   //socket.decoded_token contains user data in token
   const clientData = socket.decoded_token;
- 
+  let roomOwnerID;
   //When user joins a room
   socket.on('join', (room) => {
-    socket.join(room);   
+    socket.join(room);
     console.log(`${clientData.github_login} is now connected to room ${room}`);
 
     if (!clients.hasOwnProperty(room)) {
       clients[room] = [];
     }
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
-    console.log(clients);
     console.log("action payload content: ", clients[room]);
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
-    
-    
-    //Get current state of room on new connection 
+
+
+    //Get current state of room on new connection
     dbHelper.setRoomData(room, clientData, broadcastRoomData);
     function broadcastRoomData(roomData) {
+      roomOwnerID = roomData.roomOwnerID;
+      delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       socket.emit('action', action)
     }
-    
+
     socket.on('action', (action) => {
       console.log('Action received on server: ', action);
+      console.log('roomOwnerID: ', roomOwnerID)
+      console.log('clientData: ', clientData.id)
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
           if (roomOwnerID === clientData.id) {

@@ -45,6 +45,7 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
+    console.log('action hit')
     this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
   }
 }
