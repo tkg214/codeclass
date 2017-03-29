@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Code Class</title>
+		<% include ./partials/_head %>
+	</head>
+	<body>
+		<header>
+			<% include ./partials/_nav.ejs %>
+		</header>
+
+		<div class="jumbotron">
+			<h1>Error Page <%= errorcode %></h1>
+			<p> <%= message %> </p>
+  	<p><a class="btn btn-primary btn-lg" href="/rooms" role="button">Learn more</a></p>
+		</div>
+
+	</body>
+	<% include ./partials/_scripts.ejs %>
+</html>
