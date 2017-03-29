@@ -10,7 +10,9 @@
   </header>
   <body>
     <section id="user-classroms">
-      <p>Wassup</p>
+      <p>Wassup, <%= user.github_login %></p>
+      <img src=<%= user.github_avatar %> />
+      <p><% user.github_name %></p>
       <% classrooms.forEach((classroom) => { %>
         <p><%= classroom.topic %></p>
       <% }) %>

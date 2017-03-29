@@ -156,11 +156,13 @@ app.get('/logout', function(req, res) {
 });
 
 app.get('/users/:username', (req, res) => {
-  const subquery = knex('users').where('github_login', req.params.username).select('id');
-  knex('classrooms').where('user_id', 'in', subquery)
-    .then((classrooms) => {
-      res.render('show_user', {classrooms: classrooms});
-    });
+  const classrooms = knex('classrooms').where('user_id', 'in',
+    knex('users').where('github_login', req.params.username).select('id').limit(1)
+  );
+  const user = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
+  Promise.all([classrooms, user]).then((profileData) => {
+    res.render('show_user', {classrooms: profileData[0], user: (profileData[1])[0]});
+  });
 });
 
 //Create token and populate with req.user data. Send back token as json.
