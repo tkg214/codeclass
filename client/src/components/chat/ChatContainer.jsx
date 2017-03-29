@@ -13,8 +13,8 @@ class ChatContainer extends Component {
   render() {
 
     const { chat, roomControls } = this.props
-    let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
-    let visibility = roomControls.isChatVisible ? 'close' : 'show'
+    let visibility = roomControls.isChatVisible ? 'show' : 'close'
+    console.log('chat-container', visibility);
 
     return (
       <div className={'chat-container ' + visibility }>
@@ -35,7 +35,10 @@ class ChatContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible)
+    // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+    this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
+    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+
   }
 
 }

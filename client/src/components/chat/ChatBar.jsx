@@ -7,10 +7,11 @@ class ChatBar extends Component {
 
   render() {
     const { roomControls, chat } = this.props;
-    console.log('room controls', roomControls);
+    let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
+    console.log('chatbar visibility', visibility);
 
     return (
-      <div className="chatNotificationBar">
+      <div className='chatNotificationBar' id= { visibility }>
         <div className="chatNotificationBar-toggle">
           <button
             className="btn btn-info bar-button"
@@ -40,7 +41,9 @@ class ChatBar extends Component {
 
   _handleClick(e){
     e.preventDefault();
-    this.props.actions.toggleChatContainer  (this.props.roomControls.isChatVisible);
+    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+    this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
+
   }
 
 }

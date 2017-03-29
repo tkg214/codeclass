@@ -1,9 +1,15 @@
 .bar-button{
   width: $chat-notifcation-bar-width;
   margin-bottom: 2px;
+  background-color: #546575;
+  border-bottom: 1px solid white;
+}
+.bar-button:active{
+  background-color: #546575;
 }
 
 .chat-container {
+    margin-right: 1em;
     background-color: #b5b5b5;
     color: #FFFFFF;
     float: right;
@@ -13,24 +19,38 @@
     transform: scaleX(1);
     -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transform-origin: right;
 }
 
 .close {
+    margin-right: 0em;
     flex: 0 0 0;
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
     -webkit-transform: translate(50px);
     transform: translate(50px);
-    width: 0;
-    font-size: 15px;
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#notification-close{
+  visibility: hidden;
+  width: 0px;
+  margin-right: 0em;
+  flex: 0 0 0px!important;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  // -webkit-transform: translate(50px);
+  // transform: translate(50px);
 }
 
 .chatNotificationBar {
-    height: inherit;;
-    flex: 0 0 $chat-notifcation-bar-width;
-    flex-direction: column;
+    margin-right: 1em;
+    right: -50;
+    flex: 0 0 50px;
     background: #546575;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    transform-origin: right;
+    -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
     z-index: 999;
 }
 
