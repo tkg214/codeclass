@@ -112,14 +112,8 @@ app.get('/auth/github',
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
   passport.authenticate('github'), function(req, res) {
-    //Use this redirect while proxy is on
-    res.redirect(`http://${req.session.returnHost}${(req.session.returnTo || '/rooms')}`);
-    // Otherwise uncomment following line when proxy off
-    // res.redirect(req.session.returnTo || '/rooms');
-
+    res.redirect(req.session.returnTo || '/rooms');
     delete req.session.returnTo;
-    //Comment out the next line when proxy off
-    delete req.session.returnHost;
   });
 
   // Pass this function to routes that needs to be protected.
@@ -127,8 +121,6 @@ app.get('/auth/github/callback',
   // Otherwise, the user will be redirected to the url passed to res.redirect()
   // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
-  //req.header.host needs to be part of the redirect while proxying dev server
-  req.session.returnHost = req.headers.host;
   if (req.isAuthenticated()) { return next(); }
   req.session.returnTo = req.path;
   res.redirect('/login');
@@ -155,8 +147,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  //req.header.host needs to be part of login while proxying dev server
-  req.session.returnHost = req.headers.host;
   res.render('login');
 });
 
