@@ -12,7 +12,7 @@ class ChatContainer extends Component {
 
   render() {
 
-    const { chat, roomControls } = this.props
+    const { chat, roomControls, onlineUsers } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
 
 
