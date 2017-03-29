@@ -10,7 +10,8 @@
 		</header>
 		<div class="container">
 		<% if (!user) { %>
-			<h2>Welcome! Please log in.</h2>
+			<h2>Welcome! Our app is great blah blah.</h2>
+			<a href="/login">Login here</a>
 		<% } else { %>
 			<h2>Hello, <%= user.github_login %>.</h2>
 			<a href="/gists"> Make a test gist! </a>
