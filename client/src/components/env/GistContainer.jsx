@@ -35,7 +35,7 @@ class GistContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
-    this.props.actions.saveToGist(this.state.input, this.props.editor, this.props.language)
+    this.props.actions.saveToGist(this.state.input, this.props.editorValue, this.props.language)
     this.setState({input: ''})
   }
 

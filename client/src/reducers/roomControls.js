@@ -1,4 +1,3 @@
-//TODO normalize this
 const initialState = {
   isChatVisible: false,
   isAuthorized: true,

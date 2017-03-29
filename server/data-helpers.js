@@ -1,6 +1,6 @@
 module.exports = function makeDataHelpers(knex) {
   return {
-    setRoomData: function(room, clientData, cb) {
+    setRoomData: function(room, userID, cb) {
       knex('classrooms')
       .leftOuterJoin('edits', 'classrooms.id', 'edits.classroom_id')
       .select('classrooms.*', 'edits.content')
@@ -19,7 +19,7 @@ module.exports = function makeDataHelpers(knex) {
         knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
         .then((data) => {
           roomData.messages = data.rows
-          knex.raw('select * from users where id= ?', clientData.id)
+          knex.raw('select * from users where id= ?', userID)
           .then((data) => {
             roomData.userSettings = {
               theme: data.rows[0].editor_theme,
@@ -27,9 +27,68 @@ module.exports = function makeDataHelpers(knex) {
             };
             roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
             cb(roomData);
-            });
           });
         });
-      }
+      });
+    },
+
+    updateEditorValues: function(roomID, editorValue, cb) {
+      knex('edits')
+      .insert({
+        classroom_id: roomID,
+        content: editorValue
+      })
+      .then(() => {
+        cb();
+      });
+    },
+
+    toggleEditorLock: function(roomID, isEditorLocked, cb) {
+      knex('classrooms')
+      .where({id: roomID})
+      .update({editorLocked: isEditorLocked})
+      .then(() => {
+        cb();
+      });
+    },
+
+    toggleChatLock: function(roomID, isChatLocked, cb) {
+      knex('classrooms')
+      .where({id: roomID})
+      .update({chatLocked: isChatLocked})
+      .then(() => {
+        cb();
+      });
+    },
+
+    sendOutgoingMessage: function(roomID, userID, content, cb) {
+      knex('messages')
+      .insert({
+        classroom_id: roomID,
+        user_id: userID,
+        content: content
+      })
+      .then(() => {
+        cb();
+      });
+    },
+
+    changeEditorTheme: function(userID, theme, cb) {
+      knex('users')
+      .where({id: userID})
+      .update({editor_theme: theme})
+      .then(() => {
+        cb();
+      });
+    },
+
+    changeFontSize: function(userID, fontSize, cb) {
+      knex('users')
+      .where({id: userID})
+      .update({font_size: fontSize})
+      .then(() => {
+        cb();
+      });
+    }
   }
 }

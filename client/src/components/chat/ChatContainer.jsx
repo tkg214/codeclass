@@ -23,7 +23,7 @@ class ChatContainer extends Component {
           onClick={this._handleClick.bind(this)}
           >{chatToggleButton}
         </button>
-      <div>
+        <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
