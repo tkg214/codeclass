@@ -183,8 +183,15 @@ app.get('/api/get_token', (req, res) => {
   }
 });
 
-app.get('/rooms/:key', (req, res) => {
-  res.render('show_room');
+app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
+  const classroom = knex('classrooms').where('room_key', req.params.key)
+    .then((results) => {
+      if(results.length === 0) {
+        res.redirect('/'); //should redirect to a 404 error page
+        return;
+      } 
+      res.render('show_room');
+    });
 });
 
 app.post('/rooms', (req, res) => {
@@ -289,7 +296,6 @@ io.on('connection', (socket) => {
       clients[room] = [];
     }
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
-    console.log("action payload content: ", clients[room]);
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
 
 
@@ -303,9 +309,9 @@ io.on('connection', (socket) => {
     }
 
     socket.on('action', (action) => {
-      console.log('Action received on server: ', action);
-      console.log('roomOwnerID: ', roomOwnerID)
-      console.log('clientData: ', clientData.id)
+      // console.log('Action received on server: ', action);
+      // console.log('roomOwnerID: ', roomOwnerID)
+      // console.log('clientData: ', clientData.id)
       switch(action.type) {
         case 'UPDATE_EDITOR_VALUES': {
           if (roomOwnerID === clientData.id) {
