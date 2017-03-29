@@ -25,7 +25,7 @@ class GistContainer extends Component {
             <button
               className='btn btn-primary btn-sm gist-button'
               onClick={this._handleClick.bind(this)}
-              type='button'>Save
+              type='button'><i className="fa fa-github fa-lg"></i>&ensp;Save
             </button>
           </span>
         </div>
