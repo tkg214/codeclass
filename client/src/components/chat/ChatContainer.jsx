@@ -13,11 +13,13 @@ class ChatContainer extends Component {
   render() {
 
     const { chat, roomControls } = this.props
+    console.log(chat.messages);
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
-    let visibility = roomControls.isChatVisible ? 'show' : 'hide'
+    let visibility = roomControls.isChatVisible ? 'close' : 'show'
+    console.log(visibility);
 
     return (
-      <div className={'chat-container ' }>
+      <div className={'chat-container ' + visibility }>
         <button
           className="btn btn-default btn-sm chat-toggle-button"
           onClick={this._handleClick.bind(this)}
