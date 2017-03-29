@@ -1,6 +1,7 @@
 //TODO normalize this
 const initialState = {
   isChatVisible: false,
+  isChatNotificationVisible: true,
   isAuthorized: true,
   isEditorLocked: true,
   isChatLocked: true,
@@ -38,6 +39,9 @@ export default function reducer(state=initialState, action) {
     }
     case 'CHANGE_FONT_SIZE': {
       return {...state, userSettings: action.payload.userSettings}
+    }
+    case 'TOGGLE_CHAT_NOTIFICATION_BAR': {
+      return {...state, isChatNotificationVisible: action.payload.isChatNotificationVisible}
     }
     default: return state;
   }

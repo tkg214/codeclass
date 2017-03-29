@@ -37,6 +37,17 @@ export function toggleChatContainer(isChatVisible){
   }
 }
 
+export function toggleChatNotificationBar(isChatNotificationVisible){
+  return dispatch => {
+    dispatch({
+      type: 'TOGGLE_CHAT_NOTIFICATION_BAR',
+      payload: {
+        isChatNotificationVisible: isChatNotificationVisible ? false : true
+      }
+    })
+  }
+}
+
 
 // TODO LOCK MESSEAGES
 

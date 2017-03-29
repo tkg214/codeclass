@@ -12,16 +12,17 @@ class ChatContainer extends Component {
 
   render() {
 
-    const { chat, roomControls, onlineUsers } = this.props
-    let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
-    let visibility = roomControls.isChatVisible ? 'close' : 'show'
+    const { chat, roomControls } = this.props
+    let visibility = roomControls.isChatVisible ? 'show' : 'close'
+
 
     return (
       <div className={'chat-container ' + visibility }>
         <button
-          className="btn btn-default btn-sm chat-toggle-button"
-          onClick={this._handleClick.bind(this)}
-          >{chatToggleButton}
+          className="btn btn-info chat-toggle-button"
+          onClick={this._handleClick.bind(this)}>
+          <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+
         </button>
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
@@ -34,7 +35,10 @@ class ChatContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible)
+    // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+    this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
+    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+
   }
 
 }
