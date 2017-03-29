@@ -184,7 +184,7 @@ app.get('/api/get_token', (req, res) => {
 });
 
 app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
-  const classroom = knex('classrooms').where('room_key', req.params.key)
+  knex('classrooms').where('room_key', req.params.key)
     .then((results) => {
       if(results.length === 0) {
         res.redirect('/'); //should redirect to a 404 error page
