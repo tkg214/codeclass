@@ -12,7 +12,7 @@ class ChatContainer extends Component {
 
   render() {
 
-    const { chat, roomControls } = this.props
+    const { chat, roomControls, onlineUsers } = this.props
     let chatToggleButton = roomControls.isChatVisible ? 'Close Chat' : 'Open Chat'
     let visibility = roomControls.isChatVisible ? 'show' : 'hide'
 
@@ -24,7 +24,7 @@ class ChatContainer extends Component {
           >{chatToggleButton}
         </button>
       <div>
-          <UserCountContainer chat={chat} actions={this.props.actions}/>
+          <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </div>
@@ -42,7 +42,8 @@ class ChatContainer extends Component {
 function mapStateToProps(state) {
   return {
     chat: state.chat,
-    roomControls: state.roomControls
+    roomControls: state.roomControls,
+    onlineUsers: state.onlineUsers
    }
 }
 

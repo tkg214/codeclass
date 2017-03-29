@@ -15,15 +15,17 @@ class UserCountContainer extends Component {
   // }
 
   render() {
-    const { chat } = this.props;
+    const { users } = this.props;
+    console.log(users);
     return (
-      <div className='user-count-container'>
-        <ul className='user-list'>
-          {chat.usersOnline.map( (user) => {
-            return <User key={user.id} content={user.usersOnline}/>
+      <div className='online-users-container'>
+        <h2>Users online:</h2>
+        <div className='user-list'>
+          {users.usersOnline.map((user) => {
+            return <User key={user.id} avatar={user.avatar} name={user.name}></User>
           })}
-          </ul>
         </div>
+      </div>
     )
   }
 }

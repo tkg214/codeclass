@@ -1,0 +1,28 @@
+.online-users-container {
+  background-color: #fff;
+  height: 250px;
+  padding: 10px;
+
+  h2 {
+    color: #4a4a4a;
+    font-size: 18px;
+  }
+
+  p {
+    color: #4a4a4a;
+  }
+
+  img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+  }
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  p {
+    padding-left: 10px;
+  }
+}
