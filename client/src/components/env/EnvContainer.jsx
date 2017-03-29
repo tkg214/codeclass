@@ -87,8 +87,9 @@ class EnvContainer extends Component {
 
   _onRunClick(e) {
     e.preventDefault();
-    this.props.actions.executeCode(this.props.editor.editorValue);
+    this.props.actions.executeCode(this.props.roomControls.language, this.props.editor.editorValue);
   }
+
 }
 
 

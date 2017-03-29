@@ -34,9 +34,6 @@ axios.get('/api/get_token')
 
 //Open socket connection to authenticated users
 function connect_socket(token) {
-  if (!token) {
-    console.log("no token");
-  }
   const socket = io.connect( {
     query: 'token=' + token
   });

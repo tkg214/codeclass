@@ -15,6 +15,7 @@ class ChatContainer extends Component {
     const { chat, roomControls } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
 
+
     return (
       <div className={'chat-container ' + visibility }>
         <button
@@ -24,7 +25,7 @@ class ChatContainer extends Component {
 
         </button>
       <div>
-          <UserCountContainer chat={chat} actions={this.props.actions}/>
+          <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </div>
@@ -45,7 +46,8 @@ class ChatContainer extends Component {
 function mapStateToProps(state) {
   return {
     chat: state.chat,
-    roomControls: state.roomControls
+    roomControls: state.roomControls,
+    onlineUsers: state.onlineUsers
    }
 }
 

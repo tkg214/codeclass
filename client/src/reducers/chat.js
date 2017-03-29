@@ -1,6 +1,5 @@
 export default function reducer(state = {
-  messages: [],
-  usersOnline: []
+  messages: []
 }, action) {
   switch(action.type) {
     case 'UPDATE_ROOM_STATE': {
