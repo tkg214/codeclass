@@ -1,8 +1,9 @@
 export default function reducer(state={
-  save: '',
+  save: 'Save',
   toasts: []
 }, action) {
   switch (action.type) {
+    case 'GIST_DEFAULT':
     case 'GIST_SAVING':
       return {...state, save: action.payload.save}
     case 'GIST_SAVED':

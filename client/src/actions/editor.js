@@ -103,6 +103,13 @@ export function saveToGist(gistName, content, language) {
             response
           }
       }});
+      setTimeout(() => 
+      dispatch({
+        type: 'GIST_DEFAULT',
+        payload: {
+          save: 'Save'
+        }
+      }), 3000)
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',

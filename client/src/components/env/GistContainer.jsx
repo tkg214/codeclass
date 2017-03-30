@@ -13,9 +13,10 @@ class GistContainer extends Component {
     const { gist } = this.props;
 
     const buttonClass = {
-      'Saving...': 'btn-warning',
-      'Complete': 'btn-success',
-      'Failed': 'btn-danger'
+      'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
+      'Complete': {'style': 'btn-success', 'icon': 'fa-check'},
+      'Failed': {'style': 'btn-danger', 'icon': 'fa-x'},
+      'Save': {'style': 'btn-primary', 'icon': 'fa-github'}
     }
 
     return (
@@ -27,14 +28,14 @@ class GistContainer extends Component {
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
             className='form-control input-sm'
-            disabled={gist.save === 'isSaving'}/>
+            disabled={gist.save === 'Saving...'}/>
 
           <span className='input-group-btn'>
             <button
-              className={'btn btn-sm gist-button ' + (buttonClass[gist.save] || 'btn-primary')}
-              disabled={gist.save === 'isSaving'}
+              className={'btn btn-sm gist-button ' + buttonClass[gist.save].style}
+              disabled={gist.save === 'Saving...'}
               onClick={this._handleClick.bind(this)}
-              type='button'><i className="fa fa-github fa-lg"></i>&ensp;{(gist.save || 'Save')}
+              type='button'><i className={"fa fa-lg " + buttonClass[gist.save].icon}></i>&ensp;{gist.save}
             </button>
           </span>
         </div>
