@@ -13,7 +13,7 @@ class GistContainer extends Component {
     const { gist } = this.props;
 
     return (
-      <div className='col-lg-6'>
+      <div className='col-lg-12'>
         <div className='input-group gist-container'>
           <input
             type='text'
@@ -35,7 +35,7 @@ class GistContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
-    this.props.actions.saveToGist(this.state.input, this.props.editor, this.props.language)
+    this.props.actions.saveToGist(this.state.input, this.props.editorValue, this.props.language)
     this.setState({input: ''})
   }
 

@@ -42,10 +42,7 @@ function connect_socket(token) {
     socket.emit('join', room);
   }).on('disconnect', function() {
     console.log('disconnected');
-
   });
-
-
 
   const createStoreWithMiddleware = applyMiddleware(
     socketMiddleware(socket), thunk, logger()

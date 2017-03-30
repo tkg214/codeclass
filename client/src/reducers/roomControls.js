@@ -1,6 +1,7 @@
-//TODO normalize this
 const initialState = {
   isChatVisible: false,
+  roomTitle: '',
+  roomID: 0,
   isChatNotificationVisible: true,
   isAuthorized: true,
   isEditorLocked: true,
@@ -18,6 +19,7 @@ export default function reducer(state=initialState, action) {
     case 'UPDATE_ROOM_STATE': {
       return {...state,
         roomID: action.payload.roomID,
+        roomTitle: action.payload.roomTitle,
         isAuthorized: action.payload.isAuthorized,
         isEditorLocked: action.payload.isEditorLocked,
         isChatLocked: action.payload.isChatLocked,

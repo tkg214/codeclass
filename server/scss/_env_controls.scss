@@ -17,3 +17,15 @@
 .env-nav-controls {
   padding: 0.5em 1em 0em 1em;
 }
+
+.env-nav-panel {
+  padding: 0 1em;
+
+  .panel {
+    margin-bottom: 0;
+  }
+
+  .panel-body {
+    padding: $space;
+  }
+}

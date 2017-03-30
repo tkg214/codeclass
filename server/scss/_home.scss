@@ -5,9 +5,6 @@ main {
 button.btn {
   border-radius: 0%;
 }
-.editor {
-  height: $editor-height;
-}
 
 .hide {
   visibility: hidden;
@@ -28,4 +25,12 @@ button.btn {
 .terminal {
   overflow-y: scroll;
   margin: 0 1em;
+}
+
+.ace_gutter-layer {
+  padding: $space;
+}
+
+.ace_content {
+  padding: $space;
 }

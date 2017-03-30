@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Message from './Message.jsx';
 
 class MessageListContainer extends Component {
+
+  componentDidMount() {
+    this._scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this._scrollToBottom();
+  }
 
   render() {
     const { chat } = this.props;
@@ -9,10 +18,17 @@ class MessageListContainer extends Component {
     return (
       <div className="message-list-container">
         {mostRecentMessages.map( (message) => {
-            return <Message key={message.timestamp} content={message.content} name={message.name} avatarurl={message.avatarurl}/>
+            return <Message key={message.id} message={message}/>
         })}
+        <div className='message-list-bottom'
+          ref={(el) => {this.bottomMessage = el;}}></div>
       </div>
     )
+  }
+
+  _scrollToBottom() {
+    const bottom = ReactDOM.findDOMNode(this.bottomMessage);
+    bottom.scrollIntoView({behavior: 'smooth'})
   }
 }
 

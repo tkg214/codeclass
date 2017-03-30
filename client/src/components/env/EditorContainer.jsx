@@ -23,11 +23,12 @@ class EditorContainer extends Component {
 
   constructor() {
     super();
-    this.width = $(window).width() - $('.chat-container').width();
+    this.width = $(window).width() - $('.chat-contaidner').width();
   }
 
   render() {
-    const { editor, roomControls } = this.props;
+    const { editorValue, roomControls } = this.props;
+
     return (
       <div className='editor-container'>
         <AceEditor
@@ -37,7 +38,7 @@ class EditorContainer extends Component {
           fontSize={Number(roomControls.userSettings.fontSize)}
           onChange={this._onChange.bind(this)}
           width={`${this.width}`}
-          value={editor}
+          value={editorValue}
           readOnly={roomControls.isEditorLocked}
         />
       </div>
@@ -45,7 +46,6 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
-    console.log('action hit')
     this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
   }
 }
