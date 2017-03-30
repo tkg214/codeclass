@@ -279,12 +279,10 @@ app.post('/savegist', function (req, res) {
           }
         })
       }, function(error, response, body) {
-      console.log("gist-post response:", response);
       if (error) {
-        console.log("posting gist to github failed", error);
-        return res.status(500).send("oh god the pain");
+        return res.status(500).send("Posting gist to github failed");
       } else {
-        return res.send("zug zug");
+        return res.send("Request sent");
       }
     });
   });

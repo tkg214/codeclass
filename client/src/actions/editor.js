@@ -78,13 +78,15 @@ export function saveToGist(gistName, content, language) {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          isGistSaved: true
+          isGistSaved: true,
+          response
       }});
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          isGistSaved: false
+          isGistSaved: false,
+          error
       }});
     });
   }
