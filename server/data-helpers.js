@@ -12,6 +12,7 @@ module.exports = function makeDataHelpers(knex) {
       .then(data => {
         let roomData = {
           roomOwnerID: data[0].user_id,
+          roomTitle: data[0].topic,
           isEditorLocked: data[0].editorLocked,
           isChatLocked: data[0].chatLocked,
           editorValue: data[0].content || '',

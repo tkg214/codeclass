@@ -4,7 +4,7 @@ class EnvControls extends Component {
 
   render() {
     const { roomControls } = this.props;
-    const themes = ['Monokai', 'Github', 'Tomorrow', 'Kuroir', 'xCode', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
+    const themes = ['Monokai', 'Github', 'Kuroir', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
     const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
 
     return (
@@ -29,17 +29,32 @@ class EnvControls extends Component {
           {roomControls.isAuthorized && roomControls.isChatLocked &&
             <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
           }
+          {!roomControls.isAuthorized && roomControls.isChatLocked &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
+          }
           {roomControls.isAuthorized && !roomControls.isChatLocked &&
             <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
+          }
+          {!roomControls.isAuthorized && !roomControls.isChatLocked &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
           }
           {roomControls.isAuthorized && roomControls.isEditorLocked &&
             <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
           }
+          {!roomControls.isAuthorized && roomControls.isEditorLocked &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
+          }
           {roomControls.isAuthorized && !roomControls.isEditorLocked &&
             <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
           }
+          {!roomControls.isAuthorized && !roomControls.isEditorLocked &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
+          }
           {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+          }
+          {(!roomControls.isAuthorized && roomControls.isEditorLocked) &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
           }
         </div>
       </div>
