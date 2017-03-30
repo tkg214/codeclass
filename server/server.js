@@ -348,7 +348,7 @@ io.on('connection', (socket) => {
     }
     case 'TOGGLE_CHAT_LOCK': {
       if (roomOwnerID === clientData.id) {
-        dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
+        dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
         broadcastToRoom(action.room, action);
         break;
       }
