@@ -1,9 +1,8 @@
 .online-users-container {
   background-color: #fff;
-  height: 250px;
-  padding: 10px;
-  overflow: scroll;
- 
+  // height: 250px;
+  // overflow: scroll;
+
   h2 {
     color: #4a4a4a;
     font-size: 18px;
@@ -24,11 +23,15 @@
   overflow-y: scroll;
 }
 
-.user-container {
-  display: flex;
-  align-items: center;
-  padding: 8px 0;
-  p {
-    padding-left: 10px;
-  }
+// .user-container {
+//   display: flex;
+//   align-items: center;
+//   padding: 8px 0;
+//   p {
+//     padding-left: 10px;
+//   }
+// }
+
+.users-box {
+  padding: $space;
 }

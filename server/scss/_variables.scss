@@ -1,9 +1,8 @@
 
 $window-height: 100vh;
 $nav-height: 3em;
-$env-height: calc(100vh-3em);
 $controller-height: 3em;
 $terminal-height: 200px;
 $space: 1em;
-$editor-height: calc($env-height - $controller-height - $terminal-height);
 $chat-notifcation-bar-width: 50px;
+$message-compose-container-height: 100px;

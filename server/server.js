@@ -31,7 +31,7 @@ const jwtSecret     = process.env.TOKEN_SECRET || "development";
 const socketioJwt   = require('socketio-jwt');
 
 //Modules
-const dbHelper      = require('./data-helpers')(knex);
+const dbHelpers     = require('./data-helpers')(knex);
 
 app.set('view engine', 'ejs');
 
@@ -289,12 +289,24 @@ io.use(socketioJwt.authorize({
 const clients = {};
 
 io.on('connection', (socket) => {
-  //socket.decoded_token contains user data in token
+
+  // socket.decoded_token contains user data in token
   const clientData = socket.decoded_token;
   let roomOwnerID;
-  //When user joins a room
+  let roomKey;
+
+  function broadcastToRoom(room, action) {
+    socket.broadcast.to(room).emit('action', action);
+  }
+
+  function emitToUser(action) {
+    socket.emit('action', action);
+  }
+
+  // When user joins a room specified by room key in url, update room list and broadcast to all users, then emit room data to user
   socket.on('join', (room) => {
     socket.join(room);
+    roomKey = room;
     console.log(`${clientData.github_login} is now connected to room ${room}`);
 
     if (!clients.hasOwnProperty(room)) {
@@ -304,116 +316,82 @@ io.on('connection', (socket) => {
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
     io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
 
+    dbHelpers.setRoomData(room, clientData.id, emitRoomData);
 
-    //Get current state of room on new connection
-    dbHelper.setRoomData(room, clientData, broadcastRoomData);
-    function broadcastRoomData(roomData) {
+    function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-      socket.emit('action', action)
+      emitToUser(action);
     }
-
-    socket.on('action', (action) => {
-      // console.log('Action received on server: ', action);
-      // console.log('roomOwnerID: ', roomOwnerID)
-      // console.log('clientData: ', clientData.id)
-      switch(action.type) {
-        case 'UPDATE_EDITOR_VALUES': {
-          if (roomOwnerID === clientData.id) {
-            knex('edits')
-              .insert({
-                classroom_id: action.payload.roomID,
-                content: action.payload.editorValue
-              })
-              .then(() => {
-                socket.broadcast.to(action.room).emit('action', action);
-              });
-            break;
-          }
-          break;
-        }
-        case 'TOGGLE_EDITOR_LOCK': {
-          if (roomOwnerID === clientData.id) {
-            knex('classrooms')
-              .where({id: action.payload.roomID})
-              .update({editorLocked: action.payload.isEditorLocked})
-              .then(() => {
-                socket.broadcast.to(action.room).emit('action', action);
-              });
-            break;
-          }
-          break;
-        }
-        case 'TOGGLE_CHAT_LOCK': {
-          if (roomOwnerID === clientData.id) {
-            knex('classrooms')
-              .where({id: action.payload.roomID})
-              .update({chatLocked: action.payload.isChatLocked})
-              .then(() => {
-                socket.broadcast.to(action.room).emit('action', action);
-              });
-            break;
-          }
-          break;
-        }
-        case 'EXECUTE_CODE' : {
-          if (roomOwnerID === clientData.id) {
-            socket.broadcast.to(action.room).emit('action', action);
-            break;
-          }
-          break;
-        }
-        case 'SEND_OUTGOING_MESSAGE': {
-          // TODO create knex insert that inserts into messages table based on classroom_id and user
-          knex('messages')
-            .insert({
-              user_id: clientData.id,
-              content: action.payload.content,
-              classroom_id: action.payload.roomID
-            })
-            .then(() => {
-              socket.broadcast.to(action.room).emit('action', action);
-            });
-          break;
-        }
-        case 'CHANGE_EDITOR_THEME': {
-          // TODO do we need to do a promise here?
-          knex('users')
-            .where({id: clientData.id})
-            .update({editor_theme: action.payload.userSettings.theme})
-            .then(() => {
-              socket.emit('action', action);
-            });
-          break;
-        }
-        case 'CHANGE_FONT_SIZE': {
-          knex('users')
-            .where({id: clientData.id})
-            .update({font_size: action.payload.userSettings.fontSize})
-            .then(() => {
-              socket.emit('action', action);
-            });
-          break;
-        }
-      }
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Closed Connection :(');
-      const clientIndex = clients[room].findIndex(client => client.id === socket.id);
-      if (clientIndex > -1) {
-        clients[room].splice(clientIndex, 1);
-      }
-
-      //If no users are in room, delete property from memory
-      if (clients[room].length === 0) {
-        delete clients[room];
-      }
-      console.log(clients);
-      socket.to(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
-    });
-
   });
 
+  // When user emits to server, switch statement accesses action and processes data accordingly, then sends back through socket
+  socket.on('action', (action) => {
+    // console.log('Action received on server: \n', action);
+
+    switch(action.type) {
+    case 'UPDATE_EDITOR_VALUES': {
+      if (roomOwnerID === clientData.id) {
+        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, broadcastToRoom);
+        broadcastToRoom(action.room, action);
+        break;
+      }
+      break;
+    }
+    case 'TOGGLE_EDITOR_LOCK': {
+      if (roomOwnerID === clientData.id) {
+        dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked, broadcastToRoom);
+        broadcastToRoom(action.room, action);
+        break;
+      }
+      break;
+    }
+    case 'TOGGLE_CHAT_LOCK': {
+      if (roomOwnerID === clientData.id) {
+        dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
+        broadcastToRoom(action.room, action);
+        break;
+      }
+      break;
+    }
+    case 'EXECUTE_CODE' : {
+      if (roomOwnerID === clientData.id) {
+        broadcastToRoom(action.room, action);
+        break;
+      }
+      break;
+    }
+    case 'SEND_OUTGOING_MESSAGE': {
+      dbHelpers.sendOutgoingMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
+      broadcastToRoom(action.room, action);
+      break;
+    }
+    case 'CHANGE_EDITOR_THEME': {
+      dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme, emitToUser);
+      emitToUser(action);
+      break;
+    }
+    case 'CHANGE_FONT_SIZE': {
+      dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize, emitToUser);
+      emitToUser(action);
+      break;
+    }
+    }
+  });
+
+  // When a user disconnects, update the clients object in memory, then emit to all users the updated list of users
+  socket.on('disconnect', () => {
+    console.log(`${clientData.github_login} is now disconnected`);
+    const clientIndex = clients[roomKey].findIndex(client => client.id === socket.id);
+    if (clientIndex > -1) {
+      clients[roomKey].splice(clientIndex, 1);
+    }
+
+    //If no users are in room, delete property from memory
+    if (clients[roomKey].length === 0) {
+      delete clients[roomKey];
+    }
+    socket.to(roomKey).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[roomKey]}});
+  });
 });

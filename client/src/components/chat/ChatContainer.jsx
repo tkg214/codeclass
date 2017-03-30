@@ -18,13 +18,14 @@ class ChatContainer extends Component {
 
     return (
       <div className={'chat-container ' + visibility }>
-        <button
-          className="btn btn-info chat-toggle-button"
-          onClick={this._handleClick.bind(this)}>
-          <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-
-        </button>
-      <div>
+        <div className='chat-toggle-button'>
+          <button
+            className="btn btn-info"
+            onClick={this._handleClick.bind(this)}>
+            <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>

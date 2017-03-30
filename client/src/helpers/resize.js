@@ -3,7 +3,7 @@ $(function() {
   function setHeight(){
       const h = $(window).height();
       const n = $('nav').height();
-      const m = $('.user-count-container').height() + $('.message-compose-container').height();
+      const m = $('.online-users-container').height() + $('.message-compose-container').height() + $('.chat-toggle-button').height();
       const e = $('.terminal').height() + $('.env-nav-container').height();
       const evh = ((h - n - e) / h) * 100 - 0.1;
       $('.editor').css('height', evh + 'vh');

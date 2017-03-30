@@ -8,11 +8,10 @@ class ChatBar extends Component {
   render() {
     const { roomControls, chat } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
-    console.log('chatbar visibility', visibility);
 
     return (
-      <div className='chatNotificationBar' id= { visibility }>
-        <div className="chatNotificationBar-toggle">
+      <div className='chat-notification-bar' id= { visibility }>
+        <div className="chat-notification-bar-toggle">
           <button
             className="btn btn-info bar-button"
             onClick={this._handleClick.bind(this)}>
