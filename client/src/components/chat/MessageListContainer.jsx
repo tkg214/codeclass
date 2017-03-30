@@ -6,10 +6,11 @@ class MessageListContainer extends Component {
   render() {
     const { chat } = this.props;
     let mostRecentMessages = chat.messages[0] || [];
+    
     return (
       <div className="message-list-container">
         {mostRecentMessages.map( (message) => {
-            return <Message key={message.timestamp} content={message.content} name={message.name} avatarurl={message.avatarurl}/>
+            return <Message key={message.id} message={message}/>
         })}
       </div>
     )

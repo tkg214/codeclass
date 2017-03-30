@@ -21,6 +21,7 @@ class MessageComposeContainer extends Component {
             value={this.state.input}
             onChange={this._handleChange.bind(this)}
             maxLength="500"
+            required
             />
         }
         {!roomControls.isChatLocked &&

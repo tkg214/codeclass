@@ -23,11 +23,12 @@ class EditorContainer extends Component {
 
   constructor() {
     super();
-    this.width = $(window).width() - $('.chat-container').width();
+    this.width = $(window).width() - $('.chat-contaidner').width();
   }
 
   render() {
     const { editorValue, roomControls } = this.props;
+
     return (
       <div className='editor-container'>
         <AceEditor
