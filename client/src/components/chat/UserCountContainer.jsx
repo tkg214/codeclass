@@ -9,7 +9,7 @@ class UserCountContainer extends Component {
 
   render() {
     const { users } = this.props;
-    console.log(users);
+
     return (
       <div className='online-users-container'>
         <div className='users-box'>

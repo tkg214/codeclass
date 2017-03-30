@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
 
-import ChatHeader from './ChatHeader.jsx';
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
 import MessageComposeContainer from './MessageComposeContainer.jsx';
@@ -14,7 +13,6 @@ class ChatContainer extends Component {
 
     const { chat, roomControls, onlineUsers } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
-
 
     return (
       <div className={'chat-container ' + visibility }>
