@@ -18,12 +18,13 @@
     border-radius: 50%;
   }
 }
+
 .user-list {
-  overflow-x: scroll;
+  height: 80px;
+  overflow-x: auto;
 }
 
 .user-container {
-  display: flex;
   align-items: center;
   padding: 8px 0;
   p {
