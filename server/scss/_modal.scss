@@ -1,0 +1,15 @@
+.form-group ~ .form-group {
+  padding-top: $space;
+}
+
+input[type="radio"].radio-none {
+  display: none;
+}
+
+input[type="radio"].radio-none:checked + label {
+  /* Do something special with the selected state */
+}
+
+label {
+  font-size: 1.2em;
+}
