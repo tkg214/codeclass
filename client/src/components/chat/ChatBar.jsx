@@ -16,7 +16,7 @@ class ChatBar extends Component {
           <button
             className="btn btn-info bar-button"
             onClick={this._handleClick.bind(this)}>
-            <span className="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+            <i className='fa fa-chevron-left'></i>
           </button>
         </div>
         <div>

@@ -21,7 +21,7 @@ class ChatContainer extends Component {
         <button
           className="btn btn-info chat-toggle-button"
           onClick={this._handleClick.bind(this)}>
-          <span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+          <i className='fa fa-chevron-right'></i>&ensp;
 
         </button>
       <div>

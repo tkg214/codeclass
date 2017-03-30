@@ -189,7 +189,12 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
   knex('classrooms').where('room_key', req.params.key)
     .then((results) => {
       if(results.length === 0) {
-        res.redirect('/'); //should redirect to a 404 error page
+        res.status(404).render('error', {
+          errorcode: 404,
+          message: "Error: The classroom " + req.params.key + " doesn't exist!",
+          buttonLabel: 'Go Home',
+          buttonURL: '/'
+        });
         return;
       }
       res.render('show_room');
@@ -217,11 +222,14 @@ app.post('/rooms', (req, res) => {
       .then((room_key) => {
         res.redirect(`/rooms/${room_key[0]}`);
       });
+    } else {
+      res.status(400).render('error', {
+        errorcode: 400,
+        message: "Error: This classroom topic already exists!",
+        buttonLabel: 'Try Again',
+        buttonURL: '/rooms'
+      });
     }
-    res.status(400).render('error', {
-      errorcode: 400,
-      message: "Error: This classroom topic already exists!"
-    });
   })
 });
 

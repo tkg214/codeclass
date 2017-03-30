@@ -9,11 +9,12 @@
 }
 
 .chat-container {
+    height: 500px;
     margin-right: 1em;
     background-color: #b5b5b5;
     color: #FFFFFF;
     float: right;
-    overflow: hidden;
+    overflow: scroll;
     flex: 0 0 400px;
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
