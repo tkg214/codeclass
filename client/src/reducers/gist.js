@@ -1,12 +1,15 @@
-export default function reducer(state={}, action) {
+export default function reducer(state={
+  gist: '',
+  toasts: []
+}, action) {
   switch (action.type) {
-    case 'GIST_SAVED': {
-      console.log('Gist saved payload: ', action.payload)
-      return {...state, isGistSaved: action.payload.isGistSaved}
-    }
+    case 'GIST_SAVING':
+      return {...state, gist: action.payload.save}
+    case 'GIST_SAVED':
     case 'GIST_ERROR': {
-      console.log('Gist errorpayload: ': action.payload)
-      return {...state, isGistSaved: action.payload.isGistSaved}
+      const gistToasts = [...state.toasts];
+      gistToasts.push(action.payload.details);
+      return {...state, gist: action.payload.save, toasts: gistToasts};
     }
   }
   return state;

@@ -80,6 +80,12 @@ export function saveToGist(gistName, content, language) {
     break;
   }
   return dispatch => {
+    dispatch({
+      type: 'GIST_SAVING',
+      payload: {
+        save: 'isSaving'
+      }
+    })
     axios.post('/savegist', {
       data: {
         title: gistName,
@@ -90,19 +96,23 @@ export function saveToGist(gistName, content, language) {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          isGistSaved: true,
-          timestamp: response.headers.date,
-          text: `Saved ${gistName}${extension}`,
-          response
+          save: 'complete',
+          details: {
+            timestamp: response.headers.date,
+            text: `Saved ${gistName}${extension}`,
+            response
+          }
       }});
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          isGistSaved: false,
-          timestamp: error.headers.date,
-          text: `Failed to save ${gistName}${extension}`,
-          error
+          save: 'failed',
+          details: {
+            timestamp: error.headers.date,
+            text: `Failed to save ${gistName}${extension}`,
+            error
+          }
       }});
     });
   }
