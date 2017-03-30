@@ -83,7 +83,7 @@ export function saveToGist(gistName, content, language) {
     dispatch({
       type: 'GIST_SAVING',
       payload: {
-        save: 'isSaving'
+        save: 'Saving...'
       }
     })
     axios.post('/savegist', {
@@ -96,7 +96,7 @@ export function saveToGist(gistName, content, language) {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          save: 'complete',
+          save: 'Complete',
           details: {
             timestamp: response.headers.date,
             text: `Saved ${gistName}${extension}`,
@@ -107,7 +107,7 @@ export function saveToGist(gistName, content, language) {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          save: 'failed',
+          save: 'Failed',
           details: {
             timestamp: error.headers.date,
             text: `Failed to save ${gistName}${extension}`,
