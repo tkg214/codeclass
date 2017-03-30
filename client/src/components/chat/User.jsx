@@ -5,6 +5,7 @@ class User extends Component {
     return (
       <div className="user-container">
        <img className="online-user-avatar" src={this.props.avatar}/>
+       <br></br>
        <p>{this.props.name}</p>
       </div>
     )
