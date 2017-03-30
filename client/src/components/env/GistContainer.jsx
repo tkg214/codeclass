@@ -21,6 +21,7 @@ class GistContainer extends Component {
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
             className='form-control input-sm'/>
+
           <span className='input-group-btn'>
             <button
               className='btn btn-primary btn-sm gist-button'

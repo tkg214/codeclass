@@ -5,7 +5,7 @@ class EnvControls extends Component {
   render() {
     const { roomControls } = this.props;
     const themes = ['Monokai', 'Github', 'Kuroir', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
-    const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
+    const fontSizes = [8, 9, 11, 12, 14, 18, 24, 30, 36, 48];
 
     return (
       <div className='col-lg-12'>
