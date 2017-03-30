@@ -3,11 +3,7 @@
 }
 
 input[type="radio"].radio-none {
-  display: none;
-}
-
-input[type="radio"].radio-none:checked + label {
-  /* Do something special with the selected state */
+  display:none;
 }
 
 label {
@@ -15,5 +11,5 @@ label {
 }
 
 .btn-theme {
-  @include button-variant(lighten($theme, 20%), $light, transparent)
+  @include button-variant($light, lighten($theme, 20%), transparent)
 }
