@@ -17,6 +17,7 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
+const moment        = require('moment');
 
 //Only use knexLogger in development
 if (process.env.ENV === 'development') {
@@ -314,12 +315,16 @@ io.on('connection', (socket) => {
   let roomOwnerID;
   let roomKey;
 
-  function broadcastToRoom(room, action) {
+  function broadcastToRoom(room, action, cb) {
     socket.broadcast.to(room).emit('action', action);
   }
 
   function emitToUser(action) {
     socket.emit('action', action);
+  }
+
+  function broadcastToRoomInclusive(room, action) {
+    io.in(room).emit('action', action);
   }
 
   // When user joins a room specified by room key in url, update room list and broadcast to all users, then emit room data to user
@@ -332,12 +337,14 @@ io.on('connection', (socket) => {
       clients[room] = [];
     }
     clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
-    io.in(room).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}});
+    let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}}
+    broadcastToRoomInclusive(room, action);
 
     dbHelpers.setRoomData(room, clientData.id, emitRoomData);
 
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
+      console.log(roomData);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       emitToUser(action);
@@ -381,18 +388,31 @@ io.on('connection', (socket) => {
       break;
     }
     case 'SEND_OUTGOING_MESSAGE': {
-      dbHelpers.sendOutgoingMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
-      broadcastToRoom(action.room, action);
+      const newAction = {
+        type: 'RECEIVE_NEW_MESSAGE',
+        payload: {
+          id: 'M_' + Date.now(),
+          name: clientData.github_login,
+          content: action.payload.content,
+          avatarurl: clientData.github_avatar,
+          isOwnMessage: false,
+          timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+        }
+      }
+      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
+      broadcastToRoom(action.room, newAction);
+      const newActionToSelf = Object.assign({}, newAction);
+      newActionToSelf.payload.isOwnMessage = true;
+      // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
+      emitToUser(newActionToSelf);
       break;
     }
     case 'CHANGE_EDITOR_THEME': {
-      dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme, emitToUser);
-      emitToUser(action);
+      dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme);
       break;
     }
     case 'CHANGE_FONT_SIZE': {
-      dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize, emitToUser);
-      emitToUser(action);
+      dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
       break;
     }
     }

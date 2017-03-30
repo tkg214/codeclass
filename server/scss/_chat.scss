@@ -18,27 +18,25 @@
 
 
 .chat-container {
-    height: 500px;
-    margin-right: 1em;
-    background-color: #b5b5b5;
-    color: #FFFFFF;
-    float: right;
-    overflow: scroll;
-    flex: 0 0 400px;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-    -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    transform-origin: right;
+  margin-right: 1em;
+  background-color: #b5b5b5;
+  color: #FFFFFF;
+  overflow: hidden;
+  flex: 0 0 400px;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transform-origin: right;
 }
 
 .close {
-    margin-right: 0em;
-    flex: 0 0 0;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform: translate(50px);
-    transform: translate(50px);
+  margin-right: 0em;
+  flex: 0 0 0;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform: translate(50px);
+  transform: translate(50px);
 }
 #notification-close{
   visibility: hidden;
@@ -52,31 +50,31 @@
 }
 
 .chat-notification-bar {
-    margin-right: 1em;
-    right: -50;
-    flex: 0 0 50px;
-    background: #546575;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-    transform-origin: right;
-    -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    z-index: 999;
+  margin-right: 1em;
+  right: -50;
+  flex: 0 0 50px;
+  background: #546575;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  transform-origin: right;
+  -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  z-index: 999;
 }
 
 .chat-toggle-button {
-    border-radius: 0;
-    color: #FFFFFF;
-    // position: absolute;
-    left: 0;
-    top: -40;
+  border-radius: 0;
+  color: #FFFFFF;
+  // position: absolute;
+  left: 0;
+  top: -40;
 }
 
 .message-compose-container {
-    display: block;
-    bottom: 0;
-    height: $message-compose-container-height;
-    width: 100%;
+  display: block;
+  bottom: 0;
+  height: $message-compose-container-height;
+  width: 100%;
 }
 
 .chat-header {
@@ -84,67 +82,116 @@
 }
 
 .message-list-container {
-    color: black;
-    min-height: 200px!important;
-    overflow-y: scroll;
-    width: 100%;
-    word-wrap: break-word;
+  color: black;
+  min-height: 200px!important;
+  overflow-y: scroll;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 .chatbar-message {
-    color: #000000;
-    width: 100%;
+  color: #000000;
+  width: 100%;
 }
 
 .chatbar-button {
-    color: #FFFFFF;
-    display: inline-block;
+  color: #FFFFFF;
+  display: inline-block;
 }
 
-.user-avatar {
-    border-radius: 30px;
-    border: 2px solid #FFF;
-    margin: 5px 5px 5px auto;
-    max-height: 60px;
-    max-width: 60px;
-    white-space: nowrap;
-    z-index: 20;
-    // max-height: 70px;
-    // max-width: 70px;
+.message-container {
+  position: relative;
 }
 
-.bubble {
-    background: #fff;
-    background: -moz-linear-gradient(top, #dedede 0%, #ffffff 100%);
-    background: -webkit-linear-gradient(top, #dedede 0%, #ffffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dedede), color-stop(1, #ffffff));
-    background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
-    background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
-    background: linear-gradient(top, #dedede 0%, #ffffff 100%);
-    margin: 10px 10px 0;
-    width: 90%;
-    padding: 5px;
-    position: relative;
-    box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-    border-radius: 10px;
+.user-avatar-message {
+  border-radius: 30px;
+  border: 2px solid #FFF;
+  display: block;
+  margin: 5px 5px 5px auto;
+  max-height: 60px;
+  max-width: 60px;
+  white-space: nowrap;
+  z-index: 20;
+  // max-height: 70px;
+  // max-width: 70px;
 }
 
-.bubble::after {
-    content: "";
-    position: absolute;
-    box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-    -moz-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    bottom: -7px;
-    right: 7%;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent #FFF #FFF transparent;
+.user-avatar-own-message {
+  border-radius: 30px;
+  border: 2px solid #FFF;
+  margin: 5px 5px 5px auto;
+  margin-left: 5px;
+  max-height: 60px;
+  max-width: 60px;
+  white-space: nowrap;
+  z-index: 20;
+  // max-height: 70px;
+  // max-width: 70px;
 }
 
-.user-list li {
-    display: inline;
+.bubble-message {
+  background: #fff;
+  background: -moz-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -webkit-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dedede), color-stop(1, #ffffff));
+  background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: linear-gradient(top, #dedede 0%, #ffffff 100%);
+  margin: 0 auto;
+  margin-top: $space;
+  width: 90%;
+  padding: 5px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
+  border-radius: 10px;
 }
+
+.bubble-message::after {
+  content: "";
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  bottom: -7px;
+  right: 7%;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #FFF #FFF transparent;
+}
+
+.bubble-own-message {
+  background: #fff;
+  background: -moz-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -webkit-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dedede), color-stop(1, #ffffff));
+  background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
+  background: linear-gradient(top, #dedede 0%, #ffffff 100%);
+  margin: 0 auto;
+  margin-top: $space;
+  width: 90%;
+  padding: 5px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
+  border-radius: 10px;
+}
+
+.bubble-own-message::after {
+  content: "";
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  bottom: -7px;
+  left: 7%;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #FFF #FFF transparent;
+}
+
+// .user-list li {
+//     display: inline;
+// }
 
 .users-connected-button{
   height: 100px;
