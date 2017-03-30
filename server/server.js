@@ -17,7 +17,13 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
-const knexLogger    = require('knex-logger');
+
+//Only use knexLogger in development
+if (process.env.ENV === 'development') {
+  const knexLogger = require('knex-logger');
+  app.use(knexLogger(knex));
+}
+
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
@@ -27,7 +33,6 @@ const socketioJwt   = require('socketio-jwt');
 //Modules
 const dbHelper      = require('./data-helpers')(knex);
 
-app.use(knexLogger(knex));
 app.set('view engine', 'ejs');
 
 //Sass middleware
@@ -110,14 +115,8 @@ app.get('/auth/github',
 //  which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
   passport.authenticate('github'), function(req, res) {
-    //Use this redirect while proxy is on
-    res.redirect(`http://${req.session.returnHost}${(req.session.returnTo || '/rooms')}`);
-    // Otherwise uncomment following line when proxy off
-    // res.redirect(req.session.returnTo || '/rooms');
-
+    res.redirect(req.session.returnTo || '/rooms');
     delete req.session.returnTo;
-    //Comment out the next line when proxy off
-    delete req.session.returnHost;
   });
 
   // Pass this function to routes that needs to be protected.
@@ -125,8 +124,6 @@ app.get('/auth/github/callback',
   // Otherwise, the user will be redirected to the url passed to res.redirect()
   // Desired path is stored in user's to go to after authenticating.
 function ensureAuthenticated(req, res, next) {
-  //req.header.host needs to be part of the redirect while proxying dev server
-  req.session.returnHost = req.headers.host;
   if (req.isAuthenticated()) { return next(); }
   req.session.returnTo = req.path;
   res.redirect('/login');
@@ -135,6 +132,16 @@ function ensureAuthenticated(req, res, next) {
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.user = req.user;
+  //Define source of bundle.js depending on environment
+  let bundleSrc;
+  if(req.user) {
+    if (process.env.ENV === 'production') {
+      bundleSrc = '/bundle.js';
+    } else {
+      bundleSrc = 'http://localhost:8080/build/bundle.js';
+    }
+    res.locals.bundleSrc = bundleSrc;
+  }
   next();
 });
 
@@ -143,8 +150,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  //req.header.host needs to be part of login while proxying dev server
-  req.session.returnHost = req.headers.host;
   res.render('login');
 });
 
