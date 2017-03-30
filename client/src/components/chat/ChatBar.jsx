@@ -6,10 +6,24 @@ import * as Actions from '../../actions/chat';
 
 class ChatBar extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      lastCount: 0
+    }
+  }
+
+  componentDidMount() {
+    const { chat } = this.props;
+    let messages = chat.messages[0] || [];
+    this.setState({lastCount: messages.length});
+  }
+
+
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
-
+    let messageList = chat.messages[0] || [];
     return (
       <div className='chat-notification-bar' id= { visibility }>
         <div className="chat-notification-bar-toggle">
@@ -32,7 +46,7 @@ class ChatBar extends Component {
             className="btn btn-primary users-connected-button bar-button">
             <i className='fa fa-comments fa-lg'></i>
             <br></br>
-             <span className="badge">4</span>
+             <span className="badge">{messageList.length - this.state.lastCount}</span>
           </button>
         </div>
       </div>
@@ -44,6 +58,9 @@ class ChatBar extends Component {
     e.preventDefault();
     this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
     this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
+    const { chat } = this.props;
+    let messageList = chat.messages[0] || [];
+    this.setState({lastCount: messageList.length});
 
   }
 
