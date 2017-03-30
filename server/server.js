@@ -66,25 +66,23 @@ passport.use(new GitHubStrategy({
 },
   function(accessToken, refreshToken, profile, done) {
     knex('users').where('github_id', profile.id).then(user => {
+      let userQuery;
       if (user.length === 0) {
-        knex('users').insert({
+        userQuery = knex('users').insert({
           github_login: profile.username,
           github_avatar: profile._json.avatar_url,
           github_name: profile.displayName,
           github_id: profile.id,
           github_access_token: accessToken
-        }).returning('github_id')
-          .then((github_id) => {
-            return done(null, github_id[0]);
-          });
+        }).returning('github_id');
       } else {
-        knex('users').where('github_id', profile.id).update({
+        userQuery = knex('users').where('github_id', profile.id).update({
           github_access_token: accessToken
         }).returning('github_id')
-          .then((github_id) => {
-            return done(null, github_id[0]);
-          });
       }
+      userQuery.then((github_id) => {
+        return done(null, github_id[0]);
+      });
     });
   }
 ));
@@ -159,6 +157,10 @@ app.get('/rooms', ensureAuthenticated, function(req, res) {
   res.render('rooms');
 });
 
+app.get('/error', function(req, res) {
+  res.render('error');
+});
+
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
@@ -192,7 +194,12 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
   knex('classrooms').where('room_key', req.params.key)
     .then((results) => {
       if(results.length === 0) {
-        res.redirect('/'); //should redirect to a 404 error page
+        res.status(404).render('error', {
+          errorcode: 404,
+          message: "Error: The classroom " + req.params.key + " doesn't exist!",
+          buttonLabel: 'Go Home',
+          buttonURL: '/'
+        });
         return;
       }
       res.render('show_room');
@@ -200,7 +207,10 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/rooms', (req, res) => {
-  knex('classrooms')
+  knex('classrooms').where('topic', req.body.topic)
+  .then((results) => {
+    if(results.length === 0){
+      knex('classrooms')
       .insert({
         topic: req.body.topic,
         language_id: req.body.language,
@@ -209,14 +219,23 @@ app.post('/rooms', (req, res) => {
         user_id: req.user.id,
         //TODO Import sanitizeURL function from module
         room_key: req.body.topic
-          .replace(/[^a-zA-Z0-9]+/g, '-')
-          .replace(/^\-|\-$/g, '')
-          .toLowerCase()
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/^\-|\-$/g, '')
+        .toLowerCase()
       })
       .returning('room_key')
       .then((room_key) => {
         res.redirect(`/rooms/${room_key[0]}`);
       });
+    } else {
+      res.status(400).render('error', {
+        errorcode: 400,
+        message: "Error: This classroom topic already exists!",
+        buttonLabel: 'Try Again',
+        buttonURL: '/rooms'
+      });
+    }
+  })
 });
 
 //Posting a gist
