@@ -24,7 +24,7 @@ class EnvContainer extends Component {
       <div className='env-container'>
         <div className='env-nav-container'>
           <div className='row'>
-            <div className='col-lg-6'>
+            <div className='col-lg-12'>
               <div className='env-nav-panel'>
                 <div className='panel panel-default'>
                   <div className='panel-body'>

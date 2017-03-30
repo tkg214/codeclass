@@ -8,7 +8,7 @@ class EnvControls extends Component {
     const fontSizes = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
 
     return (
-      <div className='col-lg-6'>
+      <div className='col-lg-12'>
         <div className='env-nav-controls'>
           <div className="btn-group env-btn btn btn-primary btn-sm">
             <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
