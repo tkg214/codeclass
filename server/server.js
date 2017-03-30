@@ -244,23 +244,7 @@ function getUser(request) {
   return knex('users').where('github_id', request.session.passport.user);
 }
 
-function defineFileExtension(language) {
-  let extension;
-  switch (language) {
-  case 'javascript':
-    extension = '.js';
-    break;
-  case 'ruby':
-    extension = '.rb';
-    break;
-  case 'python':
-    extension = '.py';
-  }
-  return extension;
-}
-
 app.post('/savegist', function (req, res) {
-  const extension = defineFileExtension(req.body.data.language);
   getUser(req).then((row) => {
     const user = row[0];
     // console.log('user', user);
@@ -268,12 +252,12 @@ app.post('/savegist', function (req, res) {
       {
         url: "https://api.github.com/gists",
         headers: {
-          "User-Agent": "waffleio gist creatifier (student project)",
+          "User-Agent": "CodeClass gist creator (student project)",
           "Authorization": `token ${user.github_access_token}`
         },
         "body": JSON.stringify({
           "files": {
-            [`${req.body.data.title}${extension}`]: {
+            [`${req.body.data.title}${req.body.data.extension}`]: {
               "content": req.body.data.content
             }
           }
