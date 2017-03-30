@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
 
+
 class ChatBar extends Component {
 
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
-    let message = chat.messages[0] || [];
 
     return (
       <div className='chat-notification-bar' id= { visibility }>
@@ -22,26 +22,23 @@ class ChatBar extends Component {
         <div>
           <button
             className="btn btn-primary users-connected-button bar-button">
-            <div className="bar-button-contents">
             <i className='fa fa-users fa-lg'></i>
             <br></br>
              <span className="badge">{onlineUsers.usersOnline.length}</span>
-             </div>
           </button>
         </div>
         <div>
           <button
             className="btn btn-primary users-connected-button bar-button">
-            <div className="bar-button-contents">
             <i className='fa fa-comments fa-lg'></i>
             <br></br>
-             <div className="badge">{message.length}</div>
-           </div>
+             <span className="badge">4</span>
           </button>
         </div>
       </div>
     )
   }
+
 
   _handleClick(e){
     e.preventDefault();
