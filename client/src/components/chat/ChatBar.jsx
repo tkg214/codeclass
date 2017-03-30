@@ -5,23 +5,15 @@ import * as Actions from '../../actions/chat';
 
 
 class ChatBar extends Component {
-  constructor(){
-    super();
-
-    this.state = {
-      usersCount: '0'
-    }
-  }
 
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     console.log('check for onlineUsers', onlineUsers.usersOnline.length);
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
-    console.log('chatbar visibility', visibility);
 
     return (
-      <div className='chatNotificationBar' id= { visibility }>
-        <div className="chatNotificationBar-toggle">
+      <div className='chat-notification-bar' id= { visibility }>
+        <div className="chat-notification-bar-toggle">
           <button
             className="btn btn-info bar-button"
             onClick={this._handleClick.bind(this)}>
@@ -45,8 +37,9 @@ class ChatBar extends Component {
           </button>
         </div>
       </div>
-    );
+    )
   }
+
 
   _handleClick(e){
     e.preventDefault();

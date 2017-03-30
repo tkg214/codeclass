@@ -21,8 +21,7 @@ class ChatContainer extends Component {
         <button
           className="btn btn-info chat-toggle-button"
           onClick={this._handleClick.bind(this)}>
-          <i className='fa fa-chevron-right'></i>&ensp;
-
+          <i className='fa fa-chevron-right'></i>
         </button>
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>

@@ -27,6 +27,9 @@ class MessageComposeContainer extends Component {
         {!roomControls.isChatLocked &&
           <button onClick={this._handleSubmit.bind(this)} className="btn btn-default btn-sm chatbar-button">Send</button>
         }
+        {roomControls.isChatLocked &&
+          <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
+        }
       </div>
     )
   }
