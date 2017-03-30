@@ -13,7 +13,7 @@ class GistContainer extends Component {
     const { gist } = this.props;
 
     return (
-      <div className='col-lg-6'>
+      <div className='col-lg-12'>
         <div className='input-group gist-container'>
           <input
             type='text'
@@ -21,6 +21,7 @@ class GistContainer extends Component {
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
             className='form-control input-sm'/>
+
           <span className='input-group-btn'>
             <button
               className='btn btn-primary btn-sm gist-button'

@@ -315,7 +315,7 @@ io.on('connection', (socket) => {
   let roomOwnerID;
   let roomKey;
 
-  function broadcastToRoom(room, action) {
+  function broadcastToRoom(room, action, cb) {
     socket.broadcast.to(room).emit('action', action);
   }
 
@@ -345,10 +345,6 @@ io.on('connection', (socket) => {
 
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
-      roomData.messages.forEach((message) => {
-        message.id = 'M_' + message.id
-        message.timestamp = moment(message.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
-      })
       console.log(roomData);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
@@ -393,18 +389,23 @@ io.on('connection', (socket) => {
       break;
     }
     case 'SEND_OUTGOING_MESSAGE': {
-      let newAction = {
+      const newAction = {
         type: 'RECEIVE_NEW_MESSAGE',
         payload: {
           id: 'M_' + Date.now(),
           name: clientData.github_login,
           content: action.payload.content,
           avatarurl: clientData.github_avatar,
+          isOwnMessage: false,
           timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
         }
       }
-      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoomInclusive);
-      broadcastToRoomInclusive(action.room, newAction);
+      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
+      broadcastToRoom(action.room, newAction);
+      const newActionToSelf = Object.assign({}, newAction);
+      newActionToSelf.payload.isOwnMessage = true;
+      // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
+      emitToUser(newActionToSelf);
       break;
     }
     case 'CHANGE_EDITOR_THEME': {
