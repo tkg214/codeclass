@@ -10,7 +10,7 @@ class RoomApp extends Component {
   render() {
     return (
       <main>
-        <EnvContainer p2p={this.props.p2p}/>
+        <EnvContainer/>
         <ChatContainer/>
         <ChatBar/>
       </main>

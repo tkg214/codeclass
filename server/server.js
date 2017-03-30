@@ -6,7 +6,6 @@ const server        = require('http').Server(app);
 
 const bodyParser    = require('body-parser');
 const GitHubStrategy = require('passport-github2').Strategy;
-const p2pServer     = require('socket.io-p2p-server').Server;
 const io            = require('socket.io')(server);
 const passport      = require('passport');
 const path          = require('path');
@@ -306,8 +305,6 @@ io.use(socketioJwt.authorize({
   handshake: true
 }));
 
-io.use(p2pServer);
-
 //in-memory storage of people in classroom
 const clients = {};
 
@@ -420,10 +417,6 @@ io.on('connection', (socket) => {
     }
     }
   });
-
-  socket.on('start-stream', (data) => {
-    socket.broadcast.to(data.room).emit('start-stream', data);
-  })
 
   // When a user disconnects, update the clients object in memory, then emit to all users the updated list of users
   socket.on('disconnect', () => {

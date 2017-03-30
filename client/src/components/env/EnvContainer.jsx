@@ -3,11 +3,8 @@ import GistContainer from './GistContainer.jsx';
 import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import EnvControls from './EnvControls.jsx';
-<<<<<<< HEAD
 import EnvHeader from './EnvHeader.jsx';
 import AudioContainer from './AudioContainer.jsx';
-=======
->>>>>>> parent of bff162c... add new EnvHeader component to clean up EnvContainer
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/editor';
@@ -16,34 +13,13 @@ class EnvContainer extends Component {
 
   render() {
     const { editor, roomControls, gist, actions, terminal } = this.props;
-    let language;
-    if (roomControls.language === 'javascript') {
-      language = 'JavaScript';
-    } else if (roomControls.language === 'markdown') {
-      language = '';
-    } else {
-      language = roomControls.language.charAt(0).toUpperCase() + roomControls.language.slice(1);
-    }
 
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
           <div className='row'>
-<<<<<<< HEAD
             <EnvHeader roomControls={roomControls}/>
-            <AudioContainer p2p={this.props.p2p}/>
-=======
-            <div className='col-lg-12'>
-              <div className='env-nav-panel'>
-                <div className='panel panel-default'>
-                  <div className='panel-body'>
-                    Topic:&ensp;{roomControls.roomTitle}&ensp;&ensp;
-                    Language:&ensp;{language}&ensp;
-                  </div>
-                </div>
-              </div>
-            </div>
->>>>>>> parent of bff162c... add new EnvHeader component to clean up EnvContainer
+            <AudioContainer/>
           </div>
           <div className='row'>
             <GistContainer actions={actions} gist={gist} language={roomControls.language} editorValue={editor.editorValue}/>

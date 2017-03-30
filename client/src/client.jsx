@@ -13,7 +13,6 @@ import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
 import './helpers/resize.js';
 import axios from 'axios';
-import P2P from 'socket.io-p2p';
 
 const app = document.getElementById('react-root');
 
@@ -39,10 +38,9 @@ function connect_socket(token) {
     query: 'token=' + token
   });
 
-  const p2p = new P2P(socket);
 
-  p2p.on('connect', function() {
-    p2p.emit('join', room);
+  socket.on('connect', function() {
+    socket.emit('join', room);
   }).on('disconnect', function() {
     console.log('disconnected');
   });
@@ -52,13 +50,13 @@ function connect_socket(token) {
   )(createStore);
   const store = createStoreWithMiddleware(reducer);
 
-  p2p.on('action', (action) => {
+  socket.on('action', (action) => {
     console.log('Socket received: ', action);
     store.dispatch({type: action.type, payload: action.payload});
   });
 
   ReactDOM.render(<Provider store={store}>
-    <RoomApp p2p={p2p}/>
+    <RoomApp/>
   </Provider>, app);
 }
 
