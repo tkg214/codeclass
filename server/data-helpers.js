@@ -16,7 +16,7 @@ module.exports = function makeDataHelpers(knex) {
           language: data[0].language_id,
           roomID: data[0].id
         };
-        knex.raw('select m.created_at as timestamp, m.content as content, u.github_name as name, u.github_avatar as avatarURL from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
+        knex.raw('select m.created_at as timestamp, m.id, m.content as content, u.github_login as name, u.github_avatar as avatarurl from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
         .then((data) => {
           roomData.messages = data.rows
           knex.raw('select * from users where id= ?', userID)
@@ -61,7 +61,7 @@ module.exports = function makeDataHelpers(knex) {
       });
     },
 
-    sendOutgoingMessage: function(roomID, userID, content, cb) {
+    storeMessage: function(roomID, userID, content, cb) {
       knex('messages')
       .insert({
         classroom_id: roomID,
@@ -73,21 +73,21 @@ module.exports = function makeDataHelpers(knex) {
       });
     },
 
-    changeEditorTheme: function(userID, theme, cb) {
+    changeEditorTheme: function(userID, theme) {
       knex('users')
       .where({id: userID})
       .update({editor_theme: theme})
       .then(() => {
-        cb();
+        return;
       });
     },
 
-    changeFontSize: function(userID, fontSize, cb) {
+    changeFontSize: function(userID, fontSize) {
       knex('users')
       .where({id: userID})
       .update({font_size: fontSize})
       .then(() => {
-        cb();
+        return;
       });
     }
   }
