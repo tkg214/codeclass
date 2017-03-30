@@ -13,3 +13,7 @@ input[type="radio"].radio-none:checked + label {
 label {
   font-size: 1.2em;
 }
+
+.btn-theme {
+  @include button-variant(lighten($theme, 20%), $light, transparent)
+}
