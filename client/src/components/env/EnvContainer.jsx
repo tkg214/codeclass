@@ -4,6 +4,7 @@ import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import EnvControls from './EnvControls.jsx';
 import EnvHeader from './EnvHeader.jsx';
+import AudioContainer from './AudioContainer.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/editor';
@@ -18,6 +19,7 @@ class EnvContainer extends Component {
         <div className='env-nav-container'>
           <div className='row'>
             <EnvHeader roomControls={roomControls}/>
+            <AudioContainer p2p={this.props.p2p}/>
           </div>
           <div className='row'>
             <GistContainer actions={actions} gist={gist} language={roomControls.language} editorValue={editor.editorValue}/>

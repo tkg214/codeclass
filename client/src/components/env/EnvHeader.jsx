@@ -14,7 +14,7 @@ class EnvHeader extends Component {
     }
 
     return (
-      <div className='col-lg-12'>
+      <div className='col-lg-6'>
         <div className='env-nav-panel'>
           <div className='panel panel-default'>
             <div className='panel-body'>

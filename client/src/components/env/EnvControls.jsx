@@ -89,7 +89,6 @@ class EnvControls extends Component {
     console.log(this.props.editorValue)
     this.props.actions.executeCode(this.props.roomControls.language, this.props.editorValue);
   }
-
 }
 
 export default EnvControls;
