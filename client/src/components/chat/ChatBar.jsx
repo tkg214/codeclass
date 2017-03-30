@@ -3,10 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
 
+
 class ChatBar extends Component {
+  constructor(){
+    super();
+
+    this.state = {
+      usersCount: '0'
+    }
+  }
 
   render() {
-    const { roomControls, chat } = this.props;
+    const { roomControls, chat, onlineUsers } = this.props;
+    console.log('check for onlineUsers', onlineUsers.usersOnline.length);
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
     console.log('chatbar visibility', visibility);
 
@@ -22,15 +31,15 @@ class ChatBar extends Component {
         <div>
           <button
             className="btn btn-primary users-connected-button bar-button">
-            <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <i className='fa fa-users fa-lg'></i>
             <br></br>
-             <span className="badge">4</span>
+             <span className="badge">{onlineUsers.usersOnline.length}</span>
           </button>
         </div>
         <div>
           <button
             className="btn btn-primary users-connected-button bar-button">
-            <span className="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            <i className='fa fa-comments fa-lg'></i>
             <br></br>
              <span className="badge">4</span>
           </button>
@@ -51,7 +60,8 @@ class ChatBar extends Component {
 function mapStateToProps(state) {
   return {
     chat: state.chat,
-    roomControls: state.roomControls
+    roomControls: state.roomControls,
+    onlineUsers: state.onlineUsers
 
    }
 }
