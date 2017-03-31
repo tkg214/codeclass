@@ -1,4 +1,3 @@
-
 .btn.card-share{
   color: $light;
   border-radius: 0%;
@@ -6,6 +5,7 @@
   margin: 0;
   width: 49%;
 }
+
 .card {
   background: #fafafa;
   box-sizing: border-box;
@@ -13,7 +13,19 @@
   flex-direction: column;
   transition: 0.3s;
   width:30%;
+  &:hover .card-moment {
+    text-decoration: none;
+  }
 }
+
+.card-moment {
+  display: inline-block;
+}
+
+.card-title {
+  word-wrap: break-word;
+}
+
 .card:hover{
   transform: translate(0, -5px);
   transform: scale(1.03);
