@@ -24,7 +24,7 @@ class GistContainer extends Component {
 
     return (
       <div className='col-lg-12'>
-        <div className='section gist-container'>
+        <div className='gist-container'>
           <input
             type='text'
             placeholder='Enter Gist Name'
