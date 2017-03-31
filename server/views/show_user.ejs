@@ -22,10 +22,12 @@
         <div class="panel-heading">
           <h2> My Classrooms </h2>
         </div>
+        <div class="myrooms-container">
       <% classrooms.forEach((room) => { %>
         <% include ./partials/_room_card %>
       <% }) %>
       </div>
+    </div>
     </section>
     <% include ./partials/_scripts.ejs %>
   </body>
