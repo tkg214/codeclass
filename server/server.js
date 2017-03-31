@@ -177,6 +177,27 @@ app.get('/users/:username', (req, res) => {
   });
 });
 
+app.get('/my_rooms', (req, res) => {
+  if(req.user.id){
+  knex.select('*').
+    from('classrooms').
+    where('user_id', req.user.id).
+    then((results) => {
+      let userRooms = results;
+      console.log('userRooms: ', userRooms);
+      res.render('my_rooms', { userRooms });
+    });
+  } else {
+    res.status(401).render('error', {
+      errorcode: 401,
+      message: "Error: Please login first!!",
+      buttonLabel: 'Login',
+      buttonURL: '/login'
+    });
+  }
+
+})
+
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
   const user = req.user;
@@ -208,35 +229,45 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/rooms', (req, res) => {
-  knex('classrooms').where('topic', req.body.topic)
-  .then((results) => {
-    if(results.length === 0){
-      knex('classrooms')
-      .insert({
-        topic: req.body.topic,
-        language_id: req.body.language,
-        editorLocked: true,
-        chatLocked: false,
-        user_id: req.user.id,
-        //TODO Import sanitizeURL function from module
-        room_key: req.body.topic
-        .replace(/[^a-zA-Z0-9]+/g, '-')
-        .replace(/^\-|\-$/g, '')
-        .toLowerCase()
-      })
-      .returning('room_key')
-      .then((room_key) => {
-        res.redirect(`/rooms/${room_key[0]}`);
-      });
-    } else {
-      res.status(400).render('error', {
-        errorcode: 400,
-        message: "Error: This classroom topic already exists!",
-        buttonLabel: 'Try Again',
-        buttonURL: '/rooms'
-      });
-    }
-  })
+  if(/([A-Za-z]|[0-9]|_|-|\w|~)$/.test(req.body.topic)){
+    console.log('didnt work');
+    knex('classrooms').where('topic', req.body.topic)
+    .then((results) => {
+      if(results.length === 0){
+        knex('classrooms')
+        .insert({
+          topic: req.body.topic,
+          language_id: req.body.language,
+          editorLocked: true,
+          chatLocked: false,
+          user_id: req.user.id,
+          //TODO Import sanitizeURL function from module
+          room_key: req.body.topic
+          .replace(/[^a-zA-Z0-9]+/g, '-')
+          .replace(/^\-|\-$/g, '')
+          .toLowerCase()
+        })
+        .returning('room_key')
+        .then((room_key) => {
+          res.redirect(`/rooms/${room_key[0]}`);
+        });
+      } else {
+        res.status(400).render('error', {
+          errorcode: 400,
+          message: "Error: This classroom topic already exists!",
+          buttonLabel: 'Try Again',
+          buttonURL: '/rooms'
+        });
+      }
+    })
+  } else {
+    res.status(400).render('error', {
+      errorcode: 400,
+      message: "Error: Please use alphanumeric characters only!!",
+      buttonLabel: 'Try Again',
+      buttonURL: '/rooms'
+    });
+  }
 });
 
 //Posting a gist
