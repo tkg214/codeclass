@@ -1,5 +1,6 @@
-module.exports = function makeRoomHelpers(socketHelpers, room, clients) {
+module.exports = function makeRoomHelpers(socketHelpers, clients) {
   const clientData = socketHelpers.token();
+  const room = socketHelpers.room();
 
   return {
     addToClientsStore : function() {
@@ -15,12 +16,7 @@ module.exports = function makeRoomHelpers(socketHelpers, room, clients) {
       if (clientInRoom.length === 0) {
         clients[room].push({id: socketHelpers.id(), name : clientData.github_login, avatar : clientData.github_avatar});
       }
-    },
-    emitRoomData : function(roomData) {
-      roomOwnerID = roomData.roomOwnerID;
-      delete roomData.roomOwnerID;
-      let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-      socketHelpers.emitToUser(action);
     }
+   
   }
 }
