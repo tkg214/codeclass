@@ -17,7 +17,7 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
-const moment        = require('moment');
+// const moment        = require('moment');
 
 //Only use knexLogger in development
 if (process.env.ENV === 'development') {
@@ -357,12 +357,10 @@ io.on('connection', (socket) => {
      socket.on('action', (action) => {
     // console.log('Action received on server: \n', action);
         const actionMap = actionHandler(roomOwnerID, dbHelpers, sk, rm);
-        console.log("actionMap:", actionMap);
         const executeAction = actionMap[action.type];
-        console.log("executeAction: ", executeAction);
         executeAction(action);
 
-        switch(action.type) {
+        // switch(action.type) {
             // case 'UPDATE_EDITOR_VALUES': {
             //   if (roomOwnerID === clientData.id) {
             //     dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, broadcastToRoom);
@@ -379,48 +377,48 @@ io.on('connection', (socket) => {
             //   }
             //   break;
             // }
-            case 'TOGGLE_CHAT_LOCK': {
-              if (roomOwnerID === clientData.id) {
-                dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
-                broadcastToRoom(action.room, action);
-              }
-              break;
-            }
-            case 'EXECUTE_CODE' : {
-              if (roomOwnerID === clientData.id) {
-                broadcastToRoom(action.room, action);
-              }
-              break;
-            }
-            case 'SEND_OUTGOING_MESSAGE': {
-                const newAction = {
-                type: 'RECEIVE_NEW_MESSAGE',
-                payload: {
-                  id: 'M_' + Date.now(),
-                  name: clientData.github_login,
-                  content: action.payload.content,
-                  avatarurl: clientData.github_avatar,
-                  isOwnMessage: false,
-                  timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
-                }
-              }
-              dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
-              broadcastToRoom(action.room, newAction);
-              const newActionToSelf = Object.assign({}, newAction);
-              newActionToSelf.payload.isOwnMessage = true;
-              // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
-              emitToUser(newActionToSelf);
-              break;
-            }
-            case 'CHANGE_EDITOR_THEME': {
-              dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme);
-              break;
-            }
-            case 'CHANGE_FONT_SIZE': {
-              dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
-              break;
-            }
-          }
+            // case 'TOGGLE_CHAT_LOCK': {
+            //   if (roomOwnerID === clientData.id) {
+            //     dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
+            //     broadcastToRoom(action.room, action);
+            //   }
+            //   break;
+            // }
+            // case 'EXECUTE_CODE' : {
+            //   if (roomOwnerID === clientData.id) {
+            //     broadcastToRoom(action.room, action);
+            //   }
+            //   break;
+            // }
+            // case 'SEND_OUTGOING_MESSAGE': {
+            //     const newAction = {
+            //     type: 'RECEIVE_NEW_MESSAGE',
+            //     payload: {
+            //       id: 'M_' + Date.now(),
+            //       name: clientData.github_login,
+            //       content: action.payload.content,
+            //       avatarurl: clientData.github_avatar,
+            //       isOwnMessage: false,
+            //       timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+            //     }
+            //   }
+            //   dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
+            //   broadcastToRoom(action.room, newAction);
+            //   const newActionToSelf = Object.assign({}, newAction);
+            //   newActionToSelf.payload.isOwnMessage = true;
+            //   // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
+            //   emitToUser(newActionToSelf);
+            //   break;
+            // }
+            // case 'CHANGE_EDITOR_THEME': {
+            //   dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme);
+            //   break;
+            // }
+          //   case 'CHANGE_FONT_SIZE': {
+          //     dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
+          //     break;
+          //   }
+          // }
 
         });
 
