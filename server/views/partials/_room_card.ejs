@@ -20,11 +20,12 @@
       <p><%= moment(room.created_at).diff(moment(), 'days') < -5 ? moment(room.created_at).format('MMM Do YYYY') : moment(room.created_at).fromNow() %></p>
     </header>
 
-    <footer class='card-footer bottom-align-text'>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        <i class="fa fa-clipboard" aria-hidden="true"></i>
+    <footer class='card-footer'>
+      <a class="btn card-share" role="button" data-clipboard-text=<%= `rooms/${room.room_key}` %> >
+        <i class="fa fa-clipboard"></i>
         Copy Link
       </a>
+      <span class="fa fa-check text-success clipboard-check"></span>
     </footer>
 </div>
 <!-- </a> -->

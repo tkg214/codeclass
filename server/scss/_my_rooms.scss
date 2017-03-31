@@ -38,6 +38,10 @@
   background: lighten($theme, 5%);
 }
 
+.clipboard-check {
+  display:none;
+}
+
 .delete-card-icon{
   position: relative;
   float: right;
