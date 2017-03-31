@@ -6,3 +6,4 @@ npm-debug.log
 .env
 /tmp
 settings.json
+ecosystem.config.js
