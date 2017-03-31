@@ -35,6 +35,9 @@ class ChatContainer extends Component {
     // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
     this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
     this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
+    const { chat } = this.props;
+    let messageList = chat.messages[0] || [];
+    this.props.actions.updateNewMessagesCount(messageList.length);
 
   }
 

@@ -180,6 +180,27 @@ app.get('/users/:username', (req, res) => {
   });
 });
 
+app.get('/my_rooms', (req, res) => {
+  if(req.user.id){
+  knex.select('*').
+    from('classrooms').
+    where('user_id', req.user.id).
+    then((results) => {
+      let userRooms = results;
+      console.log('userRooms: ', userRooms);
+      res.render('my_rooms', { userRooms });
+    });
+  } else {
+    res.status(401).render('error', {
+      errorcode: 401,
+      message: "Error: Please login first!!",
+      buttonLabel: 'Login',
+      buttonURL: '/login'
+    });
+  }
+
+})
+
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
   const user = req.user;
@@ -211,35 +232,45 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/rooms', (req, res) => {
-  knex('classrooms').where('topic', req.body.topic)
-  .then((results) => {
-    if(results.length === 0){
-      knex('classrooms')
-      .insert({
-        topic: req.body.topic,
-        language_id: req.body.language,
-        editorLocked: true,
-        chatLocked: false,
-        user_id: req.user.id,
-        //TODO Import sanitizeURL function from module
-        room_key: req.body.topic
-        .replace(/[^a-zA-Z0-9]+/g, '-')
-        .replace(/^\-|\-$/g, '')
-        .toLowerCase()
-      })
-      .returning('room_key')
-      .then((room_key) => {
-        res.redirect(`/rooms/${room_key[0]}`);
-      });
-    } else {
-      res.status(400).render('error', {
-        errorcode: 400,
-        message: "Error: This classroom topic already exists!",
-        buttonLabel: 'Try Again',
-        buttonURL: '/rooms'
-      });
-    }
-  })
+  if(/([A-Za-z]|[0-9]|_|-|\w|~)$/.test(req.body.topic)){
+    console.log('didnt work');
+    knex('classrooms').where('topic', req.body.topic)
+    .then((results) => {
+      if(results.length === 0){
+        knex('classrooms')
+        .insert({
+          topic: req.body.topic,
+          language_id: req.body.language,
+          editorLocked: true,
+          chatLocked: false,
+          user_id: req.user.id,
+          //TODO Import sanitizeURL function from module
+          room_key: req.body.topic
+          .replace(/[^a-zA-Z0-9]+/g, '-')
+          .replace(/^\-|\-$/g, '')
+          .toLowerCase()
+        })
+        .returning('room_key')
+        .then((room_key) => {
+          res.redirect(`/rooms/${room_key[0]}`);
+        });
+      } else {
+        res.status(400).render('error', {
+          errorcode: 400,
+          message: "Error: This classroom topic already exists!",
+          buttonLabel: 'Try Again',
+          buttonURL: '/rooms'
+        });
+      }
+    })
+  } else {
+    res.status(400).render('error', {
+      errorcode: 400,
+      message: "Error: Please use alphanumeric characters only!!",
+      buttonLabel: 'Try Again',
+      buttonURL: '/rooms'
+    });
+  }
 });
 
 //Posting a gist
@@ -247,23 +278,7 @@ function getUser(request) {
   return knex('users').where('github_id', request.session.passport.user);
 }
 
-function defineFileExtension(language) {
-  let extension;
-  switch (language) {
-  case 'javascript':
-    extension = '.js';
-    break;
-  case 'ruby':
-    extension = '.rb';
-    break;
-  case 'python':
-    extension = '.py';
-  }
-  return extension;
-}
-
 app.post('/savegist', function (req, res) {
-  const extension = defineFileExtension(req.body.data.language);
   getUser(req).then((row) => {
     const user = row[0];
     // console.log('user', user);
@@ -271,23 +286,21 @@ app.post('/savegist', function (req, res) {
       {
         url: "https://api.github.com/gists",
         headers: {
-          "User-Agent": "waffleio gist creatifier (student project)",
+          "User-Agent": "CodeClass gist creator (student project)",
           "Authorization": `token ${user.github_access_token}`
         },
         "body": JSON.stringify({
           "files": {
-            [`${req.body.data.title}${extension}`]: {
+            [`${req.body.data.title}${req.body.data.extension}`]: {
               "content": req.body.data.content
             }
           }
         })
       }, function(error, response, body) {
-      console.log("gist-post response:", response);
       if (error) {
-        console.log("posting gist to github failed", error);
-        return res.status(500).send("oh god the pain");
+        return res.status(500).send("Posting gist to github failed");
       } else {
-        return res.send("zug zug");
+        return res.send("Request sent");
       }
     });
   });
@@ -331,7 +344,7 @@ io.on('connection', (socket) => {
     sk.broadcastToRoomInclusive(room, action);
     dbHelpers.setRoomData(room, clientData.id, emitRoomData);
 
-    //Return room owner id
+    //Return room owner id (want to refactor this out but it has to be here lol)
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
       console.log(roomOwnerID);
@@ -339,13 +352,12 @@ io.on('connection', (socket) => {
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       sk.emitToUser(action);
     }
+  });
 
-     socket.on('action', (action) => {
-      const actionMap = actionHandler(roomOwnerID, dbHelpers, sk, rm);
-      const executeAction = actionMap[action.type];
-      executeAction(action);
-    });
-
+  socket.on('action', (action) => {
+    const actionMap = actionHandler(roomOwnerID, dbHelpers, sk, rm);
+    const executeAction = actionMap[action.type];
+    executeAction(action);
   });
 
   socket.on('disconnect', () => {

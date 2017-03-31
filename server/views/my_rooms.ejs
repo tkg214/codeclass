@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Code Class | Rooms</title>
+		<% include ./partials/_head.ejs %>
+	</head>
+	<body>
+		<header>
+			<% include ./partials/_nav.ejs %>
+		</header>
+		<h1> My Rooms</h1>
+
+    <div class="myrooms-container">
+
+    <% userRooms.forEach( room => { %>
+
+      <% include ./partials/_room_card.ejs %>
+
+    <% }); %>
+
+    </div>
+
+
+
+	</body>
+	<% include ./partials/_scripts.ejs %>
+</html>
