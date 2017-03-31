@@ -16,8 +16,7 @@
     <% if (!user) { %>
       <li><a href="/login">Log In</a></li>
     <% } else { %>
-      <li><a href="/">Hey, <%= user.github_login %></a></li>
-      <li><a href="/my_rooms">My Rooms</a></li>
+      <li><a href="/users/<%=user.github_login %>">Howdy, <%=user.github_login %></a></li>
       <li><a href="/logout">
         <i class="fa fa-sign-out" aria-hidden="true"></i>
         Log Out</a></li>

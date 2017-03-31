@@ -1,31 +1,26 @@
 <!-- <a class="card-link" href=<%= `/rooms/${room.room_key}` %> -->
     <div class='card panel panel-default z-3'>
-      <div class="delete-card-circle"><i class="fa fa-times delete-card-icon" aria-hidden="true"></i></div>
+      <div class="delete-card-circle"><span class="fa fa-times delete-card-icon" aria-hidden="true"></span></div>
     <header class='card-heading panel-heading'>
     <div>
       <% if (room.language_id === 'javascript') { %>
-        <i class="fa icon-javascript-alt language-icon-js" aria-hidden="true"></i>
+        <span class="fa icon-javascript-alt language-icon-js" aria-hidden="true"></span>
       <% } %>
       <% if (room.language_id === 'ruby') { %>
-        <i class="fa icon-ruby language-icon-ruby" aria-hidden="true"></i>
+        <span class="fa icon-ruby language-icon-ruby" aria-hidden="true"></span>
       <% } %>
       <% if (room.language_id === 'python') { %>
-        <i class="fa icon-python language-icon-python" aria-hidden="true"></i>
+        <span class="fa icon-python language-icon-python" aria-hidden="true"></span>
       <% } %>
 
     </div>
       <h3>
         <%= room.topic %>
       </h3>
-
-      <h6><%= room.created_at %></h6>
-
+      <p><%= room.created_at %></p>
     </header>
 
     <footer class='card-footer bottom-align-text'>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        Go to Room
-      </a>
       <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
         <i class="fa fa-clipboard" aria-hidden="true"></i>
         Copy Link
