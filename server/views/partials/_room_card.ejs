@@ -17,7 +17,7 @@
       <h3>
         <%= room.topic %>
       </h3>
-      <p><%= room.created_at %></p>
+      <p><%= moment(room.created_at).diff(moment(), 'days') < -5 ? moment(room.created_at).format('MMM Do YYYY') : moment(room.created_at).fromNow() %></p>
     </header>
 
     <footer class='card-footer bottom-align-text'>
