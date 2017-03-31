@@ -16,11 +16,25 @@ class ChatContainer extends Component {
 
     return (
       <div className={'chat-container ' + visibility }>
-        <button
-          className="btn btn-info chat-toggle-button"
-          onClick={this._handleClick.bind(this)}>
-          <i className='fa fa-chevron-right'></i>
-        </button>
+        <div className="sidebar-tabs">
+          <ul>
+            <li
+              className="sidebar-tab chat-toggle-button"
+              onClick={this._handleClick.bind(this)}>
+              <i className='fa fa-chevron-right'></i>
+            </li>
+            <li
+              className="sidebar-tab show-users-tab btn waves-effect"
+              onClick={this._clickToShowUserTab.bind(this)}>
+              Users online
+            </li>
+            <li
+              className="sidebar-tab show-chat-tab"
+              onClick={this._clickToShowChatTab.bind(this)}>
+              Chatroom
+            </li>
+          </ul>
+        </div>
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
@@ -38,7 +52,15 @@ class ChatContainer extends Component {
     const { chat } = this.props;
     let messageList = chat.messages[0] || [];
     this.props.actions.updateNewMessagesCount(messageList.length);
+  }
 
+  _clickToShowUserTab(e) {
+    e.preventDefault();
+    console.log("user tab clicked");
+  }
+
+  _clickToShowChatTab(e) {
+    e.preventDefault();
   }
 
 }

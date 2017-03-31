@@ -10,7 +10,7 @@
 
 .chat-container {
   margin-right: 1em;
-  background-color: #b5b5b5;
+  background-color: #fff;
   color: #FFFFFF;
   overflow: hidden;
   flex: 0 0 400px;
@@ -186,4 +186,8 @@
 
 .users-connected-button{
   height: 100px;
+}
+
+.sidebar-tab {
+  color: $dark3;
 }

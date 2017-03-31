@@ -1,3 +1,18 @@
+/* COLORS */
+$green: #19B98B;
+$yellow: #FFCA4A;
+$red: #E9484E;
+$blue: #18B0F1;
+
+$dark1: #2F333D;
+$dark2: #262B34;
+$dark3: #1D202A;
+
+$gray1: #F4F7FA;
+$gray2: #DBE0E4;
+$gray3: #C5CACE;
+
+
 $nav-height: 3em;
 $controller-height: 3em;
 $terminal-height: 200px;
@@ -7,3 +22,4 @@ $theme: #485563;
 $editor-height: calc($env-height - $controller-height - $terminal-height);
 $chat-notifcation-bar-width: 50px;
 $message-compose-container-height: 100px;
+

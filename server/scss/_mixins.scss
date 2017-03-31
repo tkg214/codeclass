@@ -63,3 +63,12 @@
   line-height: $line-height;
   border-radius: $border-radius;
 }
+
+//Avatar display
+@mixin avatar-size {
+  background-color: #fff;
+  border-radius: 50%;    
+  height: 80px;
+  padding: 5px;
+  width: 80px;
+}

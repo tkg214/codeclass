@@ -5,7 +5,10 @@ class User extends Component {
     return (
       <div className="user-container">
        <img className="online-user-avatar" src={this.props.avatar}/>
-       <p>{this.props.name}</p>
+       <div className="github-info">
+        <p>{this.props.name}</p>
+        <a href={`https://github.com/${this.props.name}`}><i className="fa fa-github" aria-hidden="true"></i></a>
+       </div>
       </div>
     )
   }

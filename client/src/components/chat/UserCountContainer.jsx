@@ -17,6 +17,18 @@ class UserCountContainer extends Component {
             {users.usersOnline.map((user) => {
               return <User key={user.id} avatar={user.avatar} name={user.name}></User>
             })}
+            <div className="user-container">
+              <img className="online-user-avatar" src="https://avatars0.githubusercontent.com/u/23545041?v=3&s=400"/>
+              <p>Chunk</p>
+            </div>
+            <div className="user-container">
+              <img className="online-user-avatar" src="https://avatars1.githubusercontent.com/u/24704531?v=3&s=400"/>
+              <p>Ken</p>
+            </div>
+            <div className="user-container">
+              <img className="online-user-avatar" src="https://avatars0.githubusercontent.com/u/17226019?v=3&s=400"/>
+              <p>Danton</p>
+            </div>
           </div>
         </div>
       </div>
