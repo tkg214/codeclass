@@ -1,36 +1,59 @@
 .btn.card-share{
-  color: #000000;
+  color: $light;
   border-radius: 0%;
   border: 0;
   margin: 0;
   width: 49%;
 }
+
 .card {
-    background: #fafafa;
-    width: 30%;
-    border-radius: 0%;
-    transition: 0.5s;
+  background: #fafafa;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+  width:30%;
+  &:hover .card-moment {
+    text-decoration: none;
+  }
 }
+
+.card-moment {
+  display: inline-block;
+}
+
+.card-title {
+  word-wrap: break-word;
+}
+
 .card:hover{
-  transform: translate(-5px, -5px);
+  transform: translate(0, -5px);
+  transform: scale(1.03);
 }
 
 .card.panel.panel-default{
   border: 0;
+  background-color: #3e444c;
 }
 
-.card-heading.panel-heading{
-  background: #red;
-  border: 0;
-  border-radius: 0%;
-  word-wrap: break-word;
+// .card-heading.panel-heading{
+//   background: #red;
+//   border: 0;
+//   word-wrap: break-word;
+// }
+
+.card-body {
+  margin-bottom: auto;
 }
 
 .card-footer{
-  background: #fafafa;
-  border-top: 1px solid #eeeeee;
-  border-radius: 0%;
+  background: lighten($theme, 5%);
 }
+
+.clipboard-check {
+  display:none;
+}
+
 .delete-card-icon{
   position: relative;
   float: right;
@@ -50,10 +73,6 @@
   // height: 1.5em;
   // width: 1.5em;
   // z-index: 100;
-}
-
-.languageID{
-  text-transform: capitalize;
 }
 
 .fa.icon-javascript-alt.language-icon-js{
@@ -78,10 +97,9 @@
 
 .myrooms-container {
     margin: 0 auto;
-    width: 80%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     flex-wrap: wrap;
 }
 

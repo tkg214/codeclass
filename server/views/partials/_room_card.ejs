@@ -1,39 +1,28 @@
-<!-- <a class="card-link" href=<%= `/rooms/${room.room_key}` %> -->
-    <div class='card panel panel-default z-3'>
-      <div class="delete-card-circle"><i class="fa fa-times delete-card-icon" aria-hidden="true"></i></div>
-    <header class='card-heading panel-heading'>
-    <div>
+<article class='card panel panel-default z-3'>  <!-- <div class="delete-card-circle"><span class="fa fa-times delete-card-icon" aria-hidden="true"></span></div> -->
+    <a href=<%= `/rooms/${room.room_key}` %>>
+    <div class='panel-body card-body'>
+    <span>
       <% if (room.language_id === 'javascript') { %>
-        <i class="fa icon-javascript-alt language-icon-js" aria-hidden="true"></i>
+        <span class="fa icon-javascript-alt language-icon-js" aria-hidden="true"></span>
       <% } %>
       <% if (room.language_id === 'ruby') { %>
-        <i class="fa icon-ruby language-icon-ruby" aria-hidden="true"></i>
+        <span class="fa icon-ruby language-icon-ruby" aria-hidden="true"></span>
       <% } %>
       <% if (room.language_id === 'python') { %>
-        <i class="fa icon-python language-icon-python" aria-hidden="true"></i>
+        <span class="fa icon-python language-icon-python" aria-hidden="true"></span>
       <% } %>
-
-    </div>
-      <h3>
+    </span>
+      <h4 class="card-header">
         <%= room.topic %>
-      </h3>
-
-      <h6><%= room.created_at %></h6>
-
-    </header>
-    <article class='card-body panel-body'>
-    <p class="languageID"><%= room.language_id %></p>
-
-    </article>
-
-    <footer class='card-footer '>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        Go to Room
-      </a>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        <i class="fa fa-clipboard" aria-hidden="true"></i>
+      </h4>
+      <p class="card-moment"><%= moment(room.created_at).diff(moment(), 'days') < -5 ? moment(room.created_at).format('MMM Do YYYY') : moment(room.created_at).fromNow() %></p>
+    </div>
+    </a>
+    <footer class='card-footer'>
+      <a class="btn card-share" role="button" data-clipboard-text=<%= `rooms/${room.room_key}` %> >
+        <i class="fa fa-clipboard"></i>
         Copy Link
       </a>
+      <span class="fa fa-check text-success clipboard-check"></span>
     </footer>
-</div>
-<!-- </a> -->
+</article>
