@@ -22,11 +22,8 @@
         <div class="panel-heading">
           <h2> My Classrooms </h2>
         </div>
-      <% classrooms.forEach((classroom) => { %>
-        <div class="panel-body">
-          <a  class="pull-left" href="/rooms/<%= classroom.room_key %>"><%= classroom.topic %></a>
-          <p class="pull-right"><%= classroom.created_at %></p>
-        </div>
+      <% classrooms.forEach((room) => { %>
+        <% include ./partials/_room_card %>
       <% }) %>
       </div>
     </section>
