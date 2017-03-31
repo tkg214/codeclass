@@ -9,6 +9,7 @@ class AudioContainer extends Component {
         <div className='env-nav-panel'>
           <div className='panel panel-default'>
             <button className='btn btn-primary btn-sm' onClick={this._startStream.bind(this)}>Start Stream</button>
+
           </div>
         </div>
       </div>
@@ -16,7 +17,7 @@ class AudioContainer extends Component {
   }
 
   _startStream(e) {
-
+    
   }
 }
 

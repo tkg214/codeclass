@@ -344,7 +344,6 @@ io.on('connection', (socket) => {
 
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
-      console.log(roomData);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       emitToUser(action);

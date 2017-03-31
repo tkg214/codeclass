@@ -33,11 +33,9 @@ axios.get('/api/get_token')
 
 //Open socket connection to authenticated users
 function connect_socket(token) {
-  const socket = io();
-  socket.connect( {
+  const socket = io.connect( {
     query: 'token=' + token
   });
-
 
   socket.on('connect', function() {
     socket.emit('join', room);
