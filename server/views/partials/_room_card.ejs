@@ -21,12 +21,8 @@
       <h6><%= room.created_at %></h6>
 
     </header>
-    <article class='card-body panel-body'>
-    <p class="languageID"><%= room.language_id %></p>
 
-    </article>
-
-    <footer class='card-footer '>
+    <footer class='card-footer bottom-align-text'>
       <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
         Go to Room
       </a>

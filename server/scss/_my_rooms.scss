@@ -1,3 +1,4 @@
+
 .btn.card-share{
   color: #000000;
   border-radius: 0%;
@@ -6,10 +7,12 @@
   width: 49%;
 }
 .card {
-    background: #fafafa;
-    width: 30%;
-    border-radius: 0%;
-    transition: 0.5s;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border-radius: 0%;
+  transition: 0.5s;
 }
 .card:hover{
   transform: translate(-5px, -5px);
@@ -30,6 +33,7 @@
   background: #fafafa;
   border-top: 1px solid #eeeeee;
   border-radius: 0%;
+   margin-top: auto;
 }
 .delete-card-icon{
   position: relative;
@@ -81,7 +85,7 @@
     width: 85%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     flex-wrap: wrap;
 }
 
