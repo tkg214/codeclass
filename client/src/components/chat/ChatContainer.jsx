@@ -17,26 +17,25 @@ class ChatContainer extends Component {
     return (
       <div className={'chat-container ' + visibility }>
         <div className="sidebar-tabs">
-          <ul>
-            <li
-              className="sidebar-tab chat-toggle-button"
-              onClick={this._handleClick.bind(this)}>
-              <i className='fa fa-chevron-right'></i>
-            </li>
-            <li
-              className="sidebar-tab show-users-tab btn waves-effect"
-              onClick={this._clickToShowUserTab.bind(this)}>
-              Users online
-            </li>
-            <li
-              className="sidebar-tab show-chat-tab"
-              onClick={this._clickToShowChatTab.bind(this)}>
-              Chatroom
-            </li>
-          </ul>
+          <div
+            className="sidebar-tab chat-toggle-button"
+            onClick={this._handleClick.bind(this)}>
+            <i className='fa fa-chevron-right'></i>
+          </div>
+          <div
+            className="sidebar-tab show-users-tab"
+            onClick={this._clickToShowUserTab.bind(this)}>
+            Users online
+          </div>
+          <div
+            className="sidebar-tab show-chat-tab"
+            onClick={this._clickToShowChatTab.bind(this)}>
+            Chatroom
+          </div>
         </div>
       <div>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
+          
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </div>
