@@ -331,13 +331,19 @@ io.on('connection', (socket) => {
   socket.on('join', (room) => {
     socket.join(room);
     roomKey = room;
+    console.log('roomKey on join: ', roomKey)
     console.log(`${clientData.github_login} is now connected to room ${room}`);
 
     if (!clients.hasOwnProperty(room)) {
       clients[room] = [];
     }
+    const clientInRoom = clients[room].filter((client) => {
+      return client.name === clientData.github_login;
+    });
 
-    clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
+    if (clientInRoom.length === 0) {
+      clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
+    }
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}}
     broadcastToRoomInclusive(room, action);
 
@@ -345,7 +351,7 @@ io.on('connection', (socket) => {
 
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
-      console.log(roomData);
+      // console.log(roomData);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       emitToUser(action);
@@ -422,6 +428,12 @@ io.on('connection', (socket) => {
   // When a user disconnects, update the clients object in memory, then emit to all users the updated list of users
   socket.on('disconnect', () => {
     console.log(`${clientData.github_login} is now disconnected`);
+    console.log("roomKey on disconnect: ", roomKey);
+
+    // if (clients[roomKey].length > 0) {
+
+    // }
+
     const clientIndex = clients[roomKey].findIndex(client => client.id === socket.id);
     if (clientIndex > -1) {
       clients[roomKey].splice(clientIndex, 1);
@@ -434,3 +446,5 @@ io.on('connection', (socket) => {
     socket.to(roomKey).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[roomKey]}});
   });
 });
+
+
