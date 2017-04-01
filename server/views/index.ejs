@@ -12,8 +12,11 @@
 		<% if (!user) { %>
 			<div class="jumbotron">
 				<div class="page-header">
-					<h1>Get coding</h1>
-					<a class="btn btn-success btn-lg" href="/auth/github"><span class="fa fa-github fa-lg"></span>&ensp;Login via Github</a>
+					<span class="typed">&gt;&ensp;</span>
+					<h1 class="typed front-typed"></h1>
+					<div>
+						<a class="btn btn-success btn-lg" href="/auth/github"><span class="fa fa-github fa-lg"></span>&ensp;Login via Github</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -23,5 +26,18 @@
 		<% } %>
 	</div>
 		<% include ./partials/_scripts.ejs %>
+		<script src="/scripts/typed.min.js"></script>
+		<script>
+			$(function(){
+				$(".front-typed").typed({
+					strings: ["Welcome to class"],
+					typeSpeed: 100,
+					cursorChar: "&#9608",
+					callback: function() {
+						$('.typed-cursor').addClass('animate');
+					},
+				});
+			});
+		</script>
 	</body>
 </html>
