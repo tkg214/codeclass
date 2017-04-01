@@ -31,7 +31,7 @@ class ChatContainer extends Component {
       <Tabs onSelect={this.handleSelect} selectedIndex={2}>
         <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab">Users online</Tab>
-          <Tab className="sidebar-tab">Chatroom</Tab>
+          <Tab className="sidebar-tab mui--text-button">Chatroom</Tab>
         </TabList>
 
         <TabPanel className="sidebar-panel">
