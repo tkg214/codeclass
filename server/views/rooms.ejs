@@ -10,9 +10,11 @@
 		</header>
 		<div class="container">
 	    <section class="room-select">
+				<div class="jumbotron">
 				<div class="page-header">
 					<h1>Create a Room</h1>
 				 </div>
+			 </div>
 				 <div class="panel panel-default">
 				 <div class="panel-body">
 				 <form action="/rooms" method="POST">
@@ -22,8 +24,7 @@
 					 </div>
 					 <div class="form-group">
 						 <label for="new-classroom--language">Language</label>
-					 </div>
-						 <div class="btn-group" data-toggle="buttons">
+						 <div class="input-group btn-group-language" data-toggle="buttons">
 						 	<div class="radio-inline btn btn-primary">
 							 	<label>
 								 	<input type="radio" class="radio-none" name="language" id="radio-javascript" value="javascript" checked>
@@ -48,6 +49,7 @@
 		         <button type="submit" class="btn btn-success btn-lg">Create classroom</button>
 		       </div>
 				 </form>
+			 </div>
 	    </section>
 	</div>
 	<% include ./partials/_new_classroom_modal %>

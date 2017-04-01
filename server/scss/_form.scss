@@ -1,15 +1,20 @@
-.form-group ~ .form-group {
-  padding-top: $space;
+.form-group {
+  padding: $space;
 }
 
 input[type="radio"].radio-none {
   display:none;
 }
 
-label {
+label[for*='new-classroom'] {
   font-size: 1.2em;
+  padding-bottom: 0.5em;
 }
 
 .btn-theme {
   @include button-variant($light, lighten($theme, 20%), transparent)
+}
+
+.btn-group-language {
+  display: block;
 }
