@@ -1,23 +1,28 @@
-<!-- <a class="card-link" href=<%= `/rooms/${room.room_key}` %> -->
-    <div class='card panel panel-default z-3'>
-    <header class='card-heading panel-heading'>
-      <h3><%= room.topic %></h3>
-
-      <h6><%= room.created_at %></h6>
-
-    </header>
-    <article class='card-body panel-body'>
-    <p class="languageID"><%= room.language_id %></p>
-
-    </article>
-
-    <footer class='card-footer '>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        Go to Room
+<article class='card panel panel-default z-3'>  <!-- <div class="delete-card-circle"><span class="fa fa-times delete-card-icon" aria-hidden="true"></span></div> -->
+    <a href=<%= `/rooms/${room.room_key}` %>>
+    <div class='panel-body card-body'>
+    <span>
+      <% if (room.language_id === 'javascript') { %>
+        <span class="fa icon-javascript-alt language-icon-js" aria-hidden="true"></span>
+      <% } %>
+      <% if (room.language_id === 'ruby') { %>
+        <span class="fa icon-ruby language-icon-ruby" aria-hidden="true"></span>
+      <% } %>
+      <% if (room.language_id === 'python') { %>
+        <span class="fa icon-python language-icon-python" aria-hidden="true"></span>
+      <% } %>
+    </span>
+      <h4 class="card-header">
+        <%= room.topic %>
+      </h4>
+      <p class="card-moment"><%= moment(room.created_at).diff(moment(), 'days') < -5 ? moment(room.created_at).format('MMM Do YYYY') : moment(room.created_at).fromNow() %></p>
+    </div>
+    </a>
+    <footer class='card-footer'>
+      <a class="btn card-share" role="button" data-clipboard-text=<%= `rooms/${room.room_key}` %> >
+        <i class="fa fa-clipboard"></i>
+        Copy Link
       </a>
-      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
-        Get Link
-      </a>
+      <span class="fa fa-check text-success clipboard-check"></span>
     </footer>
-</div>
-<!-- </a> -->
+</article>

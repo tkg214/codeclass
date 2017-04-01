@@ -17,7 +17,7 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
-// const moment        = require('moment');
+const moment        = require('moment');
 
 //Only use knexLogger in development
 if (process.env.ENV === 'development') {
@@ -136,6 +136,7 @@ function ensureAuthenticated(req, res, next) {
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.user = req.user;
+  res.locals.moment = moment;
   //Define source of bundle.js depending on environment
   let bundleSrc;
   if(req.user) {
