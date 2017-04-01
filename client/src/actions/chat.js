@@ -27,7 +27,6 @@ export function updateUsers(usersOnline){
   }
 }
 export function toggleChatContainer(isChatVisible){
-  console.log('action',isChatVisible);
   return dispatch => {
     dispatch({
       type: 'TOGGLE_CHAT_CONTAINER',
@@ -50,7 +49,6 @@ export function toggleChatNotificationBar(isChatNotificationVisible){
 }
 
 export function updateNewMessagesCount(currentMessagesCount){
-  console.log('dispatched');
   return dispatch => {
     dispatch({
       type: 'UPDATE_NEW_MESSAGES_COUNT',

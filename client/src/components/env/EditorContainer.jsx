@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AceEditor from 'react-ace';
 
+import brace from 'brace';
 import 'brace/mode/javascript';
 import 'brace/mode/ruby';
 import 'brace/mode/python';
@@ -29,7 +30,6 @@ class EditorContainer extends Component {
   render() {
     const { editorValue, language, theme, isEditorLocked, fontSize } = this.props;
 
-    // TODO prop validations fail on font change but why?
     return (
       <div className='editor-container'>
         <AceEditor
