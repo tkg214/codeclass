@@ -3,22 +3,21 @@ import React, { Component } from 'react';
 class AudioContainer extends Component {
 
   render() {
-
     const { socket } = this.props;
-    socket.on('started-stream', () => {
-      console.log('started-stream')
-    });
 
-    socket.on('prepare-stream', () => {
-      console.log('prepare-stream')
-    });
+    socket.on('stream', (arrayBuffer) => {
+      const blob = new Blob([arrayBuffer], { 'type': 'audio/ogg; codecs=opus' });
+      const audioStream = document.getElementById('audioStream');
+      audioStream.src = window.URL.createObjectURL(blob);
+      audioStream.play();
+    })
 
     return (
       <div className='col-lg-6'>
         <div className='env-nav-panel'>
-          <div className='panel panel-default'>
-            <button className='btn btn-primary btn-sm' onClick={this._startStream.bind(this)}>Start Stream</button>
-
+          <div id ='audioPanel' className='panel panel-default'>
+            <button id='startButton' className='btn btn-primary btn-sm' onClick={this._startStream.bind(this)}>Start Stream</button>
+            <audio id='audioStream' controls></audio>
           </div>
         </div>
       </div>
@@ -27,8 +26,30 @@ class AudioContainer extends Component {
 
   _startStream(e) {
     e.preventDefault();
-    this.props.socket.emit('start-stream')
+
+    const constraints = {audio: true}
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then((mediaStream) => {
+      const mediaRecorder = new MediaRecorder(mediaStream);
+      mediaRecorder.onstart = (e) => {
+        this.chunks = [];
+      }
+      mediaRecorder.ondataavailable = (e) => {
+        this.chunks.push(e.data);
+      }
+      mediaRecorder.onstop = (e) => {
+        const blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
+        this.props.socket.emit('stream', blob);
+      }
+      mediaRecorder.start()
+      setInterval(() => {
+        mediaRecorder.stop()
+        mediaRecorder.start()
+      }, 500);
+    })
   }
+
+
 }
 
 export default AudioContainer;
