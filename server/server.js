@@ -151,11 +151,19 @@ app.use(function(req, res, next){
 });
 
 app.get('/', function(req, res) {
-  res.render('index');
+  if (req.user) {
+    res.redirect('/rooms');
+  } else {
+    res.render('index');
+  }
 });
 
 app.get('/login', function(req, res) {
-  res.render('login');
+  if (req.user) {
+    res.redirect('/rooms');
+  } else {
+    res.render('login');
+  }
 });
 
 app.get('/rooms', ensureAuthenticated, function(req, res) {
