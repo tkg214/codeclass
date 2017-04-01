@@ -23,6 +23,7 @@
     "react-dom": "^15.4.2",
     "react-fontawesome": "^1.5.0",
     "react-redux": "^4.4.6",
+    "react-tabs": "^0.8.2",
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {

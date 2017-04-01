@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
 import MessageComposeContainer from './MessageComposeContainer.jsx';
 
+
 class ChatContainer extends Component {
 
-  render() {
+  handleSelect(index, last) {
+    console.log('Selected tab: ' + index + ', Last tab: ' + last);
+  }
 
+  render() {
     const { chat, roomControls, onlineUsers } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
-
+    // Tabs.setUseDefaultStyles(false);
     return (
       <div className={'chat-container ' + visibility }>
         <div className="sidebar-tabs">
@@ -22,23 +27,22 @@ class ChatContainer extends Component {
             onClick={this._handleClick.bind(this)}>
             <i className='fa fa-chevron-right'></i>
           </div>
-          <div
-            className="sidebar-tab show-users-tab"
-            onClick={this._clickToShowUserTab.bind(this)}>
-            Users online
-          </div>
-          <div
-            className="sidebar-tab show-chat-tab"
-            onClick={this._clickToShowChatTab.bind(this)}>
-            Chatroom
-          </div>
         </div>
-      <div>
+      <Tabs onSelect={this.handleSelect} selectedIndex={2}>
+        <TabList>
+          <Tab className="sidebar-tab">Users online</Tab>
+          <Tab className="sidebar-tab">Chatroom</Tab>
+        </TabList>
+
+        <TabPanel className="sidebar-panel">
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
-          
-          <MessageListContainer chat={chat}/>
+        </TabPanel>
+
+        <TabPanel>
+           <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
-        </div>
+        </TabPanel>
+      </Tabs>
       </div>
     )
   }
@@ -51,15 +55,6 @@ class ChatContainer extends Component {
     const { chat } = this.props;
     let messageList = chat.messages[0] || [];
     this.props.actions.updateNewMessagesCount(messageList.length);
-  }
-
-  _clickToShowUserTab(e) {
-    e.preventDefault();
-    console.log("user tab clicked");
-  }
-
-  _clickToShowChatTab(e) {
-    e.preventDefault();
   }
 
 }
