@@ -12,16 +12,16 @@
     <section id="user-classroms" class="container">
       <div class="jumbotron clearfix">
         <div class="col-xs-2 col-sm-3">
-          <img class="img-circle img-responsive" src=<%= user.github_avatar %> />
+          <img class="img-circle img-responsive" src=<%= profile.github_avatar %> />
         </div>
         <div class="col-xs-10 col-sm-9">
-          <h1><%= user.github_login %></h1>
+          <h1><%= profile.github_login %></h1>
         </div>
       </div>
       <h1> My Classrooms </h1>
         <div class="well well-lg myrooms-container">
-          <% classrooms.forEach((room) => { %>
-            <% include ./partials/_room_card %>
+          <% classrooms.forEach((classroom) => { %>
+            <% include ./partials/_room_card.ejs %>
           <% }) %>
       </div>
     </div>

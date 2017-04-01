@@ -171,36 +171,15 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-app.get('/users/:username', (req, res) => {
+app.get('/users/:username', ensureAuthenticated, (req, res) => {
   const classrooms = knex('classrooms').where('user_id', 'in',
     knex('users').where('github_login', req.params.username).select('id').limit(1)
   );
-  const user = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
-  Promise.all([classrooms, user]).then((profileData) => {
-    res.render('show_user', {classrooms: profileData[0], user: (profileData[1])[0]});
+  const profile = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
+  Promise.all([classrooms, profile]).then((profileData) => {
+    res.render('show_user', {classrooms: profileData[0], profile: (profileData[1])[0]});
   });
 });
-
-app.get('/my_rooms', (req, res) => {
-  if(req.user.id){
-  knex.select('*').
-    from('classrooms').
-    where('user_id', req.user.id).
-    then((results) => {
-      let userRooms = results;
-      console.log('userRooms: ', userRooms);
-      res.render('my_rooms', { userRooms });
-    });
-  } else {
-    res.status(401).render('error', {
-      errorcode: 401,
-      message: "Error: Please login first!!",
-      buttonLabel: 'Login',
-      buttonURL: '/login'
-    });
-  }
-
-})
 
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
