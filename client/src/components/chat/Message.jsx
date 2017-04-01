@@ -4,16 +4,15 @@ class Message extends Component {
 
   render () {
     const { message } = this.props;
-    const messageClass = message.isOwnMessage ? 'own-message' : 'message';
+    const messageClass = message.isOwnMessage ? 'own' : 'other';
 
-    // TODO style messages
     return (
-      <article className='message-container'>
-        <div className={'bubble-' + messageClass}>
+      <article className={'message-container-' + messageClass}>
+        <article className={'bubble-chat' + messageClass}>
           {message.name}<br></br>
           {message.content}<br></br>
           {message.timestamp}
-        </div>
+        </article>
         <img src={message.avatarurl} className={'user-avatar-' + messageClass}></img>
       </article>
     )

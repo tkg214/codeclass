@@ -29,7 +29,7 @@ class ChatContainer extends Component {
           </div>
         </div>
       <Tabs onSelect={this.handleSelect} selectedIndex={2}>
-        <TabList>
+        <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab">Users online</Tab>
           <Tab className="sidebar-tab">Chatroom</Tab>
         </TabList>
