@@ -34,7 +34,7 @@ class GistContainer extends Component {
             disabled={gist.save === 'Saving...'}/>
 
             <ReactCSSTransitionGroup
-            transitionName="example"
+            transitionName="gist-saving"
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={1000}>
             <button

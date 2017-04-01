@@ -1,17 +1,17 @@
-.example-enter {
+.gist-saving-enter {
   opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.gist-saving-enter.gist-saving-enter-active {
   opacity: 1;
   transition: opacity 1000ms ease-in;
 }
 
-.example-leave {
+.gist-saving-leave {
   opacity: 1;
 }
 
-.example-leave.example-leave-active {
+.gist-saving-leave.gist-saving-leave-active {
   opacity: 0.01;
   transition: opacity 1000ms ease-in;
 }

@@ -3,12 +3,12 @@ const moment = require('moment');
 module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
   const clientData = sk.token();
   const room = sk.room();
-  
+
   return {
     UPDATE_EDITOR_VALUES : (action) => {
       if (roomOwnerID === clientData.id) {
         dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, sk.broadcastToRoom);
-        sk.broadcastToRoom(room, action);  //is callback above necessary?? 
+        sk.broadcastToRoom(room, action);  //is callback above necessary??
       }
     },
     TOGGLE_EDITOR_LOCK : (action) => {
@@ -38,6 +38,7 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
           content: action.payload.content,
           avatarurl: clientData.github_avatar,
           isOwnMessage: false,
+          isRead: false,
           timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
         }
       }
@@ -45,6 +46,7 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
       sk.broadcastToRoom(room, newAction);
       const newActionToSelf = Object.assign({}, newAction);
       newActionToSelf.payload.isOwnMessage = true;
+      newActionToSelf.payload.isRead = true;
       // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
       sk.emitToUser(newActionToSelf);
     },
@@ -56,5 +58,5 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
     }
 
   }
-  
+
 }

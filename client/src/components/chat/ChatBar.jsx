@@ -17,9 +17,10 @@ class ChatBar extends Component {
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
-    let messages = chat.messages[0] || [];
-    let containerCount = chat.currentMessagesCount.currentMessagesCount || 0; //new number
-    let messageList = messages.length > containerCount ? messages.length : containerCount;
+    let  messages = chat.messages[0] || [];
+    let messageCount = messages.length - this.state.lastCount;
+    // let containerCount = chat.currentMessagesCount.currentMessagesCount || 0; //new number
+    // let messageList = messages.length > containerCount ? messages.length : containerCount;
 
     return (
       <div className='chat-notification-bar' id= { visibility }>
@@ -43,7 +44,7 @@ class ChatBar extends Component {
             className="btn btn-primary users-connected-button bar-button">
             <i className='fa fa-comments fa-lg'></i>
             <br></br>
-             <span className="badge">{messageList - this.state.lastCount}</span>
+             <span className="badge">{ messageCount }</span>
           </button>
         </div>
       </div>
@@ -54,11 +55,10 @@ class ChatBar extends Component {
   _handleClick(e){
     e.preventDefault();
     const { chat } = this.props;
-    let messageList = chat.messages[0] || [];
-    this.setState({lastCount: messageList.length})
+    let messages = chat.messages[0] || [];
+    this.setState({ lastCount: messages.length });
     this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
     this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
-    this.props.actions.updateNewMessagesCount(messageList.length);
 
   }
 
