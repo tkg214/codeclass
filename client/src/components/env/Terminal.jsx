@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class Terminal extends Component {
 
@@ -7,10 +7,13 @@ class Terminal extends Component {
   }
 
   render() {
+
+    const { terminal } = this.props;
+
     return (
       <div className='terminal'>
         <div className='output-container'>
-          {this.props.terminal.map((outputs) => {
+          {terminal.map((outputs) => {
             if (outputs.response.stderr) {
               return <pre key={outputs.timestamp}>{outputs.response.stderr}</pre>
             }
@@ -23,6 +26,10 @@ class Terminal extends Component {
       </div>
     )
   }
+}
+
+Terminal.propTypes = {
+  terminal: PropTypes.array.isRequired
 }
 
 export default Terminal;

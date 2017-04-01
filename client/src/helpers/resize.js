@@ -13,15 +13,6 @@ $(function() {
       $('.chat-notification-bar').css('height', cvh + 'vh');
   }
 
-  function setWidth(){
-    const w = $(window).width();
-    const m = $('.chat-container').width();
-    const wh = ((w - m) / w) * 100 - 0.1;
-    $('.editor').css('width', wh + 'wh');
-  }
-
   $(document).ready(setHeight)
   $(window).resize(setHeight);
-  $(document).ready(setWidth);
-  $(window).resize(setWidth);
 });

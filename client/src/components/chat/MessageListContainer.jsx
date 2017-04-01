@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Message from './Message.jsx';
 
@@ -30,6 +30,10 @@ class MessageListContainer extends Component {
     const bottom = ReactDOM.findDOMNode(this.bottomMessage);
     bottom.scrollIntoView({behavior: 'smooth'})
   }
+}
+
+MessageListContainer.propTypes = {
+  chat: PropTypes.object.isRequired
 }
 
 export default MessageListContainer;

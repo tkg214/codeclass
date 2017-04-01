@@ -31,13 +31,13 @@ class AudioContainer extends Component {
     navigator.mediaDevices.getUserMedia(constraints)
     .then((mediaStream) => {
       const mediaRecorder = new MediaRecorder(mediaStream);
-      mediaRecorder.onstart = (e) => {
+      mediaRecorder.onstart = () => {
         this.chunks = [];
       }
       mediaRecorder.ondataavailable = (e) => {
         this.chunks.push(e.data);
       }
-      mediaRecorder.onstop = (e) => {
+      mediaRecorder.onstop = () => {
         const blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
         this.props.socket.emit('stream', blob);
       }

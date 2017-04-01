@@ -54,13 +54,13 @@ export function executeCode(lang, code) {
   }
 }
 
-export function changeEditorTheme(theme) {
+export function changeEditorTheme(fontSize, theme) {
   return dispatch => {
     dispatch({
       type: 'CHANGE_EDITOR_THEME',
       meta: {remote: true},
       payload: {
-        userSettings: {theme}
+        userSettings: { fontSize, theme }
       }
     })
   }
@@ -83,7 +83,7 @@ export function saveToGist(gistName, content, language) {
     dispatch({
       type: 'GIST_SAVING',
       payload: {
-        save: 'Saving...'
+        saveStatus: 'Saving...'
       }
     })
     axios.post('/savegist', {
@@ -96,25 +96,25 @@ export function saveToGist(gistName, content, language) {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          save: 'Complete',
+          saveStatus: 'Complete',
           details: {
             timestamp: response.headers.date,
             text: `Saved ${gistName}${extension}`,
             response
           }
       }});
-      setTimeout(() => 
+      setTimeout(() =>
       dispatch({
         type: 'GIST_DEFAULT',
         payload: {
-          save: 'Save'
+          saveStatus: 'Save'
         }
       }), 3000)
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          save: 'Failed',
+          saveStatus: 'Failed',
           details: {
             timestamp: error.headers.date,
             text: `Failed to save ${gistName}${extension}`,
@@ -125,13 +125,13 @@ export function saveToGist(gistName, content, language) {
   }
 }
 
-export function changeFontSize(fontSize) {
+export function changeFontSize(fontSize, theme) {
   return dispatch => {
     dispatch({
       type: 'CHANGE_FONT_SIZE',
       meta: {remote: true},
       payload: {
-        userSettings: {fontSize}
+        userSettings: { fontSize, theme }
       }
     })
   }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class MessageComposeContainer extends Component {
 
@@ -10,10 +10,10 @@ class MessageComposeContainer extends Component {
   }
 
   render() {
-    const { roomControls } = this.props;
+    const { isChatLocked } = this.props;
     return (
       <div className='message-compose-container'>
-        {!roomControls.isChatLocked &&
+        {!isChatLocked &&
           <textarea
             className="chatbar-message"
             placeholder="Chat Bar"
@@ -24,10 +24,10 @@ class MessageComposeContainer extends Component {
             required
             />
         }
-        {!roomControls.isChatLocked &&
+        {!isChatLocked &&
           <button onClick={this._handleSubmit.bind(this)} className="btn btn-default btn-sm chatbar-button">Send</button>
         }
-        {roomControls.isChatLocked &&
+        {isChatLocked &&
           <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
         }
       </div>
@@ -41,16 +41,24 @@ class MessageComposeContainer extends Component {
   _onKeyUp(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
-      this.props.actions.sendMessage(e.target.value, this.props.roomControls.roomID);
+      this.props.actions.sendMessage(e.target.value, this.props.roomID);
       this.setState({input: ''});
     }
   }
 
   _handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.sendMessage(this.state.input, this.props.roomControls.roomID);
+    this.props.actions.sendMessage(this.state.input, this.props.roomID);
     this.setState({input: ''})
   }
+}
+
+MessageComposeContainer.propTypes = {
+  actions: PropTypes.shape({
+    sendMessage: PropTypes.func.isRequired
+  }),
+  isChatLocked: PropTypes.bool.isRequired,
+  roomID: PropTypes.number.isRequired
 }
 
 export default MessageComposeContainer;

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class EnvHeader extends Component {
 
   render() {
-    const { roomControls } = this.props;
-    let language;
-    if (roomControls.language === 'javascript') {
-      language = 'JavaScript';
-    } else if (roomControls.language === 'markdown') {
-      language = '';
+    const { roomTitle, language } = this.props;
+    let languageHeader;
+    if (language === 'javascript') {
+      languageHeader = 'JavaScript';
+    } else if (language === 'markdown') {
+      languageHeader = '';
     } else {
-      language = roomControls.language.charAt(0).toUpperCase() + roomControls.language.slice(1);
+      languageHeader = language.charAt(0).toUpperCase() + language.slice(1);
     }
 
     return (
@@ -18,14 +18,19 @@ class EnvHeader extends Component {
         <div className='env-nav-panel'>
           <div className='panel panel-default'>
             <div className='panel-body'>
-              Topic:&ensp;{roomControls.roomTitle}&ensp;&ensp;
-              Language:&ensp;{language}&ensp;
+              Topic:&ensp;{roomTitle}&ensp;&ensp;
+              Language:&ensp;{languageHeader}&ensp;
             </div>
           </div>
         </div>
       </div>
     )
   }
+}
+
+EnvHeader.PropTypes = {
+  roomTitle: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired
 }
 
 export default EnvHeader;

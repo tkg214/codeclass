@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import GistContainer from './GistContainer.jsx';
 import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
@@ -18,15 +18,37 @@ class EnvContainer extends Component {
       <div className='env-container'>
         <div className='env-nav-container'>
           <div className='row'>
-            <EnvHeader roomControls={roomControls}/>
+            <EnvHeader
+              roomTitle={roomControls.roomTitle}
+              language={roomControls.language}/>
             <AudioContainer socket={socket}/>
           </div>
           <div className='row'>
-            <GistContainer actions={actions} gist={gist} language={roomControls.language} editorValue={editor.editorValue}/>
-            <EnvControls actions={actions} editorValue={editor.editorValue} roomControls={roomControls}/>
+            <GistContainer
+              actions={actions}
+              saveStatus={gist.saveStatus}
+              language={roomControls.language}
+              editorValue={editor.editorValue}/>
+            <EnvControls
+              actions={actions}
+              editorValue={editor.editorValue}
+              isAuthorized={roomControls.isAuthorized}
+              isChatLocked={roomControls.isChatLocked}
+              isEditorLocked={roomControls.isEditorLocked}
+              roomID={roomControls.roomID}
+              language={roomControls.language}
+              theme={roomControls.userSettings.theme}
+              fontSize={roomControls.userSettings.fontSize}/>
           </div>
         </div>
-        <EditorContainer actions={actions} editorValue={editor.editorValue} roomControls={roomControls}/>
+        <EditorContainer
+          actions={actions}
+          roomID={roomControls.roomID}
+          editorValue={editor.editorValue}
+          language={roomControls.language}
+          isEditorLocked={roomControls.isEditorLocked}
+          fontSize={roomControls.userSettings.fontSize}
+          theme={roomControls.userSettings.theme}/>
         <Terminal terminal={terminal}/>
       </div>
     )
@@ -45,6 +67,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(Actions, dispatch) }
+}
+
+EnvContainer.propTypes = {
+  actions: PropTypes.object.isRequired,
+  editor: PropTypes.object.isRequired,
+  roomControls: PropTypes.object.isRequired,
+  gist: PropTypes.object.isRequired,
+  terminal: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);
