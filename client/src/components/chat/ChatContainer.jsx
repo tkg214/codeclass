@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
@@ -14,7 +14,6 @@ class ChatContainer extends Component {
     const { chat, roomControls, onlineUsers } = this.props
     let visibility = roomControls.isChatVisible ? 'show' : 'close'
 
-
     return (
       <div className={'chat-container ' + visibility }>
         <button
@@ -23,9 +22,15 @@ class ChatContainer extends Component {
           <i className='fa fa-chevron-right'></i>
         </button>
       <div>
-          <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
+          <UserCountContainer
+            actions={this.props.actions}
+            chat={chat}
+            users={onlineUsers}/>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
+          <MessageComposeContainer
+            actions={this.props.actions}
+            isChatLocked={roomControls.isChatLocked}
+            roomID={roomControls.roomID}/>
         </div>
       </div>
     )
@@ -33,12 +38,12 @@ class ChatContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
+    const { roomControls, chat, actions } = this.props;
     // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
-    this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
-    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
-    const { chat } = this.props;
+    actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
+    actions.toggleChatContainer(roomControls.isChatVisible);
     let messageList = chat.messages[0] || [];
-    this.props.actions.updateNewMessagesCount(messageList.length);
+    actions.updateNewMessagesCount(messageList.length);
 
   }
 
@@ -54,6 +59,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(Actions, dispatch) }
+}
+
+ChatContainer.propTypes = {
+  actions: PropTypes.shape({
+    toggleChatNotificationBar: PropTypes.func.isRequired,
+    toggleChatContainer: PropTypes.func.isRequired,
+    updateNewMessagesCount: PropTypes.func.isRequired
+  }),
+  roomControls: PropTypes.object.isRequired,
+  chat: PropTypes.object.isRequired,
+  onlineUsers: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

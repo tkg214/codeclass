@@ -1,5 +1,5 @@
 export default function reducer(state={
-  usersOnline: [{id: "", name: "", avatar: ""}]
+  usersOnline: [{id: '', name: '', avatar: ''}]
 }, action) {
   switch(action.type) {
     case 'UPDATE_USERS_ONLINE': {
