@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class GistContainer extends Component {
 
@@ -12,23 +13,38 @@ class GistContainer extends Component {
   render() {
     const { gist } = this.props;
 
+    const buttonClass = {
+      'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
+      'Complete': {'style': 'btn-success', 'icon': 'fa-check'},
+      'Failed': {'style': 'btn-danger', 'icon': 'fa-x'},
+      'Save': {'style': 'btn-primary', 'icon': 'fa-github'}
+    }
+
+    const key = gist.save;
+
     return (
       <div className='col-lg-12'>
-        <div className='input-group gist-container'>
+        <div className='gist-container'>
           <input
             type='text'
             placeholder='Enter Gist Name'
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
-            className='form-control input-sm'/>
+            className='gist-input input-sm'
+            disabled={gist.save === 'Saving...'}/>
 
-          <span className='input-group-btn'>
+            <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionEnterTimeout={1000}
+            transitionLeaveTimeout={1000}>
             <button
-              className='btn btn-primary btn-sm gist-button'
+              key = {key}
+              className={'btn btn-sm gist-button ' + buttonClass[gist.save].style}
+              disabled={gist.save === 'Saving...'}
               onClick={this._handleClick.bind(this)}
-              type='button'><i className="fa fa-github fa-lg"></i>&ensp;Save
+              type='button'><i className={"fa fa-lg " + buttonClass[gist.save].icon}></i>&ensp;{gist.save}
             </button>
-          </span>
+            </ReactCSSTransitionGroup>
         </div>
       </div>
     )
@@ -37,7 +53,6 @@ class GistContainer extends Component {
   _handleClick(e) {
     e.preventDefault();
     this.props.actions.saveToGist(this.state.input, this.props.editorValue, this.props.language)
-    this.setState({input: ''})
   }
 
   _handleChange(e) {

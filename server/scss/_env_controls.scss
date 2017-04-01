@@ -1,9 +1,16 @@
-.gist-button{
+.gist-button {
   display: inline-block;
+  position: absolute;
+  width: 19.5%
 }
 
 .gist-container {
-  padding: 0.5em 1em 0em 1em;
+  padding: 0 $space;
+  position: relative;
+}
+
+.gist-input {
+  width:80%;
 }
 
 .env-btn {

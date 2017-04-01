@@ -45,36 +45,36 @@ module.exports = function makeDataHelpers(knex) {
       });
     },
 
-    updateEditorValues: function(roomID, editorValue, cb) {
+    updateEditorValues: function(roomID, editorValue) {
       knex('edits')
       .insert({
         classroom_id: roomID,
         content: editorValue
       })
       .then(() => {
-        cb();
+        return;
       });
     },
 
-    toggleEditorLock: function(roomID, isEditorLocked, cb) {
+    toggleEditorLock: function(roomID, isEditorLocked) {
       knex('classrooms')
       .where({id: roomID})
       .update({editorLocked: isEditorLocked})
       .then(() => {
-        cb();
+        return;
       });
     },
 
-    toggleChatLock: function(roomID, isChatLocked, cb) {
+    toggleChatLock: function(roomID, isChatLocked) {
       knex('classrooms')
       .where({id: roomID})
       .update({chatLocked: isChatLocked})
       .then(() => {
-        cb();
+        return;
       });
     },
 
-    storeMessage: function(roomID, userID, content, cb) {
+    storeMessage: function(roomID, userID, content) {
       knex('messages')
       .insert({
         classroom_id: roomID,
@@ -82,7 +82,7 @@ module.exports = function makeDataHelpers(knex) {
         content: content
       })
       .then(() => {
-        cb();
+        return;
       });
     },
 

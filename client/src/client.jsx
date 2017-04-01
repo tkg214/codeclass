@@ -54,7 +54,7 @@ function connect_socket(token) {
   });
 
   ReactDOM.render(<Provider store={store}>
-    <RoomApp/>
+    <RoomApp socket={socket}/>
   </Provider>, app);
 }
 

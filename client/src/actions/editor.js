@@ -67,24 +67,59 @@ export function changeEditorTheme(theme) {
 }
 
 export function saveToGist(gistName, content, language) {
+  let extension;
+  switch (language) {
+  case 'javascript':
+    extension = '.js';
+    break;
+  case 'ruby':
+    extension = '.rb';
+    break;
+  case 'python':
+    extension = '.py';
+    break;
+  }
   return dispatch => {
+    dispatch({
+      type: 'GIST_SAVING',
+      payload: {
+        save: 'Saving...'
+      }
+    })
     axios.post('/savegist', {
       data: {
         title: gistName,
         content,
-        language
+        extension
       }
     }).then((response) => {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          isGistSaved: true
+          save: 'Complete',
+          details: {
+            timestamp: response.headers.date,
+            text: `Saved ${gistName}${extension}`,
+            response
+          }
       }});
+      setTimeout(() => 
+      dispatch({
+        type: 'GIST_DEFAULT',
+        payload: {
+          save: 'Save'
+        }
+      }), 3000)
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          isGistSaved: false
+          save: 'Failed',
+          details: {
+            timestamp: error.headers.date,
+            text: `Failed to save ${gistName}${extension}`,
+            error
+          }
       }});
     });
   }

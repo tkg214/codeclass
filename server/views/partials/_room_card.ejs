@@ -1,0 +1,23 @@
+<!-- <a class="card-link" href=<%= `/rooms/${room.room_key}` %> -->
+    <div class='card panel panel-default z-3'>
+    <header class='card-heading panel-heading'>
+      <h3><%= room.topic %></h3>
+
+      <h6><%= room.created_at %></h6>
+
+    </header>
+    <article class='card-body panel-body'>
+    <p class="languageID"><%= room.language_id %></p>
+
+    </article>
+
+    <footer class='card-footer '>
+      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
+        Go to Room
+      </a>
+      <a class="btn card-share" role="button" href=<%= `/rooms/${room.room_key}` %>>
+        Get Link
+      </a>
+    </footer>
+</div>
+<!-- </a> -->

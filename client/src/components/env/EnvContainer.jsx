@@ -12,14 +12,14 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    const { editor, roomControls, gist, actions, terminal } = this.props;
+    const { socket, editor, roomControls, gist, actions, terminal } = this.props;
 
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
           <div className='row'>
             <EnvHeader roomControls={roomControls}/>
-            <AudioContainer/>
+            <AudioContainer socket={socket}/>
           </div>
           <div className='row'>
             <GistContainer actions={actions} gist={gist} language={roomControls.language} editorValue={editor.editorValue}/>

@@ -10,7 +10,7 @@ class RoomApp extends Component {
   render() {
     return (
       <main>
-        <EnvContainer/>
+        <EnvContainer socket={this.props.socket}/>
         <ChatContainer/>
         <ChatBar/>
       </main>

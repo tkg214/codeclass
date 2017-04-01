@@ -17,7 +17,7 @@ const util          = require('util');
 const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
-const moment        = require('moment');
+// const moment        = require('moment');
 
 //Only use knexLogger in development
 if (process.env.ENV === 'development') {
@@ -33,6 +33,9 @@ const socketioJwt   = require('socketio-jwt');
 
 //Modules
 const dbHelpers     = require('./data-helpers')(knex);
+const socketHelpers = require('./util/socket-helpers');
+const roomHelpers = require('./util/room-actions');
+const actionHandler = require('./util/action-handler');
 
 app.set('view engine', 'ejs');
 
@@ -177,6 +180,27 @@ app.get('/users/:username', (req, res) => {
   });
 });
 
+app.get('/my_rooms', (req, res) => {
+  if(req.user.id){
+  knex.select('*').
+    from('classrooms').
+    where('user_id', req.user.id).
+    then((results) => {
+      let userRooms = results;
+      console.log('userRooms: ', userRooms);
+      res.render('my_rooms', { userRooms });
+    });
+  } else {
+    res.status(401).render('error', {
+      errorcode: 401,
+      message: "Error: Please login first!!",
+      buttonLabel: 'Login',
+      buttonURL: '/login'
+    });
+  }
+
+})
+
 //Create token and populate with req.user data. Send back token as json.
 app.get('/api/get_token', (req, res) => {
   const user = req.user;
@@ -208,35 +232,45 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 });
 
 app.post('/rooms', (req, res) => {
-  knex('classrooms').where('topic', req.body.topic)
-  .then((results) => {
-    if(results.length === 0){
-      knex('classrooms')
-      .insert({
-        topic: req.body.topic,
-        language_id: req.body.language,
-        editorLocked: true,
-        chatLocked: false,
-        user_id: req.user.id,
-        //TODO Import sanitizeURL function from module
-        room_key: req.body.topic
-        .replace(/[^a-zA-Z0-9]+/g, '-')
-        .replace(/^\-|\-$/g, '')
-        .toLowerCase()
-      })
-      .returning('room_key')
-      .then((room_key) => {
-        res.redirect(`/rooms/${room_key[0]}`);
-      });
-    } else {
-      res.status(400).render('error', {
-        errorcode: 400,
-        message: "Error: This classroom topic already exists!",
-        buttonLabel: 'Try Again',
-        buttonURL: '/rooms'
-      });
-    }
-  })
+  if(/([A-Za-z]|[0-9]|_|-|\w|~)$/.test(req.body.topic)){
+    console.log('didnt work');
+    knex('classrooms').where('topic', req.body.topic)
+    .then((results) => {
+      if(results.length === 0){
+        knex('classrooms')
+        .insert({
+          topic: req.body.topic,
+          language_id: req.body.language,
+          editorLocked: true,
+          chatLocked: false,
+          user_id: req.user.id,
+          //TODO Import sanitizeURL function from module
+          room_key: req.body.topic
+          .replace(/[^a-zA-Z0-9]+/g, '-')
+          .replace(/^\-|\-$/g, '')
+          .toLowerCase()
+        })
+        .returning('room_key')
+        .then((room_key) => {
+          res.redirect(`/rooms/${room_key[0]}`);
+        });
+      } else {
+        res.status(400).render('error', {
+          errorcode: 400,
+          message: "Error: This classroom topic already exists!",
+          buttonLabel: 'Try Again',
+          buttonURL: '/rooms'
+        });
+      }
+    })
+  } else {
+    res.status(400).render('error', {
+      errorcode: 400,
+      message: "Error: Please use alphanumeric characters only!!",
+      buttonLabel: 'Try Again',
+      buttonURL: '/rooms'
+    });
+  }
 });
 
 //Posting a gist
@@ -244,23 +278,7 @@ function getUser(request) {
   return knex('users').where('github_id', request.session.passport.user);
 }
 
-function defineFileExtension(language) {
-  let extension;
-  switch (language) {
-  case 'javascript':
-    extension = '.js';
-    break;
-  case 'ruby':
-    extension = '.rb';
-    break;
-  case 'python':
-    extension = '.py';
-  }
-  return extension;
-}
-
 app.post('/savegist', function (req, res) {
-  const extension = defineFileExtension(req.body.data.language);
   getUser(req).then((row) => {
     const user = row[0];
     // console.log('user', user);
@@ -268,23 +286,21 @@ app.post('/savegist', function (req, res) {
       {
         url: "https://api.github.com/gists",
         headers: {
-          "User-Agent": "waffleio gist creatifier (student project)",
+          "User-Agent": "CodeClass gist creator (student project)",
           "Authorization": `token ${user.github_access_token}`
         },
         "body": JSON.stringify({
           "files": {
-            [`${req.body.data.title}${extension}`]: {
+            [`${req.body.data.title}${req.body.data.extension}`]: {
               "content": req.body.data.content
             }
           }
         })
       }, function(error, response, body) {
-      console.log("gist-post response:", response);
       if (error) {
-        console.log("posting gist to github failed", error);
-        return res.status(500).send("oh god the pain");
+        return res.status(500).send("Posting gist to github failed");
       } else {
-        return res.send("zug zug");
+        return res.send("Request sent");
       }
     });
   });
@@ -309,126 +325,52 @@ io.use(socketioJwt.authorize({
 const clients = {};
 
 io.on('connection', (socket) => {
-
-  // socket.decoded_token contains user data in token
   const clientData = socket.decoded_token;
   let roomOwnerID;
-  let roomKey;
+  let room;
+  let sk;
+  let rm;
 
-  function broadcastToRoom(room, action) {
-    socket.broadcast.to(room).emit('action', action);
-  }
+  socket.on('join', (roomKey) => {
+    room = roomKey;
+    sk = socketHelpers(io, socket, room);
+    rm = roomHelpers(sk, clients);
 
-  function emitToUser(action) {
-    socket.emit('action', action);
-  }
-
-  function broadcastToRoomInclusive(room, action) {
-    io.in(room).emit('action', action);
-  }
-
-  // When user joins a room specified by room key in url, update room list and broadcast to all users, then emit room data to user
-  socket.on('join', (room) => {
     socket.join(room);
-    roomKey = room;
-    console.log(`${clientData.github_login} is now connected to room ${room}`);
+    rm.addToClientsStore();
 
-    if (!clients.hasOwnProperty(room)) {
-      clients[room] = [];
-    }
-    clients[room].push({id: socket.id, name : clientData.github_login, avatar : clientData.github_avatar});
+    //Update room list and broadcast to all users
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}}
-    broadcastToRoomInclusive(room, action);
-
+    sk.broadcastToRoomInclusive(room, action);
     dbHelpers.setRoomData(room, clientData.id, emitRoomData);
 
+    //Return room owner id (want to refactor this out but it has to be here lol)
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
-      emitToUser(action);
+      sk.emitToUser(action);
     }
   });
 
-  // When user emits to server, switch statement accesses action and processes data accordingly, then sends back through socket
   socket.on('action', (action) => {
-    // console.log('Action received on server: \n', action);
-
-    switch(action.type) {
-    case 'UPDATE_EDITOR_VALUES': {
-      if (roomOwnerID === clientData.id) {
-        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, broadcastToRoom);
-        broadcastToRoom(action.room, action);
-        break;
-      }
-      break;
-    }
-    case 'TOGGLE_EDITOR_LOCK': {
-      if (roomOwnerID === clientData.id) {
-        dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked, broadcastToRoom);
-        broadcastToRoom(action.room, action);
-        break;
-      }
-      break;
-    }
-    case 'TOGGLE_CHAT_LOCK': {
-      if (roomOwnerID === clientData.id) {
-        dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, broadcastToRoom);
-        broadcastToRoom(action.room, action);
-        break;
-      }
-      break;
-    }
-    case 'EXECUTE_CODE' : {
-      if (roomOwnerID === clientData.id) {
-        broadcastToRoom(action.room, action);
-        break;
-      }
-      break;
-    }
-    case 'SEND_OUTGOING_MESSAGE': {
-      const newAction = {
-        type: 'RECEIVE_NEW_MESSAGE',
-        payload: {
-          id: 'M_' + Date.now(),
-          name: clientData.github_login,
-          content: action.payload.content,
-          avatarurl: clientData.github_avatar,
-          isOwnMessage: false,
-          timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
-        }
-      }
-      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, broadcastToRoom);
-      broadcastToRoom(action.room, newAction);
-      const newActionToSelf = Object.assign({}, newAction);
-      newActionToSelf.payload.isOwnMessage = true;
-      // TODO assign isn't working properly--newAction.isOwnMessage is true MUST CHANGE
-      emitToUser(newActionToSelf);
-      break;
-    }
-    case 'CHANGE_EDITOR_THEME': {
-      dbHelpers.changeEditorTheme(clientData.id, action.payload.userSettings.theme);
-      break;
-    }
-    case 'CHANGE_FONT_SIZE': {
-      dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
-      break;
-    }
-    }
+    const actionMap = actionHandler(roomOwnerID, dbHelpers, sk, rm);
+    const executeAction = actionMap[action.type];
+    executeAction(action);
   });
 
-  // When a user disconnects, update the clients object in memory, then emit to all users the updated list of users
-  socket.on('disconnect', () => {
-    console.log(`${clientData.github_login} is now disconnected`);
-    const clientIndex = clients[roomKey].findIndex(client => client.id === socket.id);
-    if (clientIndex > -1) {
-      clients[roomKey].splice(clientIndex, 1);
-    }
+  socket.on('start-stream', () => {
+    socket.emit('started-stream');
+    socket.broadcast.to(room).emit('prepare-stream');
+  });
 
-    //If no users are in room, delete property from memory
-    if (clients[roomKey].length === 0) {
-      delete clients[roomKey];
-    }
-    socket.to(roomKey).emit('action', {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[roomKey]}});
+  socket.on('signaling-message', (message) => {
+    socket.broadcast.to(room).emit('signaling-message', message);
+  });
+
+  socket.on('disconnect', () => {
+    rm.removeFromClientsStore();
+    let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}};
+    sk.broadcastToRoomInclusive(room, action);
   });
 });

@@ -4,6 +4,15 @@ class AudioContainer extends Component {
 
   render() {
 
+    const { socket } = this.props;
+    socket.on('started-stream', () => {
+      console.log('started-stream')
+    });
+
+    socket.on('prepare-stream', () => {
+      console.log('prepare-stream')
+    });
+
     return (
       <div className='col-lg-6'>
         <div className='env-nav-panel'>
@@ -17,7 +26,8 @@ class AudioContainer extends Component {
   }
 
   _startStream(e) {
-    
+    e.preventDefault();
+    this.props.socket.emit('start-stream')
   }
 }
 
