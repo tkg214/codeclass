@@ -8,8 +8,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin: $space 1%;
   transition: 0.3s;
-  width:30%;
+  width:23%;
   &:hover .card-moment {
     text-decoration: none;
   }
@@ -95,7 +96,7 @@
 .myrooms-container {
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: stretch;
     flex-wrap: wrap;
 }
