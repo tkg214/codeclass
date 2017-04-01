@@ -9,7 +9,6 @@
 			<% include ./partials/_nav.ejs %>
 		</header>
 		<div class="container">
-		<% if (!user) { %>
 			<div class="jumbotron">
 				<div class="page-header">
 					<span class="typed">&gt;&ensp;</span>
@@ -20,10 +19,6 @@
 				</div>
 			</div>
 		</div>
-		<% } else { %>
-			<h2>Hello, <%= user.github_login %>.</h2>
-			<a href="/gists"> Make a test gist! </a>
-		<% } %>
 	</div>
 		<% include ./partials/_scripts.ejs %>
 		<script src="/scripts/typed.min.js"></script>
