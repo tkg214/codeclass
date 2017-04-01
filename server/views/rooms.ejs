@@ -13,26 +13,41 @@
 				<div class="page-header">
 					<h1>Create a Room</h1>
 				 </div>
-				<div class="row">
-		      <div class="panel panel-default">
-						<div class="panel-heading">
-		        	<h1>Classroom</h1>
-						</div>
-						<div class="panel-body">
-							<p>For controlling the participation of connected members</p>
-						 	<a class="btn btn-primary" data-toggle="modal" data-target="#classroom-modal">Create classroom</a>
-						 </div>
-					</div>
-		      <div class="panel panel-default">
-						<div class="panel-heading">
-		        <h1>Meeting</h1>
-					</div>
-					<div class="panel-body">
-						<p>For unrestricted code collaboration</p>
-					</div>
-		      </div>
-		    </a>
-			</div>
+				 <div class="panel panel-default">
+				 <div class="panel-body">
+				 <form action="/rooms" method="POST">
+					 <div class="form-group">
+							 <label for="new-classroom--title">Title</label>
+							 <input id="new-classroom--title" type="text" class="form-control" name="topic">
+					 </div>
+					 <div class="form-group">
+						 <label for="new-classroom--language">Language</label>
+					 </div>
+						 <div class="btn-group" data-toggle="buttons">
+						 	<div class="radio-inline btn btn-primary">
+							 	<label>
+								 	<input type="radio" class="radio-none" name="language" id="radio-javascript" value="javascript" checked>
+								 	Javascript
+							 	</label>
+						 	</div>
+						 	<div class="radio-inline btn btn-primary">
+							 	<label>
+								 	<input type="radio" class="radio-none" name="language" id="radio-ruby" value="ruby">
+								 	Ruby
+							 	</label>
+						 	</div>
+						 	<div class="radio-inline btn btn-primary">
+							 	<label>
+								 	<input type="radio" class="radio-none" name="language" id="radio-python" value="python">
+								 	Python
+							 	</label>
+						 	</div>
+					 	</div>
+					 </div>
+					 <div class="panel-footer text-right">
+		         <button type="submit" class="btn btn-success btn-lg">Create classroom</button>
+		       </div>
+				 </form>
 	    </section>
 	</div>
 	<% include ./partials/_new_classroom_modal %>
