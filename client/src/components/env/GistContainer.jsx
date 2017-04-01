@@ -34,16 +34,16 @@ class GistContainer extends Component {
             disabled={gist.save === 'Saving...'}/>
 
             <ReactCSSTransitionGroup
-            transitionName="example"
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={1000}>
-            <button
-              key = {key}
-              className={'btn btn-sm gist-button ' + buttonClass[gist.save].style}
-              disabled={gist.save === 'Saving...'}
-              onClick={this._handleClick.bind(this)}
-              type='button'><i className={"fa fa-lg " + buttonClass[gist.save].icon}></i>&ensp;{gist.save}
-            </button>
+              transitionName="example"
+              transitionEnterTimeout={250}
+              transitionLeaveTimeout={250}>
+              <button
+                key = {key}
+                className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
+                disabled={saveStatus === 'Saving...'}
+                onClick={this._handleClick.bind(this)}
+                type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
+              </button>
             </ReactCSSTransitionGroup>
         </div>
       </div>
