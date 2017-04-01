@@ -5,13 +5,17 @@
     <title>CodeClass</title>
     <% include ./partials/_head.ejs %>
   </head>
-  <header>
-    <% include ./partials/_nav.ejs %>
-  </header>
+
   <body>
-    <div id="react-root"></div>
+    <div class="room-container">
+      <div class="room-header">
+        <% include ./partials/_nav.ejs %>
+      </div>
+      <div id="react-root"></div>
+    </div>
     <% include ./partials/_scripts.ejs %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://cdn.muicss.com/mui-0.9.12/js/mui.min.js"></script>
     <script src="<%= bundleSrc %>"></script>
   </body>
 </html>

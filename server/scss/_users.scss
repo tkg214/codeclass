@@ -18,6 +18,8 @@
 
 .user-container {
   align-items: center;
+  border: $faint-gray;
+  border-bottom: none;
   display: flex;
   padding: 10px;
 
@@ -28,6 +30,10 @@
 
   &:nth-child(even) {
     background-color: $gray1;
+  }
+
+  &:nth-child(last) {
+   border-bottom: $faint-gray;
   }
 
   &:nth-child(2) {

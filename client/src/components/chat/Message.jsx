@@ -8,14 +8,14 @@ class Message extends Component {
 
     // TODO style messages
     return (
-      <div className='message-container'>
+      <article className='message-container'>
         <div className={'bubble-' + messageClass}>
           {message.name}<br></br>
           {message.content}<br></br>
           {message.timestamp}
         </div>
         <img src={message.avatarurl} className={'user-avatar-' + messageClass}></img>
-      </div>
+      </article>
     )
   }
 }

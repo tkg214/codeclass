@@ -17,7 +17,7 @@ class ChatContainer extends Component {
 
   render() {
     const { chat, roomControls, onlineUsers } = this.props
-    let visibility = roomControls.isChatVisible ? 'show' : 'close'
+    let visibility = roomControls.isChatVisible ? 'open' : 'close'
     // Tabs.setUseDefaultStyles(false);
     return (
       <div className={'chat-container ' + visibility }>
@@ -39,7 +39,7 @@ class ChatContainer extends Component {
         </TabPanel>
 
         <TabPanel>
-           <MessageListContainer chat={chat}/>
+          <MessageListContainer chat={chat}/>
           <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
         </TabPanel>
       </Tabs>
