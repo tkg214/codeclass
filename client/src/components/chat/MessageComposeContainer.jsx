@@ -24,12 +24,14 @@ class MessageComposeContainer extends Component {
             required
             />
         }
-        {!isChatLocked &&
-          <button onClick={this._handleSubmit.bind(this)} className="chatbar-button">Send</button>
-        }
-        {isChatLocked &&
-          <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
-        }
+        <div className="message-submit">
+          {!isChatLocked &&
+            <button onClick={this._handleSubmit.bind(this)} className="chatbar-button">Send</button>
+          }
+          {isChatLocked &&
+            <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
+          }
+        </div>
       </div>
     )
   }
