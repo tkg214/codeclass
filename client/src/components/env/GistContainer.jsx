@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class GistContainer extends Component {
@@ -11,8 +11,7 @@ class GistContainer extends Component {
   }
 
   render() {
-    const { gist } = this.props;
-
+    const { saveStatus } = this.props;
     const buttonClass = {
       'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
       'Complete': {'style': 'btn-success', 'icon': 'fa-check'},
@@ -20,7 +19,7 @@ class GistContainer extends Component {
       'Save': {'style': 'btn-primary', 'icon': 'fa-github'}
     }
 
-    const key = gist.save;
+    const key = saveStatus;
 
     return (
       <div className='col-lg-12'>
@@ -31,19 +30,19 @@ class GistContainer extends Component {
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
             className='gist-input input-sm'
-            disabled={gist.save === 'Saving...'}/>
+            disabled={saveStatus === 'Saving...'}/>
 
             <ReactCSSTransitionGroup
-            transitionName="gist-saving"
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={1000}>
-            <button
-              key = {key}
-              className={'btn btn-sm gist-button ' + buttonClass[gist.save].style}
-              disabled={gist.save === 'Saving...'}
-              onClick={this._handleClick.bind(this)}
-              type='button'><i className={"fa fa-lg " + buttonClass[gist.save].icon}></i>&ensp;{gist.save}
-            </button>
+              transitionName="example"
+              transitionEnterTimeout={250}
+              transitionLeaveTimeout={250}>
+              <button
+                key = {key}
+                className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
+                disabled={saveStatus === 'Saving...'}
+                onClick={this._handleClick.bind(this)}
+                type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
+              </button>
             </ReactCSSTransitionGroup>
         </div>
       </div>
@@ -58,6 +57,15 @@ class GistContainer extends Component {
   _handleChange(e) {
     this.setState({input: e.target.value})
   }
+}
+
+GistContainer.propTypes = {
+  actions: PropTypes.shape({
+    saveToGist: PropTypes.func.isRequired
+  }),
+  saveStatus: PropTypes.string.isRequired,
+  editorValue: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired
 }
 
 export default GistContainer;

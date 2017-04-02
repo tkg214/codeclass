@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class EnvControls extends Component {
 
   render() {
-    const { roomControls } = this.props;
+    const { isAuthorized, isChatLocked, isEditorLocked } = this.props;
     const themes = ['Monokai', 'Github', 'Kuroir', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
     const fontSizes = [8, 9, 11, 12, 14, 18, 24, 30, 36, 48];
-
     return (
       <div className='col-lg-12'>
         <div className='env-nav-controls'>
@@ -26,34 +25,34 @@ class EnvControls extends Component {
               })}
             </ul>
           </div>
-          {roomControls.isAuthorized && roomControls.isChatLocked &&
+          {isAuthorized && isChatLocked &&
             <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
           }
-          {!roomControls.isAuthorized && roomControls.isChatLocked &&
+          {!isAuthorized && isChatLocked &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
           }
-          {roomControls.isAuthorized && !roomControls.isChatLocked &&
+          {isAuthorized && !isChatLocked &&
             <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
           }
-          {!roomControls.isAuthorized && !roomControls.isChatLocked &&
+          {!isAuthorized && !isChatLocked &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
           }
-          {roomControls.isAuthorized && roomControls.isEditorLocked &&
+          {isAuthorized && isEditorLocked &&
             <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
           }
-          {!roomControls.isAuthorized && roomControls.isEditorLocked &&
+          {!isAuthorized && isEditorLocked &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
           }
-          {roomControls.isAuthorized && !roomControls.isEditorLocked &&
+          {isAuthorized && !isEditorLocked &&
             <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
           }
-          {!roomControls.isAuthorized && !roomControls.isEditorLocked &&
+          {!isAuthorized && !isEditorLocked &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
           }
-          {(roomControls.isAuthorized || !roomControls.isEditorLocked) &&
+          {(isAuthorized || !isEditorLocked) &&
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
           }
-          {(!roomControls.isAuthorized && roomControls.isEditorLocked) &&
+          {(!isAuthorized && isEditorLocked) &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
           }
         </div>
@@ -65,30 +64,47 @@ class EnvControls extends Component {
     e.preventDefault();
     const text = e.target.text.toLowerCase();
     const theme = text.split(' ').join('_');
-    this.props.actions.changeEditorTheme(theme);
+    this.props.actions.changeEditorTheme(this.props.fontSize, theme);
   }
 
   _onFontSizeChangeClick(e) {
     e.preventDefault();
     const fontSize = e.target.text;
-    this.props.actions.changeFontSize(fontSize);
+    this.props.actions.changeFontSize(Number(fontSize), this.props.theme);
   }
 
   _onEditorToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleEditorLock(this.props.roomControls.isEditorLocked, this.props.roomControls.roomID);
+    this.props.actions.toggleEditorLock(this.props.isEditorLocked, this.props.roomID);
   }
 
   _onChatToggleClick(e) {
     e.preventDefault();
-    this.props.actions.toggleChatLock(this.props.roomControls.isChatLocked, this.props.roomControls.roomID);
+    this.props.actions.toggleChatLock(this.props.isChatLocked, this.props.roomID);
   }
 
   _onRunClick(e) {
     e.preventDefault();
-    console.log(this.props.editorValue)
-    this.props.actions.executeCode(this.props.roomControls.language, this.props.editorValue);
+    this.props.actions.executeCode(this.props.language, this.props.editorValue);
   }
+}
+
+EnvControls.propTypes = {
+  actions: PropTypes.shape({
+    changeEditorTheme: PropTypes.func.isRequired,
+    changeFontSize: PropTypes.func.isRequired,
+    toggleEditorLock: PropTypes.func.isRequired,
+    toggleChatLock: PropTypes.func.isRequired,
+    executeCode: PropTypes.func.isRequired
+  }),
+  theme: PropTypes.string.isRequired,
+  fontSize: PropTypes.number.isRequired,
+  language: PropTypes.string.isRequired,
+  editorValue: PropTypes.string.isRequired,
+  roomID: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  isChatLocked: PropTypes.bool.isRequired,
+  isEditorLocked: PropTypes.bool.isRequired
 
 }
 

@@ -4,7 +4,7 @@
 
 .gist-saving-enter.gist-saving-enter-active {
   opacity: 1;
-  transition: opacity 1000ms ease-in;
+  transition: opacity 250ms ease-in;
 }
 
 .gist-saving-leave {
@@ -13,7 +13,7 @@
 
 .gist-saving-leave.gist-saving-leave-active {
   opacity: 0.01;
-  transition: opacity 1000ms ease-in;
+  transition: opacity 250ms ease-in;
 }
 
 .absolute {

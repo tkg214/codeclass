@@ -4,12 +4,13 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-mfizz/2.4.1/font-mfizz.css');
 @import 'variables';
 @import 'mixins';
-@import 'modal';
+@import 'cursor';
+@import 'form';
 @import 'home';
 @import 'chat';
 @import 'react_transition';
 @import 'navbar';
 @import 'room_terminal';
 @import 'env_controls';
+@import 'user';
 @import 'users';
-@import 'my_rooms';
