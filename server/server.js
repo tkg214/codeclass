@@ -338,7 +338,7 @@ io.on('connection', (socket) => {
 
     socket.join(room);
     rm.addToClientsStore();
-    
+
     //Update room list and broadcast to all users
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}}
     sk.broadcastToRoomInclusive(room, action);
@@ -366,5 +366,3 @@ io.on('connection', (socket) => {
     sk.broadcastToRoomInclusive(room, action);
   });
 });
-
-
