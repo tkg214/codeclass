@@ -102,6 +102,14 @@ module.exports = function makeDataHelpers(knex) {
       .then(() => {
         return;
       });
+    },
+
+    storeRecordingInfo: function(recordingInfo) {
+      knex('recording_info')
+      .insert(recordingInfo)
+      .then(() => {
+        return;
+      });
     }
   }
 }

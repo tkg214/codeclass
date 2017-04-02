@@ -11,6 +11,9 @@ const passport      = require('passport');
 const path          = require('path');
 const request       = require('request');
 const sass          = require("node-sass-middleware");
+const wav           = require('wav');
+const ss            = require('socket.io-stream');
+const fs            = require('fs');
 const session       = require('express-session');
 const util          = require('util');
 
@@ -328,6 +331,7 @@ io.on('connection', (socket) => {
   const clientData = socket.decoded_token;
   let roomOwnerID;
   let room;
+  let roomID;
   let sk;
   let rm;
 
@@ -346,11 +350,13 @@ io.on('connection', (socket) => {
 
     //Return room owner id (want to refactor this out but it has to be here lol)
     function emitRoomData(roomData) {
+      roomID = roomData.roomID;
       roomOwnerID = roomData.roomOwnerID;
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       sk.emitToUser(action);
     }
+
   });
 
   socket.on('action', (action) => {
@@ -368,11 +374,62 @@ io.on('connection', (socket) => {
   //   socket.broadcast.to(room).emit('signaling-message', message);
   // });
 
-  socket.on('stream', (stream) => {
-    socket.broadcast.to(room).emit('stream', stream);
+  let fileWriter;
+  let streamSampleRate;
+  let fileName;
+  let recordingInfo;
+  let startTime;
+  const PATH = './tmp/';
+
+  function createRecordingInfo() {
+    recordingInfo = {
+      classroom_id: roomID,
+      file_path: PATH,
+      file_name: fileName,
+      sample_rate: streamSampleRate
+    }
+    return;
+  }
+
+  // TODO replace path with path.resolve([path]...)
+  function createFilePath(room) {
+    fileName = room + '_' + String(Date.now()) + '.wav';
+    return (PATH + fileName)
+  }
+
+  // TODO do a check for not streaming to self if more than one tab is open
+
+  ss(socket).on('start-stream', (stream, meta) => {
+    fileWriter = new wav.FileWriter(createFilePath(room), {
+      channels: 1,
+      sampleRate: meta.sampleRate || 48000,
+      bitDepth: 16
+    });
+    streamSampleRate = meta.sampleRate;
+    startTime = Date.now();
+    createRecordingInfo();
+    let roomStream = ss.createStream();
+    stream.pipe(fileWriter);
   });
 
+  socket.on('stop-stream', () => {
+    recordingInfo.time = (Date.now() - startTime)
+    fileWriter.end();
+    fileWriter = null;
+    console.log(recordingInfo)
+  })
+
+  // socket.on('live-stream', (stream) => {
+  //   let meta = {sampleRate: streamSampleRate || 48000};
+  //   socket.broadcast.to(room).emit('live-stream', stream, meta);
+  // });
+
   socket.on('disconnect', () => {
+    if (fileWriter) {
+      recordingInfo.time = (Date.now() - startTime)
+      fileWriter.end();
+      fileWriter = null;
+    }
     rm.removeFromClientsStore();
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}};
     sk.broadcastToRoomInclusive(room, action);
