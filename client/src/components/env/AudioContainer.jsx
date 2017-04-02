@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class AudioContainer extends Component {
 
   render() {
-    const { socket } = this.props;
+    const { socket, isAuthorized } = this.props;
 
     socket.on('stream', (arrayBuffer) => {
       const blob = new Blob([arrayBuffer], { 'type': 'audio/ogg; codecs=opus' });
@@ -17,7 +17,9 @@ class AudioContainer extends Component {
         <div className='env-nav-panel'>
           <div id ='audioPanel' className='panel panel-default'>
             <button id='startButton' className='btn btn-primary btn-sm' onClick={this._startStream.bind(this)}>Start Stream</button>
-            <audio id='audioStream' controls></audio>
+            {!isAuthorized &&
+              <audio id='audioStream' controls></audio>
+            }
           </div>
         </div>
       </div>
@@ -48,8 +50,11 @@ class AudioContainer extends Component {
       }, 500);
     })
   }
+}
 
-
+AudioContainer.propTypes = {
+  socket: PropTypes.object.isRequired,
+  isAuthorized: PropTypes.bool.isRequired
 }
 
 export default AudioContainer;

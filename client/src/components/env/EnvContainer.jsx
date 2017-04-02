@@ -13,7 +13,6 @@ class EnvContainer extends Component {
 
   render() {
     const { socket, editor, roomControls, gist, actions, terminal } = this.props;
-
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
@@ -21,7 +20,9 @@ class EnvContainer extends Component {
             <EnvHeader
               roomTitle={roomControls.roomTitle}
               language={roomControls.language}/>
-            <AudioContainer socket={socket}/>
+            <AudioContainer
+              socket={socket}
+              isAuthorized={roomControls.isAuthorized}/>
           </div>
           <div className='row'>
             <GistContainer
@@ -74,7 +75,8 @@ EnvContainer.propTypes = {
   editor: PropTypes.object.isRequired,
   roomControls: PropTypes.object.isRequired,
   gist: PropTypes.object.isRequired,
-  terminal: PropTypes.array.isRequired
+  terminal: PropTypes.array.isRequired,
+  socket: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);

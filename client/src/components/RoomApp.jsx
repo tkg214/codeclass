@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component, PropTypes } from 'react';
 import EnvContainer from './env/EnvContainer.jsx';
 import ChatContainer from './chat/ChatContainer.jsx';
 import ChatBar from './chat/ChatBar.jsx';
@@ -16,6 +14,10 @@ class RoomApp extends Component {
       </main>
     )
   }
+}
+
+RoomApp.propTypes = {
+  socket: PropTypes.object.isRequired
 }
 
 export default RoomApp;
