@@ -13,7 +13,12 @@ class ChatBar extends Component {
     }
   }
 
+  componentDidMount(){
+    const { chat } = this.props;
+    let containerCount = chat.currentMessagesCount.currentMessagesCount || 0; //new number
+    this.setState({ lastCount: containerCount });
 
+  }
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';
@@ -51,7 +56,6 @@ class ChatBar extends Component {
     )
   }
 
-
   _handleClick(e){
     e.preventDefault();
     const { chat, roomControls, actions } = this.props;
@@ -60,6 +64,7 @@ class ChatBar extends Component {
     actions.toggleChatContainer(roomControls.isChatVisible);
     actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
     actions.updateNewMessagesCount(messageList.length);
+    // this.setState({})
   }
 
 }

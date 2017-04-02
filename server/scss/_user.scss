@@ -32,7 +32,7 @@
 
 .card.panel.panel-default {
   border: 0;
-  background-color: #3e444c;
+  background-color: $gray2;
 }
 
 // .card-heading.panel-heading{
@@ -43,6 +43,15 @@
 
 .card-body {
   margin-bottom: auto;
+}
+
+.card-header{
+  color: $dark1;
+}
+
+
+a.card-body:hover{
+  text-decoration: none;
 }
 
 .card-footer{
