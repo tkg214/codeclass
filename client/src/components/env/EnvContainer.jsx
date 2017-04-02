@@ -15,12 +15,12 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          <div className='row'>
+          <div className='row1'>
             <EnvHeader
               roomTitle={roomControls.roomTitle}
               language={roomControls.language}/>
           </div>
-          <div className='row'>
+          <div className='row1'>
             <GistContainer
               actions={actions}
               saveStatus={gist.saveStatus}

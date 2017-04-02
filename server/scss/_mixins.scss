@@ -1,7 +1,7 @@
-// Button variants
-//
-// Easily pump out default styles, as well as :hover, :focus, :active,
-// and disabled options for all buttons
+/* Button variants
+ *
+ * Easily pump out default styles, as well as :hover, :focus, :active,
+ * and disabled options for all buttons */
 
 @mixin button-variant($color, $background, $border) {
   color: $color;
@@ -107,6 +107,14 @@
   // z-index: 20;
   // max-height: 70px;
   // max-width: 70px;
+}
+
+@mixin nav-global {
+  height: $nav-height;
+
+  .navbar-header {
+    padding: 0 10px;
+  }
 }
 
 //Chat background pattern
