@@ -5,6 +5,8 @@ Chatbar flex sizes
 280px - max: 1159, min 960
 240px - max: 959, min: 768
 
+* App Breakpoint: 768px (standard tablet)
+
 */
 
 $large-desktop-width: 1320px;
@@ -31,7 +33,7 @@ $tablet-width: 768px;
 }
 
 @mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$small-desktop-width - 1}) {
+  @media (max-width: #{$small-desktop-width - 1}) {
     @content;
   }
 }
