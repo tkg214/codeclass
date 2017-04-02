@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import User from './User.jsx';
 class UserCountContainer extends Component {
 
@@ -34,6 +34,10 @@ class UserCountContainer extends Component {
       </div>
     )
   }
+}
+
+UserCountContainer.propTypes = {
+  users: PropTypes.object.isRequired
 }
 
 export default UserCountContainer;

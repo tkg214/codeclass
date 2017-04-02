@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class Message extends Component {
 
@@ -17,6 +17,10 @@ class Message extends Component {
       </article>
     )
   }
+}
+
+Message.propTypes = {
+  message: PropTypes.object.isRequired
 }
 
 export default Message;

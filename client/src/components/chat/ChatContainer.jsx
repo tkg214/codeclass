@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
@@ -49,12 +49,13 @@ class ChatContainer extends Component {
 
   _handleClick(e) {
     e.preventDefault();
+    const { roomControls, chat, actions } = this.props;
     // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
-    this.props.actions.toggleChatNotificationBar(this.props.roomControls.isChatNotificationVisible);
-    this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
-    const { chat } = this.props;
+    actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
+    actions.toggleChatContainer(roomControls.isChatVisible);
     let messageList = chat.messages[0] || [];
-    this.props.actions.updateNewMessagesCount(messageList.length);
+    //this.props.actions.updateNewMessagesCount(messageList.length);
+    actions.updateNewMessagesCount(messageList.length);
   }
 
 }
@@ -69,6 +70,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(Actions, dispatch) }
+}
+
+ChatContainer.propTypes = {
+  actions: PropTypes.shape({
+    toggleChatNotificationBar: PropTypes.func.isRequired,
+    toggleChatContainer: PropTypes.func.isRequired,
+    updateNewMessagesCount: PropTypes.func.isRequired
+  }),
+  roomControls: PropTypes.object.isRequired,
+  chat: PropTypes.object.isRequired,
+  onlineUsers: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

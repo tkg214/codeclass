@@ -3,7 +3,7 @@ const initialState = {
   roomTitle: '',
   roomID: 0,
   isChatNotificationVisible: true,
-  isAuthorized: true,
+  isAuthorized: false,
   isEditorLocked: true,
   isChatLocked: true,
   userSettings: {
@@ -45,9 +45,8 @@ export default function reducer(state=initialState, action) {
     case 'TOGGLE_CHAT_NOTIFICATION_BAR': {
       return {...state, isChatNotificationVisible: action.payload.isChatNotificationVisible}
     }
-    default: return state;
   }
-  return state
+  return state;
 }
 
 // add logic here to control state of room
