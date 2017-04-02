@@ -12,7 +12,7 @@ class ChatContainer extends Component {
   render() {
 
     const { chat, roomControls, onlineUsers } = this.props
-    let visibility = roomControls.isChatVisible ? 'show' : 'close'
+    let visibility = roomControls.isChatVisible ? 'show' : 'close';
 
     return (
       <div className={'chat-container ' + visibility }>
@@ -43,8 +43,9 @@ class ChatContainer extends Component {
     actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
     actions.toggleChatContainer(roomControls.isChatVisible);
     let messageList = chat.messages[0] || [];
-    actions.updateNewMessagesCount(messageList.length);
-
+    // actions.updateNewMessagesCount(messageList.length);
+    console.log('chat container', roomControls.isChatVisible);
+    console.log('chat notif', roomControls.isChatNotificationVisible);
   }
 
 }
