@@ -12,7 +12,6 @@ export default function reducer(state = {
       const newMessages = [...state.messages];
       newMessages[0].push(action.payload);
       return {...state, messages: newMessages}
-      break;
     }
     case 'SEND_OUTGOING_MESSAGE': {
       return state;

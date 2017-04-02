@@ -9,9 +9,9 @@ class Message extends Component {
     return (
       <article className={'message-container-' + messageClass}>
         <article className={'bubble-chat' + messageClass}>
-          {message.name}<br></br>
-          {message.content}<br></br>
-          {message.timestamp}
+          <p>{message.name}</p>
+          <p>{message.content}</p>
+          <p className="message-timestamp">{message.timestamp}</p>
         </article>
         <img src={message.avatarurl} className={'user-avatar-' + messageClass}></img>
       </article>

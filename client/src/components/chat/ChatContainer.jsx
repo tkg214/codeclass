@@ -40,7 +40,10 @@ class ChatContainer extends Component {
 
         <TabPanel>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer actions={this.props.actions} roomControls={roomControls}/>
+          <MessageComposeContainer 
+            actions={this.props.actions} 
+            isChatLocked={roomControls.isChatLocked}
+            roomID={roomControls.roomID} />
         </TabPanel>
       </Tabs>
       </div>
