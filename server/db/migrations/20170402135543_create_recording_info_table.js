@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
       t.integer('time').notNullable();
       t.integer('sample_rate').notNullable();
       t.timestamps(true, true);
-    });
+    })
   ]);
 };
 

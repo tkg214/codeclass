@@ -416,6 +416,7 @@ io.on('connection', (socket) => {
     recordingInfo.time = (Date.now() - startTime)
     fileWriter.end();
     fileWriter = null;
+    dbHelpers.storeRecordingInfo(recordingInfo);
     console.log(recordingInfo)
   })
 
@@ -429,6 +430,7 @@ io.on('connection', (socket) => {
       recordingInfo.time = (Date.now() - startTime)
       fileWriter.end();
       fileWriter = null;
+      dbHelpers.storeRecordingInfo(recordingInfo);
     }
     rm.removeFromClientsStore();
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}};
