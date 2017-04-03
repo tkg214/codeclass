@@ -29,7 +29,7 @@ class ChatContainer extends Component {
             <div className="close-sidebar-btn"><i className='fa fa-chevron-right'></i></div>
           </div>
         </div>
-      <Tabs onSelect={this.handleSelect} selectedIndex={2}>
+      <Tabs onSelect={this.handleSelect} selectedIndex={0}>
         <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab">Users online</Tab>
           <Tab className="sidebar-tab mui--text-button">Chatroom</Tab>

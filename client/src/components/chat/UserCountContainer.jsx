@@ -12,7 +12,6 @@ class UserCountContainer extends Component {
     return (
       <div className='online-users-container'>
         <section className='users-box'>
-          <h2>Users online:</h2>
           <section className='user-list'>
             {users.usersOnline.map((user) => {
               return <User key={user.id} avatar={user.avatar} name={user.name}></User>
