@@ -16,15 +16,15 @@ button.btn {
 
 .env-container {
  flex-grow: 3;
+ padding: 10px;
 }
 
 .editor-container {
-  margin: 0 $space;
+
 }
 
 .terminal {
   overflow-y: scroll;
-  margin: 0 1em;
 }
 
 .ace_gutter-layer {
