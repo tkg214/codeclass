@@ -1,18 +1,22 @@
 .btn.card-share{
-  color: $light;
   border: 0;
+  border-radius: 0%;
+  color: $theme;
+  width: 100%;
+  &:hover {
+    background-color: rgb(240, 240, 240);
+  }
 }
 
 .card {
-  background: #fafafa;
   box-shadow: 0px 5px 15px 2px rgba(0,0,0,0.25);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: $space 1%;
-  transition: transform 0.1s;
   transition: all 0s;
-  width:23%;
+  transition: transform 0.1s;
+  width:29.9%;
   &:hover .card-moment {
     text-decoration: none;
   }
@@ -33,7 +37,7 @@
 
 .card.panel.panel-default {
   border: 0;
-  background-color: $gray2;
+  background-color: #FFFFFF;
 }
 
 // .card-heading.panel-heading{
@@ -48,6 +52,8 @@
 
 .card-header{
   color: $dark1;
+  -webkit-text-shadow: none;
+    text-shadow: none;
 }
 
 
@@ -56,7 +62,8 @@ a.card-body:hover{
 }
 
 .card-footer{
-  background: lighten($theme, 5%);
+  background: #FFFFFF;
+  border-top: 1px solid #e8e8e8;
 }
 
 .clipboard-check {
@@ -105,6 +112,9 @@ a.card-body:hover{
 }
 
 .myrooms-container {
+  background-color: #f3f5f7;
+    border-radius: 0%;
+    border: 0px;
     margin: 0 auto;
     display: flex;
     justify-content: flex-start;
@@ -121,4 +131,100 @@ a.card-body:hover{
 
 .myrooms-cell-header{
   border-radius: 0%;
+}
+
+#user-classroom-body{
+    background-color: $gray1
+}
+
+#user-jumbo{
+  // height: 100%;
+  // width: 100%;
+  border-radius: 0%;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+
+
+/////////////////
+
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+@-webkit-keyframes scrollBad {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -320px;
+  }
+}
+@keyframes scrollBad {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -320px;
+  }
+}
+@-webkit-keyframes scrollGood {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, -320px, 0);
+            transform: translate3d(0, -320px, 0);
+  }
+}
+@keyframes scrollGood {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, -320px, 0);
+            transform: translate3d(0, -320px, 0);
+  }
+}
+.pen {
+  background-color: blue;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+
+.top {
+  background-color: #3E69C3;
+  background-image: url(http://scarbroughstudios.com/img/codepen.svg);
+  background-position: center center;
+  background-size: 500px;
+  -webkit-animation: scrollBad 20s linear infinite;
+  animation: scrollBad 20s linear infinite;
+}
+
+.bottom {
+  background-color: #31CC70;
+  overflow: hidden;
+  position: relative;
+}
+.bottom .scroll {
+  background-image: url(http://scarbroughstudios.com/img/codepen.svg);
+  background-position: center center;
+  background-size: 500px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 400%;
+  width: 100%;
+  z-index: 1;
+  -webkit-animation: scrollGood 5s linear infinite;
+  animation: scrollGood 5s linear infinite;
 }

@@ -6,7 +6,6 @@ $(document).ready(function() {
   //   console.log(this);
   // })
 
-
   const $grid = $('.myrooms-container').isotope({
     itemSelector: '.card',
     layoutMode: 'fitRows',
