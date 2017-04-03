@@ -148,7 +148,10 @@ export function selectRecording(recordingID) {
     .then((response) => {
       dispatch({
         type: 'RECORDED_EDITS_SUCCESS',
-        payload: {didReceiveEdits: true}
+        payload: {
+          didReceiveEdits: true,
+          editorValue: response.data[0].content
+        }
       })
       dispatch({
         type: 'STORE_RECORDED_EDITS',
@@ -171,7 +174,6 @@ export function updateEditorFromRecording(recordedEditsArray) {
     const RATE_MS = 100;
     const observable = Rx.Observable.interval(RATE_MS).take(recordedEditsArray.length).map(t => recordedEditsArray[t]);
     observable.subscribe(t => {
-      console.log(t);
       dispatch({
         type: 'UPDATE_EDITOR_FROM_REC',
         payload: {

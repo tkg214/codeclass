@@ -125,6 +125,7 @@ class AudioContainer extends Component {
     )
   }
 
+  // play audio on select
   _onPlayRecordedEdits(e) {
     e.preventDefault();
     this.props.actions.updateEditorFromRecording(this.props.recordings.recordedEdits)
