@@ -148,9 +148,27 @@ module.exports = function makeDataHelpers(knex) {
       });
     },
 
+    //TODO refactor below tsrange
     getEditorValuesForStream: function(recordingID, cb) {
-      // start: moment(data[0].created_at).unix() - data[0].time,
-      // end: moment(data[0].created_at).unix()
+      knex('recording_info')
+      .select('recording_info.*')
+      .where({id: recordingID})
+      .then((data) => {
+        let start = moment(moment(data[0].created_at).diff(data[0].time, 'milliseconds')).format();
+        let end = moment(data[0].created_at).format();
+        let roomID = data[0].classroom_id;
+        knex('edits')
+        .select('content', 'created_at')
+        .whereRaw('classroom_id = ? and created_at between ?::timestamp and ?::timestamp', [roomID, start, end])
+        .orderBy('created_at', 'asc')
+        .then((data) => {
+          let firstEdit = data[0].created_at;
+          data.forEach((row) => {
+            row.time = moment(row.created_at).diff(firstEdit);
+          })
+          cb(data);
+        })
+      })
     }
   }
 }

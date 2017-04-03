@@ -143,10 +143,24 @@ export function selectRecording(recordingID) {
       type: 'GET_RECORDING_STREAM',
       payload: { recordingID }
     })
-    // axios.get('/api/recordings', {
-    //   params: { recordingID }
-    // }).then((response) => {
-    //
-    // })
+    axios.get('/api/recordings?id=' + recordingID.slice(2))
+    .then((response) => {
+      dispatch({
+        type: 'RECORDED_EDITS_SUCCESS',
+        payload: {didReceiveEdits: true}
+      })
+      dispatch({
+        type: 'STORE_RECORDED_EDITS',
+        payload: {
+          recordedEdits: response.data
+        }
+      })
+    })
+    .catch(() => {
+      dispatch({
+        type: 'RECORDED_EDITS_FAILURE',
+        payload: {didReceiveEdits: false}
+      })
+    })
   }
 }

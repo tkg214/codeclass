@@ -1,5 +1,7 @@
 export default function reducer(state={
-  recordings: []
+  recordings: [],
+  didReceiveEdits: true,
+  recordedEdits: []
 }, action) {
 
   switch(action.type) {
@@ -8,6 +10,16 @@ export default function reducer(state={
       roomRecordings.push(action.payload.recordings);
       return {...state, recordings: roomRecordings}
     }
+
+    case 'RECORDED_EDITS_SUCCESS': {
+      return {...state, didReceiveEdits: action.payload.didReceiveEdits}
+    }
+
+    case 'STORE_RECORDED_EDITS': {
+      return {...state, recordedEdits: action.payload.recordedEdits}
+    }
   }
   return state;
 }
+
+// TODO add on recorded edits failure

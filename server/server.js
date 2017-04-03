@@ -309,8 +309,15 @@ app.post('/savegist', function (req, res) {
   });
 });
 
-app.get('/api/recordings', (req, res) => {
-  console.log(req.params)
+app.get('/api/recordings', ensureAuthenticated, (req, res) => {
+  dbHelpers.getEditorValuesForStream(req.query.id, sendJSON);
+  function sendJSON(data) {
+    if (data.length) {
+      res.json(data);
+    } else {
+      res.status(204).send('No content found');
+    }
+  }
 })
 
 
