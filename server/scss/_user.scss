@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   margin: $space 1%;
-  transition: 0.1s;
+  transition: transform 0.1s;
+  transition: all 0s;
   width:23%;
   &:hover .card-moment {
     text-decoration: none;
