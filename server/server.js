@@ -309,13 +309,14 @@ app.post('/savegist', function (req, res) {
   });
 });
 
+
+// TODO  error msg
 app.get('/api/recordings', ensureAuthenticated, (req, res) => {
-  dbHelpers.getEditorValuesForStream(req.query.id, sendJSON);
-  function sendJSON(data) {
-    if (data.length) {
+  dbHelpers.getEditorValuesForStream(req.query.id, sendRecordings);
+  function sendRecordings(data) {
+    if (data) {
+      console.log(data);
       res.json(data);
-    } else {
-      res.status(204).send('No content found');
     }
   }
 })

@@ -18,6 +18,7 @@ class AudioContainer extends Component {
     let isInit;
     let audioCache = [];
     let bufferTime = 0;
+    console.log(recordings);
 
     // ss(socket).on('playback-stream', (rawStream, meta) => {
     //   audioContext = new AudioContext();
@@ -36,22 +37,22 @@ class AudioContainer extends Component {
     //   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUsermedia
     // }
 
-    function playCache(cache){
-      while (cache.length) {
-        let buffer = cache.shift();
-        let src = audioContext.createBufferSource();
-        src.buffer = buffer;
-        src.connect(audioContext.destination);
-        if (bufferTime === 0) {
-          bufferTime = audioContext.currentTime + 0.05;
-        }
-        src.start(bufferTime);
-        bufferTime += src.buffer.duration;
-      }
-    }
+    // function playCache(cache){
+    //   while (cache.length) {
+    //     let buffer = cache.shift();
+    //     let src = audioContext.createBufferSource();
+    //     src.buffer = buffer;
+    //     src.connect(audioContext.destination);
+    //     if (bufferTime === 0) {
+    //       bufferTime = audioContext.currentTime + 0.05;
+    //     }
+    //     src.start(bufferTime);
+    //     bufferTime += src.buffer.duration;
+    //   }
+    // }
 
     // TODO create error event
-    function onStartStreamClick(e) {
+    function onStartLiveStreamClick(e) {
       e.preventDefault();
       if (isAuthorized && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
@@ -94,7 +95,7 @@ class AudioContainer extends Component {
     }
 
     // TODO fix onStopStreamClick so it emits
-    function onStopStreamClick(e) {
+    function onStopLiveStreamClick(e) {
       e.preventDefault();
       if (isRecording) {
         socket.emit('stop-stream');
@@ -109,16 +110,24 @@ class AudioContainer extends Component {
         <div className='env-nav-panel'>
           <div id ='audioPanel' className='panel panel-default'>
             {isAuthorized &&
-              <button className='btn env-btn btn-primary btn-sm' onClick={onStartStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
+              <button className='btn env-btn btn-primary btn-sm' onClick={onStartLiveStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
             }
             {isAuthorized &&
-              <button className='btn env-btn btn-primary btn-sm' onClick={onStopStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
+              <button className='btn env-btn btn-primary btn-sm' onClick={onStopLiveStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
             }
             <RecordingsListContainer actions={actions} recordings={recordings}/>
+            {recordings.didReceiveEdits &&
+              <button className='btn env-btn btn-primary btn-sm' onClick={this._onPlayRecordedEdits.bind(this)}><i className='fa fa-play'></i>&ensp;Play Session</button>
+            }
           </div>
         </div>
       </div>
     )
+  }
+
+  _onPlayRecordedEdits(e) {
+    e.preventDefault();
+    this.props.actions.updateEditorFromRecording(this.props.recordings.recordedEdits)
   }
 }
 

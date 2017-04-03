@@ -164,3 +164,19 @@ export function selectRecording(recordingID) {
     })
   }
 }
+
+export function updateEditorFromRecording(recordedEditsArray) {
+  return dispatch => {
+    const RATE_MS = 250;
+    recordedEditsArray.forEach((edit) => {
+      setTimeout(() => {
+        dispatch({
+          type: 'UPDATE_EDITOR_FROM_REC',
+          payload: {
+            editorValue: edit.content
+          }
+        })
+      }, RATE_MS);
+    })
+  }
+}

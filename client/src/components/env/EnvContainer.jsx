@@ -13,7 +13,6 @@ class EnvContainer extends Component {
 
   render() {
     const { socket, editor, roomControls, gist, actions, terminal, recordings } = this.props;
-    console.log(recordings);
     return (
       <div className='env-container'>
         <div className='env-nav-container'>

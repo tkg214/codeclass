@@ -154,6 +154,7 @@ module.exports = function makeDataHelpers(knex) {
       .select('recording_info.*')
       .where({id: recordingID})
       .then((data) => {
+        let audioLength = data[0].time;
         let start = moment(moment(data[0].created_at).diff(data[0].time, 'milliseconds')).format();
         let end = moment(data[0].created_at).format();
         let roomID = data[0].classroom_id;
@@ -162,11 +163,35 @@ module.exports = function makeDataHelpers(knex) {
         .whereRaw('classroom_id = ? and created_at between ?::timestamp and ?::timestamp', [roomID, start, end])
         .orderBy('created_at', 'asc')
         .then((data) => {
-          let firstEdit = data[0].created_at;
+          let audioStart = moment(start).unix() * 1000;
           data.forEach((row) => {
-            row.time = moment(row.created_at).diff(firstEdit);
+            row.time = moment(row.created_at).unix() * 1000;
+            delete row.created_at;
           })
-          cb(data);
+          const RATE_MS = 250;
+          let n = audioLength / RATE_MS;
+          let intervalArray = new Array();
+          for (let i = 0; i < n; i++) {
+            intervalArray.push(new Object());
+          }
+          let ri = 0;
+          let t = 0
+          intervalArray.forEach((interval) => {
+            if (ri === data.length) {
+              interval.time = t;
+              interval.content = data[ri - 1].content;
+            } else if (audioStart < data[ri].time) {
+              interval.time = t;
+              interval.content = data[ri].content;
+            } else {
+              interval.time = t;
+              interval.content = data[ri].content;
+              ri++;
+            }
+            audioStart += RATE_MS;
+            t += RATE_MS;
+          })
+          cb(intervalArray);
         })
       })
     }
