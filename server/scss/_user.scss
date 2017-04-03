@@ -1,7 +1,7 @@
 .btn.card-share{
-  border: 0;
+  border: 0px;
   border-radius: 0%;
-  color: $theme;
+  color: $card-text;
   width: 100%;
   &:hover {
     background-color: rgb(240, 240, 240);
@@ -38,7 +38,7 @@
 
 .card.panel.panel-default {
   border: 0;
-  background-color: #FFFFFF;
+  background-color: $card-background;
 }
 
 // .card-heading.panel-heading{
@@ -52,7 +52,7 @@
 }
 
 .card-header{
-  color: $dark1;
+  color: $card-text;
   -webkit-text-shadow: none;
     text-shadow: none;
 }
@@ -63,7 +63,7 @@ a.card-body:hover{
 }
 
 .card-footer{
-  background: #FFFFFF;
+  background: $card-background;
   border-top: 1px solid #e8e8e8;
 }
 
@@ -111,7 +111,7 @@ h1.username{
 .icon-python{
   color: rgb(50, 117, 231);
 }
-
+.inner-shadow{}
 .language-icon {
   font-size: 2em;
   float: right;
@@ -138,6 +138,11 @@ h1.username{
 
 .myrooms-cell-header{
   border-radius: 0%;
+}
+.my-classrooms-heading{
+  color: $theme;
+  margin-top: 0;
+  text-shadow: none;
 }
 
 #user-classroom-body{
