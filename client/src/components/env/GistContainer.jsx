@@ -29,19 +29,19 @@ class GistContainer extends Component {
             placeholder='Enter Gist Name'
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
-            className='gist-input input-sm'
+            className='gist-input'
             disabled={saveStatus === 'Saving...'}/>
 
             <ReactCSSTransitionGroup
-              transitionName="example"
-              transitionEnterTimeout={250}
-              transitionLeaveTimeout={250}>
-              <button
-                key = {key}
-                className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
-                disabled={saveStatus === 'Saving...'}
-                onClick={this._handleClick.bind(this)}
-                type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
+               transitionName="example"
+               transitionEnterTimeout={250}
+               transitionLeaveTimeout={250}>
+               <button
+                 key = {key}
+                 className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
+                 disabled={saveStatus === 'Saving...'}
+                 onClick={this._handleClick.bind(this)}
+                 type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
               </button>
             </ReactCSSTransitionGroup>
         </div>

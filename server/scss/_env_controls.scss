@@ -1,19 +1,25 @@
+/* Gist  */
 .gist-button {
   display: inline-block;
   position: absolute;
-  width: 19.5%
 }
 
 .gist-container {
+  display: flex;
   position: relative;
   width: 50%;
 }
 
 .gist-input {
+  @include form-input;
+  color: $gray1;
   width:80%;
 }
 
 .env-btn {
+  background-color: $green;
+  cursor: pointer;
+  padding: 5px 5px 5px 15px;
   a {
     color: inherit;
     text-decoration: none;

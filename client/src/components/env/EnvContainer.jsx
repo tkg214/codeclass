@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import GistContainer from './GistContainer.jsx';
 import EditorContainer from './EditorContainer.jsx';
+import DisplaySettingsContainer from './DisplaySettingsContainer.jsx';
 import Terminal from './Terminal.jsx';
 import EnvControls from './EnvControls.jsx';
 import EnvHeader from './EnvHeader.jsx';
@@ -46,6 +47,7 @@ class EnvContainer extends Component {
           isEditorLocked={roomControls.isEditorLocked}
           fontSize={roomControls.userSettings.fontSize}
           theme={roomControls.userSettings.theme}/>
+        <DisplaySettingsContainer actions={actions} theme={roomControls.userSettings.theme} fontSize={roomControls.userSettings.fontSize} />
         <Terminal terminal={terminal}/>
       </div>
     )

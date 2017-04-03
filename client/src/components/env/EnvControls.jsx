@@ -9,14 +9,14 @@ class EnvControls extends Component {
     return (
       <div className='col-lg-12'>
         <div className='env-nav-controls'>
-          <div className="btn-group env-btn btn btn-primary btn-sm">
+          {/*<div className="btn-group env-btn">
             <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
               {themes.map((theme, i) => {
                 return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
               })}
             </ul>
-          </div>
+          </div>*/}
           <div className="btn-group env-btn btn btn-primary btn-sm">
             <a className="dropdown-toggle" data-toggle="dropdown">A<span className='sm'> A</span>&ensp;Font Size<span className="caret"></span></a>
             <ul className="dropdown-menu">
@@ -60,12 +60,12 @@ class EnvControls extends Component {
     );
   }
 
-  _onThemeChangeClick(e) {
-    e.preventDefault();
-    const text = e.target.text.toLowerCase();
-    const theme = text.split(' ').join('_');
-    this.props.actions.changeEditorTheme(this.props.fontSize, theme);
-  }
+  // _onThemeChangeClick(e) {
+  //   e.preventDefault();
+  //   const text = e.target.text.toLowerCase();
+  //   const theme = text.split(' ').join('_');
+  //   this.props.actions.changeEditorTheme(this.props.fontSize, theme);
+  // }
 
   _onFontSizeChangeClick(e) {
     e.preventDefault();
@@ -91,13 +91,13 @@ class EnvControls extends Component {
 
 EnvControls.propTypes = {
   actions: PropTypes.shape({
-    changeEditorTheme: PropTypes.func.isRequired,
+    // changeEditorTheme: PropTypes.func.isRequired,
     changeFontSize: PropTypes.func.isRequired,
     toggleEditorLock: PropTypes.func.isRequired,
     toggleChatLock: PropTypes.func.isRequired,
     executeCode: PropTypes.func.isRequired
   }),
-  theme: PropTypes.string.isRequired,
+  // theme: PropTypes.string.isRequired,
   fontSize: PropTypes.number.isRequired,
   language: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,

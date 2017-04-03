@@ -70,6 +70,22 @@
   border-radius: $border-radius;
 }
 
+@mixin button-clear-styles {
+  background:none;
+  border:none;
+}
+
+/* INPUTS */
+@mixin form-input {
+  border-color: $gray1;
+  border-width: 0 0 2px 0;
+  background-color: transparent;
+  outline: 0;
+
+  &:focus {
+    border-color: $green;
+  }
+}
 
 /* Avatar display */
 @mixin avatar-size {
