@@ -23,27 +23,22 @@ class ChatBar extends Component {
     return (
       <div className='chat-notification-bar' id= { visibility }>
         <div className="chat-notification-bar-toggle">
-          <button
-            className="btn btn-info bar-button"
+          <div className="open-sidebar-btn"
             onClick={this._handleClick.bind(this)}>
             <i className='fa fa-chevron-left'></i>
-          </button>
+          </div>
         </div>
         <div>
-          <button
-            className="btn btn-primary users-connected-button bar-button">
-            <i className='fa fa-users fa-lg'></i>
-            <br></br>
-             <span className="badge">{onlineUsers.usersOnline.length}</span>
-          </button>
+          <div className="users-connected-btn bar-btn">
+            <i className='fa fa-users fa-lg'></i><br/>
+            <p className="badge">{onlineUsers.usersOnline.length}</p>
+          </div>
         </div>
         <div>
-          <button
-            className="btn btn-primary users-connected-button bar-button">
-            <i className='fa fa-comments fa-lg'></i>
-            <br></br>
-             <span className="badge">{messageList - this.state.lastCount}</span>
-          </button>
+          <div className="users-connected-btn bar-btn">
+            <i className='fa fa-comments fa-lg'></i><br/>
+            <p className="badge">{messageList - this.state.lastCount}</p>
+          </div>
         </div>
       </div>
     )

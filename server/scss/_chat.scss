@@ -1,11 +1,34 @@
-.bar-button{
+.open-sidebar-btn{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $nav-height;
   width: $chat-notifcation-bar-width;
   margin-bottom: 2px;
-  background-color: #546575;
-  border-bottom: 1px solid white;
+  background-color: $green;
+
+  i {
+    color: $gray1;
+  }
 }
-.bar-button:active{
-  background-color: #546575;
+.open-sidebar-btn:active{
+  background-color: $green;
+}
+
+.bar-btn {
+  background-color: $dark2;
+  border-bottom: 0.1px solid #3f434a;
+  height: 80px;
+
+  i {
+    color: $gray1;
+    text-align: center;
+  }
+
+  .badge {
+    width: 60%;
+  }
 }
 
 .chat-container {
@@ -69,9 +92,9 @@
 }
 
 .chat-notification-bar {
-  right: -50;
+  // right: -50;
   flex: 0 0 50px;
-  background: #546575;
+  background-color: $dark1;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   transform-origin: right;
@@ -193,14 +216,29 @@
 }
 
 .sidebar-tabs {
-  background-color: $gray1;
+  background-color: $green;
   flex: none !important;
+
+  i {
+    color: $gray1;
+  }
 }
 
 .sidebar-tab {
   color: $dark3;
-  padding: 10px;
-  &:hover{
-    background-color: $gray2;
+  height: $nav-height;
+
+  .close-sidebar-btn {
+    @include ver-hor-center;
+    height: 100%;
+    width: $chat-notifcation-bar-width;
+      &:hover{
+      background-color: $gray1;
+
+      i {
+        color: $green;
+      }
+    }
   }
+  
 }

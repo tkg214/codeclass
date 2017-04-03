@@ -25,7 +25,7 @@ class ChatContainer extends Component {
           <div
             className="sidebar-tab chat-toggle-button"
             onClick={this._handleClick.bind(this)}>
-            <i className='fa fa-chevron-right'></i>
+            <div className="close-sidebar-btn"><i className='fa fa-chevron-right'></i></div>
           </div>
         </div>
       <Tabs onSelect={this.handleSelect} selectedIndex={2}>
