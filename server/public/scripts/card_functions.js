@@ -17,7 +17,6 @@ $(document).ready(function() {
 
   $('.btn-group.filter-language-group').on('click', 'button', function() {
     const filterValue = $(this).attr('data-filter');
-    console.log('TRIGGERED');
     $grid.isotope({filter: filterValue});
   });
 
@@ -29,7 +28,6 @@ $(document).ready(function() {
       $grid.isotope({sortBy: sortByValue, sortAscending: true});
 
     } else {
-      console.log('descending');
       $grid.isotope({sortBy: sortByValue, sortAscending: false});
     }
   });
