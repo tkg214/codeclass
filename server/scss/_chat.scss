@@ -189,7 +189,7 @@
   }
 
   article {
-    @include bubble-chat-styles($green);
+    @include bubble-chat-styles($chat-bubble-own);
     &:after {
       right: -10px;
     }

@@ -40,7 +40,7 @@
 }
 
 .run-btn {
-  background-color: $yellow;
+  background-color: $dark2;
   color: $gray1;
   cursor: pointer;
   height: $nav-height;
@@ -48,6 +48,7 @@
   padding: 10px 10px 0 10px;
 
   &:hover {
-
+    background-color: $gray1;
+    color: $dark3;
   }
 }
