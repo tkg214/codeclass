@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Rx from 'rxjs/Rx';
 
 export function updateEditorValues(editorValue, roomID) {
   return dispatch => {
@@ -167,16 +168,16 @@ export function selectRecording(recordingID) {
 
 export function updateEditorFromRecording(recordedEditsArray) {
   return dispatch => {
-    const RATE_MS = 250;
-    recordedEditsArray.forEach((edit) => {
-      setTimeout(() => {
-        dispatch({
-          type: 'UPDATE_EDITOR_FROM_REC',
-          payload: {
-            editorValue: edit.content
-          }
-        })
-      }, RATE_MS);
+    const RATE_MS = 100;
+    const observable = Rx.Observable.interval(RATE_MS).take(recordedEditsArray.length).map(t => recordedEditsArray[t]);
+    observable.subscribe(t => {
+      console.log(t);
+      dispatch({
+        type: 'UPDATE_EDITOR_FROM_REC',
+        payload: {
+          editorValue: t.content
+        }
+      })
     })
   }
 }

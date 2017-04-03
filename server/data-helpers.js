@@ -168,7 +168,7 @@ module.exports = function makeDataHelpers(knex) {
             row.time = moment(row.created_at).unix() * 1000;
             delete row.created_at;
           })
-          const RATE_MS = 250;
+          const RATE_MS = 100;
           let n = audioLength / RATE_MS;
           let intervalArray = new Array();
           for (let i = 0; i < n; i++) {
