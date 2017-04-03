@@ -9,14 +9,14 @@ class EnvControls extends Component {
     return (
       <div className='col-lg-12'>
         <div className='env-nav-controls'>
-          {/*<div className="btn-group env-btn">
+          <div className="btn-group env-btn">
             <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
               {themes.map((theme, i) => {
                 return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
               })}
             </ul>
-          </div>*/}
+          </div>
           <div className="btn-group env-btn btn btn-primary btn-sm">
             <a className="dropdown-toggle" data-toggle="dropdown">A<span className='sm'> A</span>&ensp;Font Size<span className="caret"></span></a>
             <ul className="dropdown-menu">
@@ -49,23 +49,23 @@ class EnvControls extends Component {
           {!isAuthorized && !isEditorLocked &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
           }
-          {(isAuthorized || !isEditorLocked) &&
+          {/*{(isAuthorized || !isEditorLocked) &&
             <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
           }
           {(!isAuthorized && isEditorLocked) &&
             <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
-          }
+          }*/}
         </div>
       </div>
     );
   }
 
-  // _onThemeChangeClick(e) {
-  //   e.preventDefault();
-  //   const text = e.target.text.toLowerCase();
-  //   const theme = text.split(' ').join('_');
-  //   this.props.actions.changeEditorTheme(this.props.fontSize, theme);
-  // }
+  _onThemeChangeClick(e) {
+    e.preventDefault();
+    const text = e.target.text.toLowerCase();
+    const theme = text.split(' ').join('_');
+    this.props.actions.changeEditorTheme(this.props.fontSize, theme);
+  }
 
   _onFontSizeChangeClick(e) {
     e.preventDefault();
@@ -83,21 +83,16 @@ class EnvControls extends Component {
     this.props.actions.toggleChatLock(this.props.isChatLocked, this.props.roomID);
   }
 
-  _onRunClick(e) {
-    e.preventDefault();
-    this.props.actions.executeCode(this.props.language, this.props.editorValue);
-  }
 }
 
 EnvControls.propTypes = {
   actions: PropTypes.shape({
-    // changeEditorTheme: PropTypes.func.isRequired,
+    changeEditorTheme: PropTypes.func.isRequired,
     changeFontSize: PropTypes.func.isRequired,
     toggleEditorLock: PropTypes.func.isRequired,
-    toggleChatLock: PropTypes.func.isRequired,
-    executeCode: PropTypes.func.isRequired
+    toggleChatLock: PropTypes.func.isRequired
   }),
-  // theme: PropTypes.string.isRequired,
+  theme: PropTypes.string.isRequired,
   fontSize: PropTypes.number.isRequired,
   language: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+/*import React, { Component, PropTypes } from 'react';
 
 class DisplaySettings extends Component {
 
@@ -8,11 +8,19 @@ class DisplaySettings extends Component {
 
     return(
     <div>
-      <div className="btn-group env-btn">
+      <div className="btn-group env-btn dropup">
         <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
         <ul className="dropdown-menu">
           {themes.map((theme, i) => {
             return <li key={i}><a onClick={this._onThemeChangeClick.bind(this)}>{theme}</a></li>
+          })}
+        </ul>
+      </div>
+       <div className="btn-group env-btn btn btn-primary btn-sm dropup">
+        <a className="dropdown-toggle" data-toggle="dropdown">A<span className='sm'> A</span>&ensp;Font Size<span className="caret"></span></a>
+        <ul className="dropdown-menu">
+          {fontSizes.map((fontSize, i) => {
+            return <li key={i}><a onClick={this._onFontSizeChangeClick.bind(this)}>{fontSize}</a></li>
           })}
         </ul>
       </div>
@@ -25,6 +33,12 @@ class DisplaySettings extends Component {
     const text = e.target.text.toLowerCase();
     const theme = text.split(' ').join('_');
     this.props.actions.changeEditorTheme(this.props.fontSize, theme);
+  }
+
+  _onFontSizeChangeClick(e) {
+    e.preventDefault();
+    const fontSize = e.target.text;
+    this.props.actions.changeFontSize(Number(fontSize), this.props.theme);
   }
 }
 
@@ -46,4 +60,4 @@ DisplaySettings.propTypes = {
 
 }
 
-export default DisplaySettings;
+export default DisplaySettings;*/

@@ -11,7 +11,7 @@ class GistContainer extends Component {
   }
 
   render() {
-    const { saveStatus } = this.props;
+    const { saveStatus, isAuthorized, isChatLocked, isEditorLocked } = this.props;
     const buttonClass = {
       'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
       'Complete': {'style': 'btn-success', 'icon': 'fa-check'},
@@ -45,6 +45,14 @@ class GistContainer extends Component {
               </button>
             </ReactCSSTransitionGroup>
         </div>
+        <div className='run-container'>
+          {(isAuthorized || !isEditorLocked) &&
+            <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+          }
+          {(!isAuthorized && isEditorLocked) &&
+            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+          }
+        </div>
       </div>
     )
   }
@@ -57,15 +65,25 @@ class GistContainer extends Component {
   _handleChange(e) {
     this.setState({input: e.target.value})
   }
+
+  _onRunClick(e) {
+    e.preventDefault();
+    this.props.actions.executeCode(this.props.language, this.props.editorValue);
+  }
 }
 
 GistContainer.propTypes = {
   actions: PropTypes.shape({
-    saveToGist: PropTypes.func.isRequired
+    saveToGist: PropTypes.func.isRequired,
+    executeCode: PropTypes.func.isRequired
   }),
   saveStatus: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  roomID: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  isChatLocked: PropTypes.bool.isRequired,
+  isEditorLocked: PropTypes.bool.isRequired
 }
 
 export default GistContainer;
