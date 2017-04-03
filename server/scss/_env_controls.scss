@@ -23,21 +23,55 @@
   margin-right: 30px;
 }
 
-.env-btn {
-  background-color: $green;
-  cursor: pointer;
-  padding: 5px 5px 5px 15px;
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-  width: 20%;
-}
-
-
 .env-nav-controls {
-  padding: 0.5em 1em 0em 1em;
+  display: flex;
 }
+
+.env-btn {
+  @include ver-hor-center;
+  background-color: #1e1e1f;
+  border-right: 0.1px solid #292929;
+  cursor: pointer;
+  width: 20%;
+
+  &:hover {
+    background-color: $gray2;
+    color: $dark1;
+  }
+
+  a {
+   @include env-btn-styles;
+  }
+
+}
+
+.env-btn-disabled {
+  @include ver-hor-center;
+  background-color: #404040;
+  border-right: 0.1px solid #4c4c4c;
+  width: 20%;
+  color: #616161;
+
+}
+
+.env-status {
+  @include env-btn-styles;
+  padding-top: 12px;
+  font-size: 0.8em;
+}
+
+.env-mode {
+  @include ver-hor-center;
+  background-color: darken($blue, 20%);
+  border-right: 0.1px solid #292929;
+  width: 20%;
+
+  p {
+   @include env-btn-styles;
+   padding-top: 10px;
+  }
+}
+
 
 .run-btn {
   background-color: $dark2;

@@ -3,6 +3,7 @@
   height: $terminal-height;
   padding: 10px;
   word-wrap: break-word;
+  overflow-y: auto;
 }
 
 pre {
