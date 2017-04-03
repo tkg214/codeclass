@@ -143,9 +143,11 @@
 }
 
 .message-container-own {
-  display: flex;
-  padding: 15px 25px;
-  position: relative;
+  @include message-container-styles;
+
+  @include tablet {
+    padding: 10px 5px 0 15px;
+  }
 
   article {
     @include bubble-chat-styles($green);
@@ -153,17 +155,23 @@
       right: -10px;
     }
   }
-
   img {
     @include chat-avatar;
+    @include tablet {
+      margin: 5px 5px 5px 20px;
+      max-height: 50px;
+      max-width: 50px;
+    }
   }
 }
 
 .message-container-other {
-  display: flex;
+  @include message-container-styles; 
   flex-direction: row-reverse;
-  padding: 15px 25px;
-  position: relative;
+
+  @include tablet {
+    padding: 10px 15px 0 5px;    
+  }
 
   article {
     @include bubble-chat-styles($gray2);
@@ -174,6 +182,11 @@
 
   img {
     @include chat-avatar;
+    @include tablet {
+    margin: 5px 20px 5px 5px;
+    max-height: 50px;
+    max-width: 50px;
+  }
   }
 }
 

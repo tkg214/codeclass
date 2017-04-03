@@ -9,7 +9,6 @@ class Message extends Component {
     return (
       <article className={'message-container-' + messageClass}>
         <article className={'bubble-chat' + messageClass}>
-          <p>{message.name}</p>
           <p>{message.content}</p>
           <p className="message-timestamp">{message.timestamp}</p>
         </article>
