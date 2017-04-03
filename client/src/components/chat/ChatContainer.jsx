@@ -12,12 +12,8 @@ import EnvHeader from './EnvHeader.jsx';
 
 class ChatContainer extends Component {
 
-  handleSelect(index, last) {
-    console.log('Selected tab: ' + index + ', Last tab: ' + last);
-  }
-
   render() {
-    const { chat, roomControls, onlineUsers } = this.props
+    const { chat, roomControls, onlineUsers, sidebar } = this.props
     let visibility = roomControls.isChatVisible ? 'open' : 'close'
     // Tabs.setUseDefaultStyles(false);
     return (
@@ -29,7 +25,7 @@ class ChatContainer extends Component {
             <div className="close-sidebar-btn"><i className='fa fa-chevron-right'></i></div>
           </div>
         </div>
-      <Tabs onSelect={this.handleSelect} selectedIndex={0}>
+      <Tabs onSelect={this.handleSelect.bind(this)} selectedIndex={sidebar.currentTab}>
         <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab">Users online</Tab>
           <Tab className="sidebar-tab mui--text-button">Chatroom</Tab>
@@ -63,13 +59,21 @@ class ChatContainer extends Component {
     actions.updateNewMessagesCount(messageList.length);
   }
 
+  handleSelect(index, last) {
+    const { actions } = this.props;
+    console.log('Selected tab: ' + index + ', Last tab: ' + last);
+    actions.switchSidebarTab(index);
+  }
+
+
 }
 
 function mapStateToProps(state) {
   return {
     chat: state.chat,
     roomControls: state.roomControls,
-    onlineUsers: state.onlineUsers
+    onlineUsers: state.onlineUsers,
+    sidebar: state.sidebar
    }
 }
 
@@ -81,11 +85,13 @@ ChatContainer.propTypes = {
   actions: PropTypes.shape({
     toggleChatNotificationBar: PropTypes.func.isRequired,
     toggleChatContainer: PropTypes.func.isRequired,
-    updateNewMessagesCount: PropTypes.func.isRequired
+    updateNewMessagesCount: PropTypes.func.isRequired,
+    switchSidebarTab: PropTypes.func.isRequired
   }),
   roomControls: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
-  onlineUsers: PropTypes.object.isRequired
+  onlineUsers: PropTypes.object.isRequired,
+  sidebar: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);
