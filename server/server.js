@@ -309,6 +309,10 @@ app.post('/savegist', function (req, res) {
   });
 });
 
+app.get('/api/recordings', (req, res) => {
+  console.log(req.params)
+})
+
 
 //Temp data
 // const roomData = require('./temp-room-api-data.json');
@@ -364,15 +368,6 @@ io.on('connection', (socket) => {
     const executeAction = actionMap[action.type];
     executeAction(action);
   });
-  //
-  // socket.on('start-stream', () => {
-  //   socket.emit('started-stream');
-  //   socket.broadcast.to(room).emit('prepare-stream');
-  // });
-  //
-  // socket.on('signaling-message', (message) => {
-  //   socket.broadcast.to(room).emit('signaling-message', message);
-  // });
 
   let fileWriter;
   let streamSampleRate;
@@ -397,7 +392,7 @@ io.on('connection', (socket) => {
     return (PATH + fileName)
   }
 
-  // TODO do a check for not streaming to self if more than one tab is open
+  // TODO do a check for not streaming if more than one tab is open
 
   ss(socket).on('start-stream', (stream, meta) => {
     fileWriter = new wav.FileWriter(createFilePath(room), {
@@ -408,28 +403,37 @@ io.on('connection', (socket) => {
     streamSampleRate = meta.sampleRate;
     startTime = Date.now();
     createRecordingInfo();
-    let roomStream = ss.createStream();
+    let roomStream = new ss.createStream();
     stream.pipe(fileWriter);
   });
 
+  // TODO stop button does not work as expected. stop-stream does not actually emit from client
   socket.on('stop-stream', () => {
-    recordingInfo.time = (Date.now() - startTime)
-    fileWriter.end();
-    fileWriter = null;
-    dbHelpers.storeRecordingInfo(recordingInfo);
-    console.log(recordingInfo)
+    if (fileWriter) {
+      console.log('stopped');
+      recordingInfo.time = (Date.now() - startTime)
+      fileWriter.end();
+      dbHelpers.storeRecordingInfo(recordingInfo);
+    }
   })
 
-  // socket.on('live-stream', (stream) => {
-  //   let meta = {sampleRate: streamSampleRate || 48000};
-  //   socket.broadcast.to(room).emit('live-stream', stream, meta);
-  // });
+  socket.on('playback', (action) => {
+    let id = action.payload.recordingID.slice(2);
+    // let roomStream = new ss.createStream();
+    dbHelpers.getRecordingInfoForStream(id, createPlaybackStream);
+    function createPlaybackStream(data) {
+      let roomStream = new ss.createStream();
+      let file = data.filePath + data.fileName;
+      ss(socket).emit('playback-stream', roomStream, {sampleRate: data.sampleRate});
+      fs.createReadStream(file).pipe(roomStream);
+    }
+  });
 
+  // TODO fix TypeError: Cannot read property 'removeFromClientsStore' of undefined
   socket.on('disconnect', () => {
     if (fileWriter) {
       recordingInfo.time = (Date.now() - startTime)
       fileWriter.end();
-      fileWriter = null;
       dbHelpers.storeRecordingInfo(recordingInfo);
     }
     rm.removeFromClientsStore();

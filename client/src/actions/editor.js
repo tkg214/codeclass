@@ -136,3 +136,17 @@ export function changeFontSize(fontSize, theme) {
     })
   }
 }
+
+export function selectRecording(recordingID) {
+  return dispatch => {
+    dispatch({
+      type: 'GET_RECORDING_STREAM',
+      payload: { recordingID }
+    })
+    // axios.get('/api/recordings', {
+    //   params: { recordingID }
+    // }).then((response) => {
+    //
+    // })
+  }
+}

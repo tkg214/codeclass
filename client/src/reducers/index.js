@@ -7,6 +7,7 @@ import roomControls from './roomControls';
 import terminal from './terminal';
 import gist from './gist';
 import onlineUsers from './onlineUsers';
+import recordings from './recordings';
 
 export default combineReducers({
   chat,
@@ -14,5 +15,6 @@ export default combineReducers({
   roomControls,
   terminal,
   gist,
-  onlineUsers
+  onlineUsers,
+  recordings
 });

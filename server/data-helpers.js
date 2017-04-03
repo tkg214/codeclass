@@ -1,6 +1,15 @@
 const moment = require('moment');
 
 module.exports = function makeDataHelpers(knex) {
+
+  // TODO use left outer join for messages query on setRoomData
+
+  function convertMs(ms) {
+    const m = Math.floor(ms / 60000);
+    const s = ((ms % 60000) / 1000).toFixed(0);
+    return m + ":" + (s < 10 ? '0' : '') + s;
+  }
+
   return {
     setRoomData: function(room, userID, cb) {
       knex('classrooms')
@@ -19,27 +28,40 @@ module.exports = function makeDataHelpers(knex) {
           language: data[0].language_id,
           roomID: data[0].id
         };
-        knex.raw('select m.created_at as timestamp, m.user_id as messageuserid, m.id, m.content as content, u.github_login as name, u.github_avatar as avatarurl from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
+        knex('classrooms')
+        .leftOuterJoin('recording_info', 'classrooms.id', 'recording_info.classroom_id')
+        .select('recording_info.created_at as timestamp', 'recording_info.id', 'recording_info.time')
+        .where('classroom_id', roomData.roomID)
+        .orderBy('recording_info.created_at', 'desc')
         .then((data) => {
-          roomData.messages = data.rows
-          knex.raw('select * from users where id= ?', userID)
+          roomData.recordings = data;
+          roomData.recordings.forEach((recording) => {
+            recording.id = 'R_' + recording.id;
+            recording.time = convertMs(recording.time);
+            recording.timestamp = moment(recording.timestamp).format('dddd, MMMM Do YYYY, h:mm:ss a');
+          });
+          knex.raw('select m.created_at as timestamp, m.user_id as messageuserid, m.id, m.content as content, u.github_login as name, u.github_avatar as avatarurl from classrooms c join messages m on c.id=m.classroom_id join users u on m.user_id=u.id where c.room_key = ?', room)
           .then((data) => {
-            roomData.userSettings = {
-              theme: data.rows[0].editor_theme,
-              fontSize: data.rows[0].font_size
-            };
-            roomData.messages.forEach((message) => {
-              if (message.messageuserid === userID) {
-                message.isOwnMessage = true;
-              } else {
-                message.isOwnMessage = false;
-              }
-              delete message.messageuserid;
-              message.id = 'M_' + message.id
-              message.timestamp = moment(message.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            })
-            roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
-            cb(roomData);
+            roomData.messages = data.rows;
+            knex.raw('select * from users where id= ?', userID)
+            .then((data) => {
+              roomData.userSettings = {
+                theme: data.rows[0].editor_theme,
+                fontSize: data.rows[0].font_size
+              };
+              roomData.messages.forEach((message) => {
+                if (message.messageuserid === userID) {
+                  message.isOwnMessage = true;
+                } else {
+                  message.isOwnMessage = false;
+                }
+                delete message.messageuserid;
+                message.id = 'M_' + message.id
+                message.timestamp = moment(message.timestamp).format('dddd, MMMM Do YYYY, h:mm:ss a');
+              })
+              roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
+              cb(roomData);
+            });
           });
         });
       });
@@ -110,6 +132,25 @@ module.exports = function makeDataHelpers(knex) {
       .then(() => {
         return;
       });
+    },
+
+    getRecordingInfoForStream: function(recordingID, cb) {
+      knex('recording_info')
+      .select('recording_info.*')
+      .where({id: recordingID})
+      .then((data) => {
+        fileInfo = {
+          fileName: data[0].file_name,
+          filePath: data[0].file_path,
+          sampleRate: data[0].sample_rate
+        }
+        cb(fileInfo)
+      });
+    },
+
+    getEditorValuesForStream: function(recordingID, cb) {
+      // start: moment(data[0].created_at).unix() - data[0].time,
+      // end: moment(data[0].created_at).unix()
     }
   }
 }

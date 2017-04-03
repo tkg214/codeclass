@@ -12,7 +12,7 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    const { socket, editor, roomControls, gist, actions, terminal } = this.props;
+    const { socket, editor, roomControls, gist, actions, terminal, recordings } = this.props;
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
@@ -21,7 +21,9 @@ class EnvContainer extends Component {
               roomTitle={roomControls.roomTitle}
               language={roomControls.language}/>
             <AudioContainer
+              actions={actions}
               socket={socket}
+              recordings={recordings}
               isAuthorized={roomControls.isAuthorized}/>
           </div>
           <div className='row'>
@@ -56,13 +58,13 @@ class EnvContainer extends Component {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     editor: state.editor,
     roomControls: state.roomControls,
     terminal: state.terminal,
-    gist: state.gist
+    gist: state.gist,
+    recordings: state.recordings
    }
 }
 
@@ -76,7 +78,8 @@ EnvContainer.propTypes = {
   roomControls: PropTypes.object.isRequired,
   gist: PropTypes.object.isRequired,
   terminal: PropTypes.array.isRequired,
-  socket: PropTypes.object.isRequired
+  socket: PropTypes.object.isRequired,
+  recordings: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);

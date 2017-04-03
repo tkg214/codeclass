@@ -12,7 +12,6 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
       }
     },
     TOGGLE_EDITOR_LOCK : (action) => {
-      console.log("toggle editor lock: ", action);
       if (roomOwnerID === clientData.id) {
         dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked);
         sk.broadcastToRoom(room, action);
@@ -54,7 +53,5 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
     CHANGE_FONT_SIZE : (action) => {
       dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
     }
-
   }
-
 }

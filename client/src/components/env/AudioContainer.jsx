@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import RecordingsListContainer from './RecordingsListContainer.jsx';
 import ss from 'socket.io-stream';
 
 class AudioContainer extends Component {
 
   render() {
-    const { socket, isAuthorized } = this.props;
+    const { actions, socket, isAuthorized, recordings } = this.props;
     const constraints = {audio: true};
     let audioContext;
     let audioInput;
@@ -12,12 +13,14 @@ class AudioContainer extends Component {
     let recorder;
     let sampleRate;
     let isRecording;
-    let socketStream = ss.createStream();
+    let socketStream;
+    let localStream;
     let isInit;
     let audioCache = [];
     let bufferTime = 0;
 
-    // ss(socket).on('live-stream', (rawStream, meta) => {
+    // ss(socket).on('playback-stream', (rawStream, meta) => {
+    //   audioContext = new AudioContext();
     //   console.log(rawStream);
     //   let rawArray = new Float32Array(rawStream);
     //   let buffer = audioContext.createBuffer(1, bufferSize, meta.sampleRate)
@@ -29,43 +32,44 @@ class AudioContainer extends Component {
     //   }
     // })
 
-    if (isAuthorized && !navigator.getUserMedia) {
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUsermedia
-    }
-
-    if (!isAuthorized) {
-      audioContext = new AudioContext();
-    }
-
-    // function playCache(cache){
-    //   while (cache.length) {
-    //     let buffer = cache.shift();
-    //     let src = audioContext.createBufferSource();
-    //     src.buffer = buffer;
-    //     src.connect(audioContext.destination);
-    //     if (bufferTime === 0) {
-    //       bufferTime = audioContext.currentTime + 0.05;
-    //     }
-    //     src.start(bufferTime);
-    //     bufferTime += src.buffer.duration;
-    //   }
+    // if (isAuthorized && !navigator.getUserMedia) {
+    //   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUsermedia
     // }
+
+    function playCache(cache){
+      while (cache.length) {
+        let buffer = cache.shift();
+        let src = audioContext.createBufferSource();
+        src.buffer = buffer;
+        src.connect(audioContext.destination);
+        if (bufferTime === 0) {
+          bufferTime = audioContext.currentTime + 0.05;
+        }
+        src.start(bufferTime);
+        bufferTime += src.buffer.duration;
+      }
+    }
 
     // TODO create error event
     function onStartStreamClick(e) {
       e.preventDefault();
-      if (isAuthorized && navigator.getUserMedia) {
-        navigator.getUserMedia(constraints, onSuccess, (err) => {
-          console.log('error: ', err)
+      if (isAuthorized && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+          onSuccess(stream);
         })
       }
     }
 
+    // TODO add pause feature
+    // TODO stop stream does not work if other actions are fired
+    // TODO add multiple recording on same page... errors with quality on 1 + n stream
     function onSuccess(stream) {
       isRecording = true;
+      localStream = stream;
       audioContext = new AudioContext();
+      socketStream = new ss.createStream();
       sampleRate = audioContext.sampleRate;
-      audioInput = audioContext.createMediaStreamSource(stream);
+      audioInput = audioContext.createMediaStreamSource(localStream);
       recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
       recorder.onaudioprocess = processInput;
       audioInput.connect(recorder);
@@ -89,19 +93,15 @@ class AudioContainer extends Component {
       return buf.buffer;
     }
 
-    // function convertInt16ToFloat32(buffer) {
-    //   let l = buffer.length;
-    //   let output = new Float32Array(l);
-    //   while (l--) {
-    //     output[l] = Math.
-    //   }
-    // }
-
+    // TODO fix onStopStreamClick so it emits
     function onStopStreamClick(e) {
       e.preventDefault();
-      isRecording = false;
-      socket.emit('stop-stream');
-      socketStream.end();
+      if (isRecording) {
+        socket.emit('stop-stream');
+        socketStream.end();
+        localStream.getTracks()[0].stop();
+        isRecording = false;
+      }
     }
 
     return (
@@ -109,14 +109,12 @@ class AudioContainer extends Component {
         <div className='env-nav-panel'>
           <div id ='audioPanel' className='panel panel-default'>
             {isAuthorized &&
-              <button className='btn btn-primary btn-sm' onClick={onStartStreamClick.bind(this)}>Start Stream</button>
+              <button className='btn env-btn btn-primary btn-sm' onClick={onStartStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
             }
             {isAuthorized &&
-              <button className='btn btn-primary btn-sm' onClick={onStopStreamClick.bind(this)}>Stop Stream</button>
+              <button className='btn env-btn btn-primary btn-sm' onClick={onStopStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
             }
-            {!isAuthorized &&
-              <audio id='audioStream' controls></audio>
-            }
+            <RecordingsListContainer actions={actions} recordings={recordings}/>
           </div>
         </div>
       </div>
@@ -125,8 +123,10 @@ class AudioContainer extends Component {
 }
 
 AudioContainer.propTypes = {
+  actions: PropTypes.object.isRequired,
   socket: PropTypes.object.isRequired,
-  isAuthorized: PropTypes.bool.isRequired
+  isAuthorized: PropTypes.bool.isRequired,
+  recordings: PropTypes.object.isRequired
 }
 
 export default AudioContainer;
