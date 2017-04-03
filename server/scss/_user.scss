@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   margin: $space 1%;
-  transition: all 0s;
+  // transition: translate3d 0s;
   transition: transform 0.1s;
   width:29.9%;
   &:hover .card-moment {
@@ -24,6 +24,7 @@
 
 .card-moment {
   display: inline-block;
+  color: #90a7b2;
 }
 
 .card-title {
@@ -93,6 +94,12 @@ a.card-body:hover{
   // z-index: 100;
 }
 
+h1.username{
+  color: #354851;
+  -webkit-text-shadow: none;
+    text-shadow: none;
+}
+
 .icon-javascript-alt{
   color: rgb(231, 224, 50);
 }
@@ -151,10 +158,6 @@ a.card-body:hover{
 /////////////////
 
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
 @-webkit-keyframes scrollBad {
   0% {
     background-position: 0 0;
@@ -191,17 +194,9 @@ a.card-body:hover{
             transform: translate3d(0, -320px, 0);
   }
 }
-.pen {
-  background-color: blue;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 100%;
-  width: 100%;
-}
-
 
 .top {
+  filter: brightness(100%);
   background-color: #3E69C3;
   background-image: url(http://scarbroughstudios.com/img/codepen.svg);
   background-position: center center;
@@ -210,21 +205,11 @@ a.card-body:hover{
   animation: scrollBad 20s linear infinite;
 }
 
-.bottom {
-  background-color: #31CC70;
-  overflow: hidden;
-  position: relative;
-}
-.bottom .scroll {
-  background-image: url(http://scarbroughstudios.com/img/codepen.svg);
-  background-position: center center;
-  background-size: 500px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 400%;
-  width: 100%;
-  z-index: 1;
-  -webkit-animation: scrollGood 5s linear infinite;
-  animation: scrollGood 5s linear infinite;
+
+.card{
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
 }
