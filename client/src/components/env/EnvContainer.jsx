@@ -15,17 +15,15 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          {/*<div className='row'>
-            <EnvHeader
-              roomTitle={roomControls.roomTitle}
-              language={roomControls.language}/>
-          </div>*/}
           <div className='row'>
             <GistContainer
               actions={actions}
               saveStatus={gist.saveStatus}
               language={roomControls.language}
-              editorValue={editor.editorValue}/>
+              editorValue={editor.editorValue}
+              isAuthorized={roomControls.isAuthorized}
+              isChatLocked={roomControls.isChatLocked}
+              isEditorLocked={roomControls.isEditorLocked} />
           </div>
         </div>
         <EditorContainer

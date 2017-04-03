@@ -80,7 +80,7 @@ GistContainer.propTypes = {
   saveStatus: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-  roomID: PropTypes.number.isRequired,
+  // roomID: PropTypes.number.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   isChatLocked: PropTypes.bool.isRequired,
   isEditorLocked: PropTypes.bool.isRequired
