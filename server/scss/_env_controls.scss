@@ -1,13 +1,17 @@
 /* Gist  */
+.gist-run-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .gist-button {
   display: inline-block;
-  position: absolute;
+  // position: absolute;
 }
 
 .gist-container {
   display: flex;
-  position: relative;
-  width: 50%;
+  // position: relative;
 }
 
 .gist-input {
@@ -27,16 +31,20 @@
   width: 20%;
 }
 
+
 .env-nav-controls {
   padding: 0.5em 1em 0em 1em;
 }
 
-.env-nav-panel {
-  .panel {
-    margin-bottom: 0;
-  }
+.run-btn {
+  background-color: $yellow;
+  color: $gray1;
+  cursor: pointer;
+  height: $nav-height;
+  // width: $nav-height;
+  padding: 10px 10px 0 10px;
 
-  .panel-body {
-    padding: $space;
+  &:hover {
+
   }
 }

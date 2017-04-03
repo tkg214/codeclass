@@ -12,9 +12,13 @@
   }
 }
 
-// .user-list {
-//   height: 80px;
-// }
+.env-nav-panel {
+  @include flex-clear;
+
+  p {
+    color: $dark2;
+  }
+}
 
 .user-container {
   align-items: center;

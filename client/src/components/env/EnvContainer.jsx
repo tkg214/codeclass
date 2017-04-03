@@ -3,7 +3,7 @@ import GistContainer from './GistContainer.jsx';
 import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import EnvControls from './EnvControls.jsx';
-import EnvHeader from './EnvHeader.jsx';
+// import EnvHeader from './EnvHeader.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/editor';
@@ -15,11 +15,11 @@ class EnvContainer extends Component {
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
-          <div className='row'>
+          {/*<div className='row'>
             <EnvHeader
               roomTitle={roomControls.roomTitle}
               language={roomControls.language}/>
-          </div>
+          </div>*/}
           <div className='row'>
             <GistContainer
               actions={actions}

@@ -22,7 +22,7 @@ class GistContainer extends Component {
     const key = saveStatus;
 
     return (
-      <div className='col-lg-12'>
+      <div className='col-lg-12 gist-run-container'>
         <div className='gist-container'>
           <input
             type='text'
@@ -47,10 +47,10 @@ class GistContainer extends Component {
         </div>
         <div className='run-container'>
           {(isAuthorized || !isEditorLocked) &&
-            <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+            <div onClick={this._onRunClick.bind(this)} className='run-btn'><i className='fa fa-play'></i>&ensp;Run</div>
           }
           {(!isAuthorized && isEditorLocked) &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+            <div className='run-btn'><i className='fa fa-play'></i>&ensp;Run</div>
           }
         </div>
       </div>

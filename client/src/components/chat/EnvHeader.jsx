@@ -1,4 +1,4 @@
-/*import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class EnvHeader extends Component {
 
@@ -14,15 +14,9 @@ class EnvHeader extends Component {
     }
 
     return (
-      <div className='col-lg-12'>
-        <div className='env-nav-panel'>
-          <div className='panel panel-default'>
-            <div className='panel-body'>
-              Topic:&ensp;{roomTitle}&ensp;&ensp;
-              Language:&ensp;{languageHeader}&ensp;
-            </div>
-          </div>
-        </div>
+      <div className='env-nav-panel'>
+        <p>Topic:&ensp;{roomTitle}&ensp;&ensp;</p>
+        <p>Language:&ensp;{languageHeader}&ensp;</p>
       </div>
     )
   }
@@ -33,4 +27,4 @@ EnvHeader.PropTypes = {
   language: PropTypes.string.isRequired
 }
 
-export default EnvHeader;*/
+export default EnvHeader;

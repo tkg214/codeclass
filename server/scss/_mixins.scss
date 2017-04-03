@@ -75,6 +75,11 @@
   border:none;
 }
 
+@mixin flex-clear {
+  display: block !important;
+  flex: 0 !important;
+}
+
 /* INPUTS */
 @mixin form-input {
   border-color: $gray1;

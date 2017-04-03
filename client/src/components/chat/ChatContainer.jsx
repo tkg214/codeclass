@@ -7,6 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
 import MessageComposeContainer from './MessageComposeContainer.jsx';
+import EnvHeader from './EnvHeader.jsx';
 
 
 class ChatContainer extends Component {
@@ -35,6 +36,7 @@ class ChatContainer extends Component {
         </TabList>
 
         <TabPanel className="sidebar-panel">
+          <EnvHeader roomTitle={roomControls.roomTitle} language={roomControls.language}/>
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
         </TabPanel>
 
