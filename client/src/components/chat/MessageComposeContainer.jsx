@@ -16,7 +16,6 @@ class MessageComposeContainer extends Component {
         {!isChatLocked &&
           <textarea
             className="chatbar-message"
-            placeholder="Chat Bar"
             onKeyUp={this._onKeyUp.bind(this)}
             value={this.state.input}
             onChange={this._handleChange.bind(this)}

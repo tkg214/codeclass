@@ -147,7 +147,10 @@
     background-color: #fff;
     border: $faint-gray;
     color: $dark3;
+    font-family: $content-font;
     height: 150px;
+    outline: none;
+    padding: 10px;
     width: 100%;
     resize: none;
   }
