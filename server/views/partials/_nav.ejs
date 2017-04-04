@@ -1,3 +1,5 @@
+    <% include ./_new_classroom_modal.ejs %>
+
 <nav>
   <div class="container-fluid">
     <div class="navbar-header">
@@ -6,11 +8,11 @@
     </div>
     <div class="room-nav-util">
       <% if (user) { %>
-      <div class="util-btn"><a href="/rooms"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
-      <div class="util-btn"><a href="/users/<%=user.github_login %>"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></div>
-      <div class="util-btn"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></div>
+      <a id="modal-button" class="util-btn"><div><i class="fa fa-plus" aria-hidden="true"></i></div></a>
+      <a class="util-btn" href="/users/<%=user.github_login %>"><div><i class="fa fa-user-circle-o" aria-hidden="true"></i></div></a>
+      <a class="util-btn" href="/logout"><div><i class="fa fa-sign-out" aria-hidden="true"></i></div></a>
       <% } else { %>
-      <div><a href="/login">Log In</a></div>
+      <a  class="util-btn" href="/login"><div><i class="fa fa-sign-in" aria-hidden="true"></i></div></a>
       <% } %>
     </div>
 </nav>

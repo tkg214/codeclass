@@ -14,7 +14,6 @@ class ChatBar extends Component {
     }
   }
 
-
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
     let visibility = roomControls.isChatNotificationVisible ? 'show' : 'notification-close';

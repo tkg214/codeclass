@@ -5,6 +5,8 @@ $content-font: 'Lato', sans-serif;
 
 
 /* COLORS */
+$brand: rgb(152, 195, 53);
+
 $card-background: #485563;
 $card-text: #FFFFFF;
 
@@ -23,6 +25,10 @@ $gray3: #C5CACE;
 
 $chat-bubble-own: #d1e1ef;
 $chat-bubble-other: $gray2;
+
+$jsyellow: rgb(231, 224, 50);
+$rubyred: rgb(231, 50, 50);
+$pythonblue: rgb(50, 117, 231);
 
 /* BORDER STYLE */
 $faint-gray: 0.5px solid #dedede;
