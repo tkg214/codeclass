@@ -57,7 +57,7 @@
   p {
     font-family: $content-font;
   }
-  
+
   li {
     font-family: $title-font;
   }
@@ -73,17 +73,12 @@
     //TODO: looks bad atm. Style chatroom
   }
   @include tablet {
-    flex: 0 0 240px;    
-    //TODO: looks bad atm. Style chatroom    
+    flex: 0 0 240px;
+    //TODO: looks bad atm. Style chatroom
   }
 
 }
 
-.chat-container div {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 .open {
   display: flex;
   flex-direction: column;
@@ -133,7 +128,7 @@
 .message-compose-container {
   background-color: #fff;
   bottom: 5px;
-  display: block;  
+  display: block;
   margin: 0 auto;
   position: absolute;
   width: 100%;
@@ -203,11 +198,11 @@
 }
 
 .message-container-other {
-  @include message-container-styles; 
+  @include message-container-styles;
   flex-direction: row-reverse;
 
   @include tablet {
-    padding: 10px 15px 0 5px;    
+    padding: 10px 15px 0 5px;
   }
 
   article {
@@ -232,8 +227,8 @@
 }
 
 .sidebar-tablist {
-  background-color: $green;  
-  margin: 0 !important;  
+  background-color: $green;
+  margin: 0 !important;
 }
 
 .sidebar-tabs {
@@ -261,5 +256,5 @@
       }
     }
   }
-  
+
 }
