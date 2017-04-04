@@ -35,8 +35,7 @@ module.exports = function makeDataHelpers(knex) {
                 message.isOwnMessage = false;
               }
               delete message.messageuserid;
-              message.id = 'M_' + message.id
-              message.timestamp = moment(message.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
+              message.id = 'M_' + message.id;
             })
             roomData.roomOwnerID === data.rows[0].id ? roomData.isAuthorized = true : roomData.isAuthorized = false;
             cb(roomData);

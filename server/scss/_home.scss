@@ -15,12 +15,8 @@ button.btn {
 }
 
 .env-container {
- flex-grow: 3;
+ flex: 1 0 auto;
  padding: 10px;
-}
-
-.editor-container {
-
 }
 
 .ace_gutter-layer {

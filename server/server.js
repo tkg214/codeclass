@@ -147,7 +147,7 @@ app.use(function(req, res, next){
   let bundleSrc;
   if(req.user) {
     if (ENV === 'production') {
-      bundleSrc = '/build/bundle.js';
+      bundleSrc = '/dist/bundle.js';
     } else {
       bundleSrc = 'http://localhost:8080/build/bundle.js';
     }
@@ -189,8 +189,10 @@ app.get('/users/:username', ensureAuthenticated, (req, res) => {
   const classrooms = knex('classrooms').where('user_id', 'in',
     knex('users').where('github_login', req.params.username).select('id').limit(1)
   );
+  console.log(classrooms);
   const profile = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
   Promise.all([classrooms, profile]).then((profileData) => {
+    console.log(profileData[0]);
     res.render('show_user', {classrooms: profileData[0], profile: (profileData[1])[0]});
   });
 });
