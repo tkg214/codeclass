@@ -34,6 +34,17 @@
   }
 }
 
+.chat-avatar {
+  position:absolute;
+  top:0;
+  &-other {
+    left:$space;
+  }
+  &-own {
+    right:$space;
+  }
+}
+
 .chat-container {
   background-color: $gray1;
   color: white;
@@ -157,6 +168,8 @@
 
   article {
     @include bubble-chat-styles($chat-bubble-own);
+    margin-left:auto;
+    margin-right:5*$space;
     &:after {
       right: -10px;
     }
@@ -167,7 +180,7 @@
   }
 
   @include tablet {
-    padding: 10px 15px 0 15px;
+    padding: 10px 5px 0 15px;
 
     img {
       max-height: 50px;
@@ -181,20 +194,14 @@
       width: 65%;
     }
   }
-
-
 }
 
 .message-container-other {
   @include message-container-styles;
-  flex-direction: row-reverse;
-
-  @include tablet {
-    padding: 10px 15px 0 5px;
-  }
-
   article {
-    @include bubble-chat-styles($gray2);
+    @include bubble-chat-styles($chat-bubble-other);
+    margin-left:5*$space;
+    margin-right:auto;
     &:after {
       left: -10px;
     }
@@ -202,7 +209,12 @@
 
   img {
     @include chat-avatar;
-    @include tablet {
+  }
+
+  @include tablet {
+    padding: 10px 15px 0 5px;
+
+    img {
       max-height: 50px;
       max-width: 50px;
     }

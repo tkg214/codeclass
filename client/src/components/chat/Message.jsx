@@ -8,11 +8,11 @@ class Message extends Component {
 
     return (
       <article className={'message-container-' + messageClass}>
-        <article className={'bubble-chat' + messageClass}>
+        <article className={'bubble-chat bubble-chat-' + messageClass}>
           <p>{message.content}</p>
           <p className="message-timestamp">{message.timestamp}</p>
         </article>
-        <img src={message.avatarurl} className={'user-avatar-' + messageClass}></img>
+        <img src={message.avatarurl} className={'chat-avatar chat-avatar-' + messageClass}></img>
       </article>
     )
   }
