@@ -11,10 +11,6 @@ label[for*='new-classroom'] {
   padding-bottom: 0.5em;
 }
 
-.btn-theme {
-  @include button-variant($light, lighten($theme, 20%), transparent)
-}
-
 .btn-group-language {
   display: block;
 }
