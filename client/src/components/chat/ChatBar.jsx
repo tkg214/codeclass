@@ -23,7 +23,7 @@ class ChatBar extends Component {
     return (
       <div className='chat-notification-bar' id= { visibility }>
         <div className="chat-notification-bar-toggle">
-          <div className="open-sidebar-btn"
+          <div className="open-sidebar"
             onClick={this._handleClick.bind(this)}>
             <i className='fa fa-chevron-left'></i>
           </div>

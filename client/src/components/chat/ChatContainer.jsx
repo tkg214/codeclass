@@ -20,7 +20,7 @@ class ChatContainer extends Component {
       <div className={'chat-container ' + visibility }>
         <div className="sidebar-tabs">
           <div
-            className="sidebar-tab chat-toggle-button"
+            className="sidebar-tab chat-toggle"
             onClick={this._handleClick.bind(this)}>
             <div className="close-sidebar-btn"><i className='fa fa-chevron-right'></i></div>
           </div>
@@ -38,8 +38,8 @@ class ChatContainer extends Component {
 
         <TabPanel>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer 
-            actions={this.props.actions} 
+          <MessageComposeContainer
+            actions={this.props.actions}
             isChatLocked={roomControls.isChatLocked}
             roomID={roomControls.roomID} />
         </TabPanel>

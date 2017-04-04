@@ -1,4 +1,4 @@
-.open-sidebar-btn{
+.open-sidebar {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -12,6 +12,15 @@
     color: $gray1;
   }
 }
+
+.chat-toggle {
+  border-radius: 0;
+  color: #FFFFFF;
+  height: $nav-height;
+  left: 0;
+  top: -40;
+}
+
 .open-sidebar-btn:active{
   background-color: $green;
 }
@@ -117,14 +126,6 @@
   z-index: 999;
 }
 
-.chat-toggle-button {
-  border-radius: 0;
-  color: #FFFFFF;
-  // position: absolute;
-  left: 0;
-  top: -40;
-}
-
 .message-compose-container {
   background-color: #fff;
   bottom: 5px;
@@ -164,7 +165,7 @@
 .message-list-container {
   @include users-onine-background-pattern;
   color: black;
-  min-height: 200px!important;
+  min-height: 200px;
   overflow-y: scroll;
   width: 100%;
   word-wrap: break-word;
@@ -227,12 +228,13 @@
 
 .sidebar-tablist {
   background-color: $green;
-  margin: 0 !important;
+  margin: 0;
+  height:$nav-height;
 }
 
 .sidebar-tabs {
   background-color: $green;
-  flex: none !important;
+  flex: none;
 
   i {
     color: $gray1;
