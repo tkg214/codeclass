@@ -10,57 +10,8 @@
   </header>
   <body id="user-classroom-body">
 
-    <div id="myModal" class="modal">
 
-    	<!-- Modal content -->
-
-    	<div class="modal-content slideDown">
-
-    		<div class="modal-header">
-    			<span class="closeModal" id="closeModal">&times;</span>
-    			<h2>Create a Class</h2>
-    		</div>
-    		<div class="modal-body">
-    			<form action="/rooms" method="POST" class="modal-form">
-    				<div class="form-row">
-    					<label for="">Title</label>
-              <input id="new-classroom--title" type="text" class="" name="topic">
-    				</div>
-
-    				<div class="form-row">
-                <label for="">Language</label>
-                <div class="input-group btn-group-language" data-toggle="buttons">
-                 <div class="radio-inline btn btn-primary btn-xs">
-                   <label>
-                     <input type="radio" class="radio-none" name="language" id="radio-javascript" value="javascript" checked>
-                     Javascript
-                   </label>
-                 </div>
-                 <div class="radio-inline btn btn-primary btn-xs">
-                   <label>
-                     <input type="radio" class="radio-none" name="language" id="radio-ruby" value="ruby">
-                     Ruby
-                   </label>
-                 </div>
-                 <div class="radio-inline btn btn-primary btn-xs">
-                   <label>
-                     <input type="radio" class="radio-none" name="language" id="radio-python" value="python">
-                     Python
-                   </label>
-                 </div>
-               </div>
-              </div>
-
-    		</div>
-    		<div class="modal-footer">
-          <button type="submit" class="btn btn-success btn-lg">Create classroom</button>
-    		</div>
-    		</form>
-
-    	</div>
-
-    </div>
-
+    <% include ./partials/_new_classroom_modal.ejs %>
 
     <section id="user-classroms" class="container">
       <div id="user-jumbo" class="jumbotron clearfix top">

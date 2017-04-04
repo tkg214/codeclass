@@ -41,8 +41,14 @@ class MessageComposeContainer extends Component {
   _onKeyUp(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
+      if(e.target.value.match(/^\s+$/)){
+        e.target.placeholder = 'Try writing something first!';
+        this.setState({input: ''});
+      } else {
       this.props.actions.sendMessage(e.target.value, this.props.roomID);
       this.setState({input: ''});
+      e.target.placeholder = 'Enter a message';
+      }
     }
   }
 

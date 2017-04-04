@@ -101,17 +101,16 @@ h1.username{
 }
 
 .icon-javascript-alt{
-  color: rgb(231, 224, 50);
+  color: $jsyellow;
 }
 
 .icon-ruby{
-  color: rgb(231, 50, 50);
+  color: $rubyred;
 }
 
 .icon-python{
-  color: rgb(50, 117, 231);
+  color: $pythonblue;
 }
-.inner-shadow{}
 .language-icon {
   font-size: 2em;
   float: right;
@@ -158,7 +157,37 @@ h1.username{
   background-color: rgba(255, 255, 255, 0);
 }
 
-
+.btn.active{
+  &.btn-js{
+    background-color: $jsyellow;
+  }
+  &.btn-ruby{
+    background-color: $rubyred;
+  }
+  &.btn-python{
+    background-color: $pythonblue;
+  }
+}
+.btn{
+  &.btn-js{
+    border: none;
+    border-radius: 0%;
+    font-weight: normal;
+  }
+  &.btn-ruby{
+    border: none;
+    border-radius: 0%;
+    font-weight: normal;
+  }
+  &.btn-python{
+    border: none;
+    border-radius: 0%;
+    font-weight: normal;
+  }
+}
+label{
+  margin: 2px;
+}
 
 /////////////////
 
@@ -212,7 +241,7 @@ h1.username{
 
 
 .card{
-  -webkit-transition-duration: 0s;
+  -webkit-transition-duration: .1s;
      -moz-transition-duration: 0s;
       -ms-transition-duration: 0s;
        -o-transition-duration: 0s;
