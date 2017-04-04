@@ -1,3 +1,5 @@
+
+// in use
 .open-sidebar {
   cursor: pointer;
   display: flex;
@@ -5,20 +7,11 @@
   align-items: center;
   height: $nav-height;
   width: $chat-notifcation-bar-width;
-  margin-bottom: 2px;
   background-color: $green;
 
   i {
     color: $gray1;
   }
-}
-
-.chat-toggle {
-  border-radius: 0;
-  color: #FFFFFF;
-  height: $nav-height;
-  left: 0;
-  top: -40;
 }
 
 .bar-btn {
@@ -39,20 +32,11 @@
     color: $gray1;
     margin-bottom: 20px;
   }
-
-  .badge {
-    // width: 60%;
-  }
 }
-
 
 .chat-container {
   background-color: $gray1;
   color: white;
-  display: flex;
-  flex-flow: column;
-  height: 70vh;
-  overflow: hidden;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   -webkit-transition: all 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -75,13 +59,18 @@
   }
   @include small-desktop {
     flex: 0 0 280px;
-    //TODO: looks bad atm. Style chatroom
   }
   @include tablet {
     flex: 0 0 240px;
-    //TODO: looks bad atm. Style chatroom
   }
 
+}
+
+.chat-messages {
+  height: 85vh;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
 }
 
 .close {
@@ -95,6 +84,7 @@
   width: 0px;
 }
 
+//A conditionally applied id?
 #notification-close{
   visibility: hidden;
   width: 0px;
@@ -105,22 +95,18 @@
 }
 
 .chat-notification-bar {
-  flex: 0 0 50px;
   background-color: $dark1;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   transform-origin: right;
   -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  width: 50px;
   z-index: 999;
 }
 
 .message-compose-container {
-  background-color: #fff;
-  bottom: 0;
-  display: block;
-  margin: 0 auto;
-  width: 100%;
+    flex: 0 0 20%;
 
   textarea {
     background-color: #fff;
@@ -147,20 +133,22 @@
   }
 }
 
-.chat-header {
-    width: 100%;
-}
-
 .message-list-container {
   @include users-onine-background-pattern;
   color: black;
-  min-height: 200px;
-  overflow-y: scroll;
-  width: 100%;
-  word-wrap: break-word;
+  flex: 1 1 20%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
+  // min-height: 200px;
+  // overflow-y: scroll;
+  // width: 100%;
+  // word-wrap: break-word;
+// }
 
 .message-timestamp {
+  color: $dark1;
   font-size: 0.8em;
 }
 

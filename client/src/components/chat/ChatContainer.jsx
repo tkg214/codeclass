@@ -39,7 +39,7 @@ class ChatContainer extends Component {
           <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
         </TabPanel>
 
-        <TabPanel>
+        <TabPanel className="chat-messages">
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer
             actions={this.props.actions}

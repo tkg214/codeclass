@@ -104,14 +104,13 @@
 /* Avatar display */
 @mixin avatar-size {
   background-color: #fff;
-  border-radius: 50%;    
+  border-radius: 50%;
   height: 70px;
   padding: 5px;
   width: 70px;
 }
 
 @mixin message-container-styles {
-  display: flex;
   padding: 15px 25px;
   position: relative;
 }
@@ -119,11 +118,9 @@
 @mixin bubble-chat-styles($bubble-color) {
   background-color: $bubble-color;
   border-radius: 2px;
-  margin: 0 auto;
-  margin-top: $space;
-  padding: 10px 10px 0 10px;
+  padding: $space $space 0 $space;
   position: relative;
-  width: 75%;
+  width: 85%;
 
   &:after {
     top: -10px;
