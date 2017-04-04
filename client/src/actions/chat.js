@@ -71,6 +71,17 @@ export function toggleFirstRender(toggle){
   }
 }
 
+export function switchSidebarTab(index){
+  return dispatch => {
+    dispatch({
+      type: 'SWITCH_SIDEBAR_TAB',
+      payload: {
+        currentTab: index
+      }
+    })
+  }
+}
+
 
 // TODO LOCK MESSEAGES
 
