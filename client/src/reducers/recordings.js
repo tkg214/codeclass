@@ -1,6 +1,6 @@
 export default function reducer(state={
   recordings: [],
-  didReceiveEdits: true,
+  didReceiveEdits: false,
   recordedEdits: []
 }, action) {
 

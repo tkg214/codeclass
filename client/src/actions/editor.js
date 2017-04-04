@@ -144,13 +144,13 @@ export function selectRecording(recordingID) {
       type: 'GET_RECORDING_STREAM',
       payload: { recordingID }
     })
-    axios.get('/api/recordings?id=' + recordingID.slice(2))
+    axios.get('/api/recorded_edits?id=' + recordingID.slice(2))
     .then((response) => {
       dispatch({
         type: 'RECORDED_EDITS_SUCCESS',
         payload: {
           didReceiveEdits: true,
-          editorValue: response.data[0].content
+          editorValue: ''
         }
       })
       dispatch({
@@ -171,7 +171,10 @@ export function selectRecording(recordingID) {
 
 export function updateEditorFromRecording(recordedEditsArray) {
   return dispatch => {
-    const RATE_MS = 100;
+    const RATE_MS = 25;
+    // transfer server algo to here and reconstruct
+    // TODO audio node has its own timer
+    // TODO use json column for edits and get rid of observable need. dispatch as reedux events
     const observable = Rx.Observable.interval(RATE_MS).take(recordedEditsArray.length).map(t => recordedEditsArray[t]);
     observable.subscribe(t => {
       dispatch({

@@ -163,34 +163,49 @@ module.exports = function makeDataHelpers(knex) {
         .whereRaw('classroom_id = ? and created_at between ?::timestamp and ?::timestamp', [roomID, start, end])
         .orderBy('created_at', 'asc')
         .then((data) => {
-          let audioStart = moment(start).unix() * 1000;
-          data.forEach((row) => {
-            row.time = moment(row.created_at).unix() * 1000;
-            delete row.created_at;
-          })
-          const RATE_MS = 100;
-          let n = audioLength / RATE_MS;
-          let intervalArray = new Array();
-          for (let i = 0; i < n; i++) {
-            intervalArray.push(new Object());
-          }
-          let ri = 0;
-          let t = 0
-          intervalArray.forEach((interval) => {
-            if (ri === data.length) {
-              interval.time = t;
-              interval.content = data[ri - 1].content;
-            } else if (audioStart < data[ri].time) {
-              interval.time = t;
-              interval.content = data[ri].content;
-            } else {
-              interval.time = t;
-              interval.content = data[ri].content;
-              ri++;
+          let intervalArray;
+          if (data.length === 0) {
+            intervalArray = [{
+              time: 0,
+              content: ''
+            }]
+          } else {
+            // TODO look into psql sol for converting to unix
+            let audioStart = moment(start).unix() * 1000;
+            data.forEach((row) => {
+              row.time = moment(row.created_at).unix() * 1000;
+              delete row.created_at;
+            })
+            const RATE_MS = 25;
+            let n = audioLength / RATE_MS;
+            intervalArray = new Array();
+            for (let i = 0; i < n; i++) {
+              intervalArray.push(new Object());
             }
-            audioStart += RATE_MS;
-            t += RATE_MS;
-          })
+            let ri = 0;
+            let t = 0
+
+            // TODO fix logic for this. sometimes data.content is undefined
+            // TODO null check for content if no content exists
+
+            // TODO use reduce to collapse content
+            // TODO lodash unique values*
+            intervalArray.forEach((interval) => {
+              if (ri === data.length) {
+                interval.time = t;
+                interval.content = data[ri - 1].content;
+              } else if (audioStart < data[ri].time) {
+                interval.time = t;
+                interval.content = data[ri].content;
+              } else {
+                interval.time = t;
+                interval.content = data[ri].content;
+                ri++;
+              }
+              audioStart += RATE_MS;
+              t += RATE_MS;
+            })
+          }
           cb(intervalArray);
         })
       })

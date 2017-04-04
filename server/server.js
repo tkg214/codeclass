@@ -311,7 +311,7 @@ app.post('/savegist', function (req, res) {
 
 
 // TODO  error msg
-app.get('/api/recordings', ensureAuthenticated, (req, res) => {
+app.get('/api/recorded_edits', ensureAuthenticated, (req, res) => {
   dbHelpers.getEditorValuesForStream(req.query.id, sendRecordings);
   function sendRecordings(data) {
     if (data) {
@@ -320,7 +320,6 @@ app.get('/api/recordings', ensureAuthenticated, (req, res) => {
     }
   }
 })
-
 
 //Temp data
 // const roomData = require('./temp-room-api-data.json');
@@ -401,6 +400,7 @@ io.on('connection', (socket) => {
   }
 
   // TODO do a check for not streaming if more than one tab is open
+  // TODO use opus or other compressed format instead of wav
 
   ss(socket).on('start-stream', (stream, meta) => {
     fileWriter = new wav.FileWriter(createFilePath(room), {
@@ -423,7 +423,7 @@ io.on('connection', (socket) => {
       fileWriter.end();
       dbHelpers.storeRecordingInfo(recordingInfo);
     }
-  })
+  });
 
   socket.on('playback', (action) => {
     let id = action.payload.recordingID.slice(2);
