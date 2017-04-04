@@ -16,7 +16,6 @@ class MessageComposeContainer extends Component {
         {!isChatLocked &&
           <textarea
             className="chatbar-message"
-            placeholder="Chat Bar"
             onKeyUp={this._onKeyUp.bind(this)}
             value={this.state.input}
             onChange={this._handleChange.bind(this)}
@@ -24,12 +23,14 @@ class MessageComposeContainer extends Component {
             required
             />
         }
-        {!isChatLocked &&
-          <button onClick={this._handleSubmit.bind(this)} className="btn btn-default btn-sm chatbar-button">Send</button>
-        }
-        {isChatLocked &&
-          <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
-        }
+        <div className="message-submit">
+          {!isChatLocked &&
+            <button onClick={this._handleSubmit.bind(this)} className="chatbar-button">Send</button>
+          }
+          {isChatLocked &&
+            <div className="chat-locked-warning">Chat Locked</div>
+          }
+        </div>
       </div>
     )
   }

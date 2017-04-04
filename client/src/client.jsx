@@ -11,7 +11,6 @@ import thunk from 'redux-thunk';
 // import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
-import './helpers/resize.js';
 import axios from 'axios';
 
 

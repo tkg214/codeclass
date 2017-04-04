@@ -14,35 +14,6 @@ class ChatBar extends Component {
     }
   }
 
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps');
-  }
-  componentWillUpdate(){
-    console.log('componentWillUpdate');
-  }
-  componentDidUpdate(){
-    const { roomControls } = this.props;
-    console.log('roomControls', roomControls.isFirstRender);
-    console.log('componentDidUpdate');
-  }
-
-
-  componentDidMount(){
-    console.log('componentDidMount loaded');
-    //
-    // const { roomControls, chat, actions } = this.props;
-    //
-    // let  messages = chat.messages[0] || [];
-    // // console.log(roomControls.isFirstRender);
-    // if(roomControls.isFirstRender){
-    //   this.setState({lastCount: messages.length});
-    //   actions.toggleFirstRender(roomControls.isFirstRender);
-    //   console.log('test');
-    //
-    // }
-
-
-  }
 
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
@@ -58,27 +29,23 @@ class ChatBar extends Component {
     return (
       <div className='chat-notification-bar' id= { visibility }>
         <div className="chat-notification-bar-toggle">
-          <button
-            className="btn btn-info bar-button"
+          <div className="open-sidebar"
             onClick={this._handleClick.bind(this)}>
             <i className='fa fa-chevron-left'></i>
-          </button>
+          </div>
         </div>
         <div>
-          <button
-            className="btn btn-primary users-connected-button bar-button">
-            <i className='fa fa-users fa-lg'></i>
-            <br></br>
-             <span className="badge">{onlineUsers.usersOnline.length}</span>
-          </button>
+          <div className="users-connected-btn bar-btn">
+            <i className='fa fa-users fa-lg'></i><br/>
+            <p className="badge">{onlineUsers.usersOnline.length}</p>
+          </div>
         </div>
         <div>
-          <button
-            className="btn btn-primary users-connected-button bar-button">
-            <i className='fa fa-comments fa-lg'></i>
-            <br></br>
-             <span className="badge">{ messageCount }</span>
-          </button>
+          <div className="users-connected-btn bar-btn">
+            <i className='fa fa-comments fa-lg'></i><br/>
+            <p className="badge">{messageCount}</p>
+          </div>
+
         </div>
       </div>
     )

@@ -15,20 +15,12 @@ button.btn {
 }
 
 .env-container {
- flex-grow: 3;
-}
-
-.editor-container {
-  margin: 0 $space;
-}
-
-.terminal {
-  overflow-y: scroll;
-  margin: 0 1em;
+ flex: 1 0 auto;
+ padding: 10px;
 }
 
 .ace_gutter-layer {
-  padding: $space;
+  padding-top: $space;
 }
 
 .ace_content {

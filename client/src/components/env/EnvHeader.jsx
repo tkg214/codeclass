@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+/*import React, { Component, PropTypes } from 'react';
 
 class EnvHeader extends Component {
 
@@ -33,4 +33,4 @@ EnvHeader.PropTypes = {
   language: PropTypes.string.isRequired
 }
 
-export default EnvHeader;
+export default EnvHeader;*/

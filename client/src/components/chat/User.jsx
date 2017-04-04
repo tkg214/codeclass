@@ -6,10 +6,13 @@ class User extends Component {
     const { avatar, name } = this.props;
 
     return (
-      <div className="user-container">
+      <article className="user-container">
        <img className="online-user-avatar" src={avatar}/>
-       <p>{name}</p>
-      </div>
+       <section className="github-info">
+        <p>{name}</p>
+        <a href={`https://github.com/${this.props.name}`}><i className="fa fa-github" aria-hidden="true"></i></a>
+       </section>
+      </article>
     )
   }
 }

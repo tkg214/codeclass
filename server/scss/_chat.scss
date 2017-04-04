@@ -1,24 +1,87 @@
-.bar-button{
+
+// in use
+.open-sidebar {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $nav-height;
   width: $chat-notifcation-bar-width;
-  margin-bottom: 2px;
-  background-color: #546575;
-  border-bottom: 1px solid white;
+  background-color: $green;
+
+  i {
+    color: $gray1;
+  }
 }
-.bar-button:active{
-  background-color: #546575;
+
+.bar-btn {
+  background-color: $dark2;
+  border-bottom: 0.1px solid #3f434a;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  padding-top: 20px;
+  padding-left: 15px;
+
+  * {
+    display: block;
+    position: absolute;
+  }
+
+  i {
+    color: $gray1;
+    margin-bottom: 20px;
+  }
+}
+
+.chat-avatar {
+  position:absolute;
+  top:0;
+  &-other {
+    left:$space;
+  }
+  &-own {
+    right:$space;
+  }
 }
 
 .chat-container {
-  margin-right: 1em;
-  background-color: #b5b5b5;
-  color: #FFFFFF;
-  overflow: hidden;
-  flex: 0 0 400px;
+  background-color: $gray1;
+  color: white;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
-  -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  -webkit-transition: all 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   transform-origin: right;
+
+  p {
+    font-family: $content-font;
+  }
+
+  li {
+    font-family: $title-font;
+  }
+
+  @include large-desktop {
+    flex: 0 0 400px;
+  }
+  @include regular-desktop {
+    flex: 0 0 360px;
+  }
+  @include small-desktop {
+    flex: 0 0 280px;
+  }
+  @include tablet {
+    flex: 0 0 240px;
+  }
+
+}
+
+.chat-messages {
+  height: 85vh;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
 }
 
 .close {
@@ -26,9 +89,13 @@
   flex: 0 0 0;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  -webkit-transform: translate(50px);
-  transform: translate(50px);
+  -webkit-transform: translate(75px);
+  transform: translate(75px);
+  visibility: hidden;
+  width: 0px;
 }
+
+//A conditionally applied id?
 #notification-close{
   visibility: hidden;
   width: 0px;
@@ -36,154 +103,169 @@
   flex: 0 0 0px!important;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  // -webkit-transform: translate(50px);
-  // transform: translate(50px);
 }
 
 .chat-notification-bar {
-  margin-right: 1em;
-  right: -50;
-  flex: 0 0 50px;
-  background: #546575;
+  background-color: $dark1;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   transform-origin: right;
   -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  width: 50px;
   z-index: 999;
 }
 
-.chat-toggle-button {
-  border-radius: 0;
-  color: #FFFFFF;
-  // position: absolute;
-  left: 0;
-  top: -40;
-}
-
 .message-compose-container {
-  display: block;
-  bottom: 0;
-  height: $message-compose-container-height;
-  width: 100%;
+    flex: 0 0 20%;
+
+  textarea {
+    background-color: #fff;
+    border: $faint-gray;
+    color: $dark3;
+    font-family: $content-font;
+    height: 150px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+    resize: none;
+  }
 }
 
-.chat-header {
-    width: 100%;
+.message-submit {
+  background-color: $gray2;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    background-color: $green;
+    border: none;
+    padding: 10px 8px;
+  }
 }
 
 .message-list-container {
+  @include users-onine-background-pattern;
   color: black;
-  min-height: 200px!important;
-  overflow-y: scroll;
-  width: 100%;
-  word-wrap: break-word;
+  flex: 1 1 20%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
-.chatbar-message {
-  color: #000000;
-  width: 100%;
+.message-timestamp {
+  color: darken($gray3, 20);
+  font-size: 0.8em;
 }
 
-.chatbar-button {
-  color: #FFFFFF;
-  display: inline-block;
+.message-container-own {
+  @include message-container-styles;
+
+  article {
+    @include bubble-chat-styles($chat-bubble-own);
+    margin-left:auto;
+    margin-right:5*$space;
+    &:after {
+      right: -10px;
+    }
+  }
+
+  img {
+    @include chat-avatar;
+  }
+
+  @include tablet {
+    padding: 10px 5px 0 15px;
+
+    img {
+      max-height: 50px;
+      max-width: 50px;
+    }
+  }
+
+  @include small-desktop {
+    padding: 10px 15px 0 15px;
+    article {
+      width: 65%;
+    }
+  }
 }
 
-.message-container {
-  position: relative;
-}
+.message-container-other {
+  @include message-container-styles;
+  article {
+    @include bubble-chat-styles($chat-bubble-other);
+    margin-left:5*$space;
+    margin-right:auto;
+    &:after {
+      left: -10px;
+    }
+  }
 
-.user-avatar-message {
-  border-radius: 30px;
-  border: 2px solid #FFF;
-  display: block;
-  margin: 5px 5px 5px auto;
-  max-height: 60px;
-  max-width: 60px;
-  white-space: nowrap;
-  z-index: 20;
-  // max-height: 70px;
-  // max-width: 70px;
-}
+  img {
+    @include chat-avatar;
+  }
 
-.user-avatar-own-message {
-  border-radius: 30px;
-  border: 2px solid #FFF;
-  margin: 5px 5px 5px auto;
-  margin-left: 5px;
-  max-height: 60px;
-  max-width: 60px;
-  white-space: nowrap;
-  z-index: 20;
-  // max-height: 70px;
-  // max-width: 70px;
-}
+  @include tablet {
+    padding: 10px 15px 0 5px;
 
-.bubble-message {
-  background: #fff;
-  background: -moz-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -webkit-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dedede), color-stop(1, #ffffff));
-  background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: linear-gradient(top, #dedede 0%, #ffffff 100%);
-  margin: 0 auto;
-  margin-top: $space;
-  width: 90%;
-  padding: 5px;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-  border-radius: 10px;
-}
+    img {
+      max-height: 50px;
+      max-width: 50px;
+    }
+  }
 
-.bubble-message::after {
-  content: "";
-  position: absolute;
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-  -moz-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  bottom: -7px;
-  right: 7%;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent #FFF #FFF transparent;
+  @include small-desktop {
+    padding: 10px 15px 0 15px;
+    article {
+      width: 65%;
+    }
+  }
 }
-
-.bubble-own-message {
-  background: #fff;
-  background: -moz-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -webkit-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #dedede), color-stop(1, #ffffff));
-  background: -o-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: -ms-linear-gradient(top, #dedede 0%, #ffffff 100%);
-  background: linear-gradient(top, #dedede 0%, #ffffff 100%);
-  margin: 0 auto;
-  margin-top: $space;
-  width: 90%;
-  padding: 5px;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-  border-radius: 10px;
-}
-
-.bubble-own-message::after {
-  content: "";
-  position: absolute;
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px;
-  -moz-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  bottom: -7px;
-  left: 7%;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent #FFF #FFF transparent;
-}
-
-// .user-list li {
-//     display: inline;
-// }
 
 .users-connected-button{
   height: 100px;
+}
+
+.sidebar-tablist {
+  background-color: $green;
+  margin: 0;
+  height:$nav-height;
+}
+
+.sidebar-tabs {
+  background-color: $green;
+  flex: none;
+
+  i {
+    color: $gray1;
+  }
+}
+
+.sidebar-tab {
+  color: $dark3;
+  height: $nav-height;
+
+  .close-sidebar-btn {
+    @include ver-hor-center;
+    height: 100%;
+    width: $chat-notifcation-bar-width;
+      &:hover{
+      background-color: $gray1;
+
+      i {
+        color: $green;
+      }
+    }
+  }
+
+}
+
+.chat-locked-warning {
+  background-color: $dark3;
+  font-size: 1.5em;
+  font-family: $title-font;
+  height: 100%;
+  text-align: center;
+  width:100%
 }

@@ -11,7 +11,7 @@ class GistContainer extends Component {
   }
 
   render() {
-    const { saveStatus } = this.props;
+    const { saveStatus, isAuthorized, isChatLocked, isEditorLocked } = this.props;
     const buttonClass = {
       'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
       'Complete': {'style': 'btn-success', 'icon': 'fa-check'},
@@ -22,28 +22,36 @@ class GistContainer extends Component {
     const key = saveStatus;
 
     return (
-      <div className='col-lg-12'>
+      <div className='col-lg-12 gist-run-container'>
         <div className='gist-container'>
           <input
             type='text'
             placeholder='Enter Gist Name'
             onChange={this._handleChange.bind(this)}
             value={this.state.input}
-            className='gist-input input-sm'
+            className='gist-input'
             disabled={saveStatus === 'Saving...'}/>
 
             <ReactCSSTransitionGroup
-              transitionName="example"
-              transitionEnterTimeout={250}
-              transitionLeaveTimeout={250}>
-              <button
-                key = {key}
-                className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
-                disabled={saveStatus === 'Saving...'}
-                onClick={this._handleClick.bind(this)}
-                type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
+               transitionName="example"
+               transitionEnterTimeout={250}
+               transitionLeaveTimeout={250}>
+               <button
+                 key = {key}
+                 className={'btn btn-sm gist-button ' + buttonClass[saveStatus].style}
+                 disabled={saveStatus === 'Saving...'}
+                 onClick={this._handleClick.bind(this)}
+                 type='button'><i className={'fa fa-lg ' + buttonClass[saveStatus].icon}></i>&ensp;{saveStatus}
               </button>
             </ReactCSSTransitionGroup>
+        </div>
+        <div className='run-container'>
+          {(isAuthorized || !isEditorLocked) &&
+            <div onClick={this._onRunClick.bind(this)} className='run-btn'><i className='fa fa-play'></i>&ensp;Run</div>
+          }
+          {(!isAuthorized && isEditorLocked) &&
+            <div className='run-btn'><i className='fa fa-play'></i>&ensp;Run</div>
+          }
         </div>
       </div>
     )
@@ -57,15 +65,25 @@ class GistContainer extends Component {
   _handleChange(e) {
     this.setState({input: e.target.value})
   }
+
+  _onRunClick(e) {
+    e.preventDefault();
+    this.props.actions.executeCode(this.props.language, this.props.editorValue);
+  }
 }
 
 GistContainer.propTypes = {
   actions: PropTypes.shape({
-    saveToGist: PropTypes.func.isRequired
+    saveToGist: PropTypes.func.isRequired,
+    executeCode: PropTypes.func.isRequired
   }),
   saveStatus: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  // roomID: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  isChatLocked: PropTypes.bool.isRequired,
+  isEditorLocked: PropTypes.bool.isRequired
 }
 
 export default GistContainer;

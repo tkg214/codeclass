@@ -1,0 +1,53 @@
+.room-navbar {
+  background-color: $dark2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-nav-brand{
+  padding-left: 20px;
+  a {
+    color: $gray1;
+    font-family: 'Lobster', sans-serif;
+    font-size: 2.5em;
+    text-decoration: none;
+    &:hover{
+      color: $yellow;
+    }
+  }
+}
+
+.room-nav-util {
+  display: flex;
+  height: 5vh;
+  justify-content: flex-end;
+}
+
+.util-btn {
+  @include ver-hor-center;
+  padding: 5px;
+  background-color: $blue;
+  cursor: pointer;
+  width: 50px;
+
+  &:nth-child(2) {
+    background-color: $red;
+  }
+
+  &:nth-child(3) {
+    background-color: $yellow;
+  }
+
+  i {
+    color: $gray1;
+    font-size: 1.5em;
+  }
+
+  &:hover {
+    background-color: $gray1;
+    i {
+      color: $dark1;
+    }
+  }
+}

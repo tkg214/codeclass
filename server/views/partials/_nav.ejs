@@ -1,25 +1,16 @@
-<nav class="navbar navbar-default">
+<nav>
   <div class="container-fluid">
     <div class="navbar-header">
       <a id="navbar-brand" class="navbar-brand" href="/">CodeClass</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <% if (user) { %>
-      <li><a href="/rooms">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        New Room
-      </a></li>
 
+    </div>
+    <div class="room-nav-util">
+      <% if (user) { %>
+      <div class="util-btn"><a href="/rooms"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+      <div class="util-btn"><a href="/users/<%=user.github_login %>"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></div>
+      <div class="util-btn"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></div>
+      <% } else { %>
+      <div><a href="/login">Log In</a></div>
       <% } %>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    <% if (!user) { %>
-      <li><a href="/login">Log In</a></li>
-    <% } else { %>
-      <li><a href="/users/<%=user.github_login %>">Howdy, <%=user.github_login %></a></li>
-      <li><a href="/logout">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-        Log Out</a></li>
-    <% } %>
-  </ul>
+    </div>
 </nav>
