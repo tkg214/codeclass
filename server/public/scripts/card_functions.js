@@ -40,6 +40,7 @@ $(document).ready(function() {
 
   const openModal = function() {
   	modal.style.display = "block";
+    modal.style.background = "rgba(33, 33, 33, 0.54)";
     $('body').addClass('modal-active');
 
   }

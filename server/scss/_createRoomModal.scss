@@ -4,6 +4,9 @@ rgba(#c4c4c4, 0.82)
 /*************/
 /* The Modal (background) */
 
+div#myModal.modal{
+	background-color: black;
+}
 .modal {
 	display: none;
 	/* Hidden by default */
@@ -19,7 +22,7 @@ rgba(#c4c4c4, 0.82)
 	/* Full height */
 	overflow: auto;
 	/* Enable scroll if needed */
-	background-color: rgba(#c4c4c4, 0.82);
+	// background: rgba(#c4c4c4, 1)!important;
 	/* Black w/ opacity */
 	transition: all 0.5s ease 0.06s;
 }
