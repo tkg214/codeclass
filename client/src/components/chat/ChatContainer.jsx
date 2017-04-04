@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/chat';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+Tabs.setUseDefaultStyles(false);
+
 
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
