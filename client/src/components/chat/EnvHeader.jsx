@@ -24,7 +24,7 @@ class EnvHeader extends Component {
     return (
       <div className='env-nav-panel'>
         <span className={cssClasses} aria-hidden="true"></span>        
-        <p><strong>Topic:</strong>&ensp;{roomTitle}&ensp;&ensp;</p>
+        <p>&ensp;{roomTitle}&ensp;&ensp;</p>
       </div>
     )
   }

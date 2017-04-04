@@ -1,5 +1,5 @@
 .online-users-container {
-  background-color: #fff;
+  background-color: #f1f1f1;
 
   h2 {
     color: #4a4a4a;
@@ -16,33 +16,50 @@
   @include flex-clear;
   background-color: #fff;
   border-radius: 5px;
-  display: block;
-  padding: 15px;
+  padding: 20px 15px;
 
   p {
+    font-family: $title-font;
+    font-size: 1.3em;
+    font-weight: bold;
     margin: 0 0 2px;
+    padding-top: 3px;
     color: $dark2;
   }
-
+  
   .room-language-icon {
-    font-size: 5em;
+    font-size: 3em;
+    float: left;
+  }
+
+  .title-display {
+    background-color: $gray3;
   }
 }
 
 .user-container {
   align-items: center;
+  background-color: #fff;  
   border: $faint-gray;
   border-bottom: none;
   display: flex;
   padding: 10px;
-
+  
   img {
     @include avatar-size;
     border: 3px solid $green;
   }
 
+  &:hover {
+    background-color: $gray2;
+  }
+
   &:nth-child(even) {
     background-color: $gray1;
+    
+    &:hover {
+      background-color: $gray2;
+    }
   }
 
   &:nth-child(last) {
@@ -77,8 +94,8 @@
 
 
 .sidebar-users-online-title {
-  background-color: $gray1;
-  padding: 10px 0;
+  background-color: #e6f2ff;
+  padding: 20px 0 10px 0;
   text-align: center;
-  
+  line-height: 0.1em;
 }
