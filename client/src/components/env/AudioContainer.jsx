@@ -19,19 +19,20 @@ class AudioContainer extends Component {
     this.socketStream;
     this.localStream;
   }
-  //
-  // componentDidMount() {
-  //   ss(socket).on('playback-stream', (arrayBuffer, meta) => {
-  //     this.state.sampleRate = meta.sampleRate;
-  //     audioContext = new AudioContext();
-  //     let source = audioContext.createBufferSource();
-  //     audioContext.decodeAudioData(arrayBuffer, (buffer) => {
-  //       source.buffer = buffer;
-  //       source.connect(audioContext.destination);
-  //       source.start(audioContext.currentTime);
-  //     })
-  //   })
-  // }
+
+  // TODO enable buffering
+  componentDidMount() {
+    const audio = document.getElementById('audio-player');
+    ss(this.props.socket).on('playback-stream', (stream, meta) => {
+      let buffer = [];
+      stream.on('data', (chunk) => {
+        buffer.push(chunk);
+      });
+      stream.on('end', () => {
+        audio.src = window.URL.createObjectURL(new Blob(buffer));
+      })
+    })
+  }
 
   _onStartLiveStreamClick(e) {
     e.preventDefault();
@@ -86,39 +87,44 @@ class AudioContainer extends Component {
     }
   }
 
+  // play audio on select
+  _onPlayRecordedEdits(e) {
+    e.preventDefault();
+    const audio = document.getElementById('audio-player');
+    const currentTime = Math.round(audio.currentTime * 1000);
+    const totalTime = Math.round(audio.duration * 1000);
+    this.props.actions.updateEditorFromRecording(this.props.recordings.recordedEdits, currentTime, totalTime);
+  }
+
   render() {
     const { actions, isAuthorized, recordings } = this.props;
 
     // TODO add pause feature
-    // TODO stop stream does not work if other actions are fired
     // TODO add multiple recording on same page... errors with quality on 1 + n stream
-    // TODO get rid of click sound only at start of recording
-    // TODO fix onStopStreamClick so it emits
+    // TODO add on seeked feakture
 
     return (
       <div className='col-lg-6'>
         <div className='env-nav-panel'>
           <div id ='audioPanel' className='panel panel-default'>
-            {isAuthorized &&
+            {isAuthorized && !this.state.isRecording &&
               <button className='btn env-btn btn-primary btn-sm' onClick={this._onStartLiveStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
             }
-            {isAuthorized &&
+            {isAuthorized && this.state.isRecording &&
+              <button className='btn env-btn btn-primary btn-sm disabled'><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
+            }
+            {isAuthorized && this.state.isRecording &&
               <button className='btn env-btn btn-primary btn-sm' onClick={this._onStopLiveStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
             }
-            <RecordingsListContainer actions={actions} recordings={recordings}/>
-            {recordings.didReceiveEdits &&
-              <button className='btn env-btn btn-primary btn-sm' onClick={this._onPlayRecordedEdits.bind(this)}><i className='fa fa-play'></i>&ensp;Play Session</button>
+            {isAuthorized && !this.state.isRecording &&
+              <button className='btn env-btn btn-primary btn-sm disabled'><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
             }
+            <RecordingsListContainer actions={actions} recordings={recordings} isAuthorized={isAuthorized}/>
+            <audio id='audio-player' onPlay={this._onPlayRecordedEdits.bind(this)} controls></audio>
           </div>
         </div>
       </div>
     )
-  }
-
-  // play audio on select
-  _onPlayRecordedEdits(e) {
-    e.preventDefault();
-    this.props.actions.updateEditorFromRecording(this.props.recordings.recordedEdits)
   }
 }
 

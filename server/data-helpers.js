@@ -126,11 +126,17 @@ module.exports = function makeDataHelpers(knex) {
       });
     },
 
-    storeRecordingInfo: function(recordingInfo) {
+    storeRecordingInfo: function(recordingInfo, cb) {
       knex('recording_info')
       .insert(recordingInfo)
-      .then(() => {
-        return;
+      .returning('*')
+      .then((data) => {
+        let recInfo = {
+          id: 'R_' + data[0].id,
+          timestamp: moment(data[0].created_at).format('dddd, MMMM Do YYYY, h:mm:ss a'),
+          time: convertMs(data[0].time)
+        }
+        cb(recInfo);
       });
     },
 
@@ -146,6 +152,15 @@ module.exports = function makeDataHelpers(knex) {
         }
         cb(fileInfo)
       });
+    },
+
+    deleteRecInfo: function(recordingID) {
+      knex('recording_info')
+      .where({id: recordingID})
+      .del()
+      .then(() => {
+        return
+      })
     },
 
     //TODO refactor below tsrange
@@ -185,11 +200,6 @@ module.exports = function makeDataHelpers(knex) {
             let ri = 0;
             let t = 0
 
-            // TODO fix logic for this. sometimes data.content is undefined
-            // TODO null check for content if no content exists
-
-            // TODO use reduce to collapse content
-            // TODO lodash unique values*
             intervalArray.forEach((interval) => {
               if (ri === data.length) {
                 interval.time = t;

@@ -321,6 +321,11 @@ app.get('/api/recorded_edits', ensureAuthenticated, (req, res) => {
   }
 })
 
+// app.post('/api/recorded_edits', ensureAuthenticated, (req, res) => {
+//   dbHelpers.deleteRecInfo(req.body.data.id);
+//   res.sendStatus(200)
+// })
+
 //Temp data
 // const roomData = require('./temp-room-api-data.json');
 server.listen(3000, () =>
@@ -381,6 +386,7 @@ io.on('connection', (socket) => {
   let fileName;
   let recordingInfo;
   let startTime;
+  let isRecording = false;
   const PATH = './tmp/';
 
   function createRecordingInfo() {
@@ -400,7 +406,7 @@ io.on('connection', (socket) => {
   }
 
   // TODO do a check for not streaming if more than one tab is open
-  // TODO use opus or other compressed format instead of wav
+  // TODO use opus or other compressed format instead of wav if possible
 
   ss(socket).on('start-stream', (stream, meta) => {
     fileWriter = new wav.FileWriter(createFilePath(room), {
@@ -410,24 +416,27 @@ io.on('connection', (socket) => {
     });
     streamSampleRate = meta.sampleRate;
     startTime = Date.now();
+    isRecording = true;
     createRecordingInfo();
-    let roomStream = new ss.createStream();
     stream.pipe(fileWriter);
   });
 
-  // TODO stop button does not work as expected. stop-stream does not actually emit from client
   socket.on('stop-stream', () => {
-    if (fileWriter) {
+    if (isRecording) {
       console.log('stopped');
-      recordingInfo.time = (Date.now() - startTime)
+      recordingInfo.time = (Date.now() - startTime);
       fileWriter.end();
-      dbHelpers.storeRecordingInfo(recordingInfo);
+      dbHelpers.storeRecordingInfo(recordingInfo, broadcastNewInc);
+      isRecording = false;
+      function broadcastNewInc(data) {
+        let action = {type: 'UPDATE_REC_LIST', payload: data};
+        sk.broadcastToRoomInclusive(room, action);
+      }
     }
   });
 
   socket.on('playback', (action) => {
     let id = action.payload.recordingID.slice(2);
-    // let roomStream = new ss.createStream();
     dbHelpers.getRecordingInfoForStream(id, createPlaybackStream);
     function createPlaybackStream(data) {
       let roomStream = new ss.createStream();
@@ -437,12 +446,19 @@ io.on('connection', (socket) => {
     }
   });
 
+  // TODO update recording list on new recording. do db query
+
   // TODO fix TypeError: Cannot read property 'removeFromClientsStore' of undefined
   socket.on('disconnect', () => {
-    if (fileWriter) {
-      recordingInfo.time = (Date.now() - startTime)
+    if (isRecording) {
+      recordingInfo.time = (Date.now() - startTime);
       fileWriter.end();
-      dbHelpers.storeRecordingInfo(recordingInfo);
+      dbHelpers.storeRecordingInfo(recordingInfo, broadcastNew);
+      isRecording = false;
+      function broadcastNew(data) {
+        let action = {type: 'UPDATE_REC_LIST', payload: data};
+        sk.broadcastToRoom(room, action);
+      }
     }
     rm.removeFromClientsStore();
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}};

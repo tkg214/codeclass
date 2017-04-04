@@ -169,13 +169,32 @@ export function selectRecording(recordingID) {
   }
 }
 
-export function updateEditorFromRecording(recordedEditsArray) {
+
+// // TODO add error and success messages
+// export function deleteRecording(recordingID) {
+//   return dispatch => {
+//     axios.post('/api/recorded_edits', {
+//       data: {
+//         id: recordingID.slice(2)
+//       }
+//     }).then(() => {
+//       dispatch({
+//         type: 'REMOVE_REC_FROM_LIST',
+//         meta: {remote: true},
+//         payload: {
+//           id: recordingID
+//         }
+//       })
+//     })
+//   }
+// }
+
+export function updateEditorFromRecording(recordedEditsArray, currentTime) {
   return dispatch => {
     const RATE_MS = 25;
-    // transfer server algo to here and reconstruct
-    // TODO audio node has its own timer
-    // TODO use json column for edits and get rid of observable need. dispatch as reedux events
-    const observable = Rx.Observable.interval(RATE_MS).take(recordedEditsArray.length).map(t => recordedEditsArray[t]);
+    const i = Math.round(currentTime / 25);
+    const intervalArray = recordedEditsArray.slice(i)
+    const observable = Rx.Observable.interval(RATE_MS).take(intervalArray.length).map(t => intervalArray[t]);
     observable.subscribe(t => {
       dispatch({
         type: 'UPDATE_EDITOR_FROM_REC',
