@@ -1,16 +1,16 @@
-.form-group {
-  padding: $space;
+label[for*='new-classroom'] {
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
 }
 
 input[type="radio"].radio-none {
   display:none;
 }
 
-label[for*='new-classroom'] {
-  font-size: 1.5em;
-  padding-bottom: 0.5em;
-}
-
 .btn-group-language {
   display: block;
+}
+
+.form-group {
+  padding: $space;
 }
