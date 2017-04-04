@@ -22,6 +22,7 @@ class MessageComposeContainer extends Component {
             onChange={this._handleChange.bind(this)}
             maxLength="500"
             required
+            ref='textAreaInput'
             />
         }
         {!isChatLocked &&
@@ -39,23 +40,30 @@ class MessageComposeContainer extends Component {
   }
 
   _onKeyUp(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
       if(e.target.value.match(/^\s+$/)){
         e.target.placeholder = 'Try writing something first!';
         this.setState({input: ''});
       } else {
-      this.props.actions.sendMessage(e.target.value, this.props.roomID);
-      this.setState({input: ''});
+      this.props.actions.sendMessage(this.refs.textAreaInput.value, this.props.roomID);
       e.target.placeholder = 'Enter a message';
+      this.setState({input: ''});
       }
     }
   }
 
   _handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.sendMessage(this.state.input, this.props.roomID);
-    this.setState({input: ''})
+    let textAreaInput = this.refs.textAreaInput.value;
+    console.log(typeof this.refs.textAreaInput.value);
+    if(this.refs.textAreaInput.value === '' || this.refs.textAreaInput.value.match(/^\s+$/)){
+      this.refs.textAreaInput.placeholder = 'Try writing something first!';
+      this.setState({input: ''})
+    } else {
+      this.props.actions.sendMessage(this.state.input, this.props.roomID);
+      this.setState({input: ''})
+    }
   }
 }
 

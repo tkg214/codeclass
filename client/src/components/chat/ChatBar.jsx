@@ -13,22 +13,22 @@ class ChatBar extends Component {
 
     }
   }
+  // 
+  // componentWillReceiveProps(){
+  //   console.log('componentWillReceiveProps');
+  // }
+  // componentWillUpdate(){
+  //   console.log('componentWillUpdate');
+  // }
+  // componentDidUpdate(){
+  //   const { roomControls } = this.props;
+  //   console.log('roomControls', roomControls.isFirstRender);
+  //   console.log('componentDidUpdate');
+  // }
 
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps');
-  }
-  componentWillUpdate(){
-    console.log('componentWillUpdate');
-  }
-  componentDidUpdate(){
-    const { roomControls } = this.props;
-    console.log('roomControls', roomControls.isFirstRender);
-    console.log('componentDidUpdate');
-  }
-
-
-  componentDidMount(){
-    console.log('componentDidMount loaded');
+  //
+  // componentDidMount(){
+  //   console.log('componentDidMount loaded');
     //
     // const { roomControls, chat, actions } = this.props;
     //
@@ -42,7 +42,7 @@ class ChatBar extends Component {
     // }
 
 
-  }
+  // }
 
   render() {
     const { roomControls, chat, onlineUsers } = this.props;
