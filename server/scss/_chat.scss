@@ -21,10 +21,6 @@
   top: -40;
 }
 
-.open-sidebar-btn:active{
-  background-color: $green;
-}
-
 .bar-btn {
   background-color: $dark2;
   border-bottom: 0.1px solid #3f434a;
@@ -51,12 +47,12 @@
 
 
 .chat-container {
-  background-color: #fff;
-  border-radius: 5px;
-  color: #FFFFFF;
-  flex: 0 0 400px;
-  height: 100vh;
-  position: relative;
+  background-color: $gray1;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  height: 70vh;
+  overflow: hidden;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   -webkit-transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -88,11 +84,6 @@
 
 }
 
-.open {
-  display: flex;
-  flex-direction: column;
-}
-
 .close {
   margin-right: 0em;
   flex: 0 0 0;
@@ -110,12 +101,9 @@
   flex: 0 0 0px!important;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  // -webkit-transform: translate(50px);
-  // transform: translate(50px);
 }
 
 .chat-notification-bar {
-  // right: -50;
   flex: 0 0 50px;
   background-color: $dark1;
   -webkit-transform: scaleX(1);
