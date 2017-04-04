@@ -6,7 +6,6 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
   
   return {
     UPDATE_EDITOR_VALUES : (action) => {
-      console.log("update_editor_values in action-handler: ", action.payload.roomID);
       if (roomOwnerID === clientData.id) {
         dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, sk.broadcastToRoom);
         sk.broadcastToRoom(room, action);  //is callback above necessary?? 
