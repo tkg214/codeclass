@@ -1,9 +1,14 @@
 nav {
   height: $nav-height;
+  //Override bootstrap
+  .container-fluid {
+    padding-right: 0;
+  }
 }
 
 #navbar-brand{
   color: rgb(152, 195, 53);
   font-family: 'Raleway', sans-serif;
-  font-size: 2.5em;
+  font-size: 2.3em;
+  height: $nav-height;
 }

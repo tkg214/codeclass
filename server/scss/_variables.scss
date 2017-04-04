@@ -28,13 +28,12 @@ $chat-bubble-other: $gray2;
 $faint-gray: 0.5px solid #dedede;
 
 $nav-height: 5vh;
-$main-height: 100vh - $nav-height;
+$main-height: 95vh;
 $controller-height: 3em;
 $terminal-height: 200px;
 $space: 1em;
 $light: #ebebeb;
 $typed-size: 4em;
 $theme: #485563;
-$editor-height: calc($env-height - $controller-height - $terminal-height);
 $chat-notifcation-bar-width: 50px;
 $message-compose-container-height: 100px;

@@ -39,7 +39,7 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
           content: action.payload.content,
           avatarurl: clientData.github_avatar,
           isOwnMessage: false,
-          timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+          timestamp: moment()
         }
       }
       dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, sk.broadcastToRoom);

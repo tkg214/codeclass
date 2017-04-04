@@ -5,7 +5,7 @@ html, body {
 }
 
 main {
-  width: 100%;
   background-color: $dark3;
   height: $main-height;
+  overflow-x: hidden;
 }

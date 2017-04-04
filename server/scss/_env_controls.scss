@@ -9,11 +9,6 @@
   position: absolute;
 }
 
-.gist-container {
-  // display: flex;
-  // position: relative;
-}
-
 .gist-input {
   @include form-input;
   color: $gray1;
@@ -78,7 +73,6 @@
   color: $gray1;
   cursor: pointer;
   height: $nav-height;
-  // width: $nav-height;
   padding: 10px 10px 0 10px;
 
   &:hover {

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
 
 class Message extends Component {
 
@@ -10,7 +11,9 @@ class Message extends Component {
       <article className={'message-container-' + messageClass}>
         <article className={'bubble-chat bubble-chat-' + messageClass}>
           <p>{message.content}</p>
-          <p className="message-timestamp">{message.timestamp}</p>
+          <p className="message-timestamp">
+            {moment(message.timestamp).diff(moment(), 'days') < -2 ? moment(message.timestamp).format('MMM Do YYYY') : moment(message.timestamp).fromNow()}
+          </p>
         </article>
         <img src={message.avatarurl} className={'chat-avatar chat-avatar-' + messageClass}></img>
       </article>
@@ -26,4 +29,3 @@ export default Message;
 
 
 // TODO add nullcheck for avatar
-// TODO timestamp might be off based on locale, should use moment.js here instead of server
