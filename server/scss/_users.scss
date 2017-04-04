@@ -1,37 +1,101 @@
 .online-users-container {
-  background-color: #fff;
-  // height: 250px;
-  // overflow: scroll;
+  background-color: #f1f1f1;
 
   h2 {
     color: #4a4a4a;
     font-size: 18px;
+    padding: 10px;
   }
 
   p {
     color: #4a4a4a;
   }
-
-  img {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-  }
 }
 
-.user-list {
-  height: 80px;
-  overflow-x: auto;
+.env-nav-panel {
+  @include flex-clear;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px 15px;
+
+  p {
+    font-family: $title-font;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 0 0 2px;
+    padding-top: 3px;
+    color: $dark2;
+  }
+  
+  .room-language-icon {
+    font-size: 3em;
+    float: left;
+  }
+
+  .title-display {
+    background-color: $gray3;
+  }
 }
 
 .user-container {
   align-items: center;
-  padding: 8px 0;
-  p {
-    padding-left: 10px;
+  background-color: #fff;  
+  border: $faint-gray;
+  border-bottom: none;
+  display: flex;
+  padding: 10px;
+  
+  img {
+    @include avatar-size;
+    border: 3px solid $green;
+  }
+
+  &:hover {
+    background-color: $gray2;
+  }
+
+  &:nth-child(even) {
+    background-color: $gray1;
+    
+    &:hover {
+      background-color: $gray2;
+    }
+  }
+
+  &:nth-child(last) {
+   border-bottom: $faint-gray;
+  }
+
+  &:nth-child(2) {
+    img {
+      border: 3px solid $red;
+    }
+  }
+  &:nth-child(3) {
+    img {
+      border: 3px solid $yellow;
+    }
+  }
+   &:nth-child(4) {
+    img {
+      border: 3px solid $blue;
+    }
   }
 }
 
-.users-box {
-  padding: $space;
+.github-info {
+  padding-left: 15px;
+  i {
+    color: $dark2;
+    cursor: pointer;
+    font-size: 1.5em;
+  }
+}
+
+
+.sidebar-users-online-title {
+  background-color: #e6f2ff;
+  padding: 20px 0 10px 0;
+  text-align: center;
+  line-height: 0.1em;
 }

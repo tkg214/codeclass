@@ -1,23 +1,15 @@
 nav {
+  background-color: $dark3;
   height: $nav-height;
+  //Override bootstrap
+  .container-fluid {
+    padding-right: 0;
+  }
 }
 
 #navbar-brand{
-  color: rgb(152, 195, 53);
+  color: $brand;
   font-family: 'Raleway', sans-serif;
-  font-size: 2.5em;
-}
-
-//
-.waffle {
-//     // background: -webkit-gradient( linear, left top, left bottom, from(#7F0000), color-stop(50%, #BF0000), color-stop(50%, #FF0000), to(#400000));
-//     // background: -webkit-linear-gradient(top, #fff, #777 50%, #666 50%, #BFAC12);
-//     // background: linear-gradient(top, #fff, #777 50%, #666 50%, #111);
-//     -webkit-background-clip: text;
-//     font-family: 'Lobster', sans-serif;
-//     background-clip: text;
-//     color: transparent;
-//     font-size: 1.5em;
-//     text-align: center;
-//     white-space: nowrap;
+  font-size: 2.3em;
+  height: $nav-height;
 }

@@ -5,11 +5,14 @@
     <title>CodeClass</title>
     <% include ./partials/_head.ejs %>
   </head>
-  <header>
-    <% include ./partials/_nav.ejs %>
-  </header>
+
   <body>
-    <div id="react-root"></div>
+    <div class="room-container">
+      <div class="room-header">
+        <% include ./partials/_nav.ejs %>
+      </div>
+      <div id="react-root" class="room"></div>
+    </div>
     <% include ./partials/_scripts.ejs %>
     <script src="<%= bundleSrc %>"></script>
   </body>

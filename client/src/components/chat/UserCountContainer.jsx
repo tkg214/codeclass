@@ -11,14 +11,16 @@ class UserCountContainer extends Component {
     const { users } = this.props;
     return (
       <div className='online-users-container'>
-        <div className='users-box'>
-          <h2>Users online:</h2>
-          <div className='user-list'>
+        <section className='users-box'>
+          <article className='sidebar-users-online-title'>
+            <p><span>Users online</span></p>
+          </article>
+          <section className='user-list'>
             {users.usersOnline.map((user) => {
               return <User key={user.id} avatar={user.avatar} name={user.name}></User>
             })}
-          </div>
-        </div>
+          </section>
+        </section>
       </div>
     )
   }

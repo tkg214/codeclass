@@ -2,6 +2,9 @@
 /*   MODAL   */
 /*************/
 /* The Modal (background) */
+#myModal{
+	z-index: 1000;
+}
 
 .modal {
 	display: none;

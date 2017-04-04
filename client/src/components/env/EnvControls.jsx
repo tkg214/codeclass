@@ -7,9 +7,9 @@ class EnvControls extends Component {
     const themes = ['Monokai', 'Github', 'Kuroir', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
     const fontSizes = [8, 9, 11, 12, 14, 18, 24, 30, 36, 48];
     return (
-      <div className='col-lg-12'>
+      <div className='editor-group'>
         <div className='env-nav-controls'>
-          <div className="btn-group env-btn btn btn-primary btn-sm">
+          <div className="btn-group env-btn dropup">
             <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-paint-brush'></i>&ensp;Theme<span className="caret"></span></a>
             <ul className="dropdown-menu">
               {themes.map((theme, i) => {
@@ -17,7 +17,7 @@ class EnvControls extends Component {
               })}
             </ul>
           </div>
-          <div className="btn-group env-btn btn btn-primary btn-sm">
+          <div className="btn-group env-btn dropup">
             <a className="dropdown-toggle" data-toggle="dropdown">A<span className='sm'> A</span>&ensp;Font Size<span className="caret"></span></a>
             <ul className="dropdown-menu">
               {fontSizes.map((fontSize, i) => {
@@ -26,35 +26,36 @@ class EnvControls extends Component {
             </ul>
           </div>
           {isAuthorized && isChatLocked &&
-            <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
+            <div onClick={this._onChatToggleClick.bind(this)} className='env-btn'><i className='fa fa-lock'></i><p className='env-status'>&ensp;Chat Locked</p></div>
           }
           {!isAuthorized && isChatLocked &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Chat Locked</button>
+            <div className='env-btn-disabled'><i className='fa fa-lock'></i><p className='env-status'>&ensp;Chat Locked</p></div>
           }
           {isAuthorized && !isChatLocked &&
-            <button onClick={this._onChatToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
+            <div onClick={this._onChatToggleClick.bind(this)} className='env-btn'><i className='fa fa-unlock'></i><p className='env-status'>&ensp;Chat Unlocked</p></div>
           }
           {!isAuthorized && !isChatLocked &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Chat Unlocked</button>
+            <div className='env-btn-disabled'><i className='fa fa-unlock'></i><p className='env-status'>&ensp;Chat Unlocked</p></div>
           }
           {isAuthorized && isEditorLocked &&
-            <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
+            <div onClick={this._onEditorToggleClick.bind(this)} className='env-btn'><i className='fa fa-lock'></i><p className='env-status'>&ensp;Editor Locked</p></div>
           }
           {!isAuthorized && isEditorLocked &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-lock'></i>&ensp;Editor Locked</button>
+            <div className='env-btn-disabled'><i className='fa fa-lock'></i><p className='env-status'>&ensp;Editor Locked</p></div>
           }
           {isAuthorized && !isEditorLocked &&
-            <button onClick={this._onEditorToggleClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
+            <div onClick={this._onEditorToggleClick.bind(this)} className='env-btn'><i className='fa fa-unlock'></i><p className='env-status'>&ensp;Editor Unlocked</p></div>
           }
           {!isAuthorized && !isEditorLocked &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-unlock'></i>&ensp;Editor Unlocked</button>
+            <div className='env-btn-disabled'><i className='fa fa-unlock'></i><p className='env-status'>&ensp;Editor Unlocked</p></div>
           }
-          {(isAuthorized || !isEditorLocked) &&
-            <button onClick={this._onRunClick.bind(this)} className='btn btn-primary btn-sm env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+          {isEditorLocked &&
+            <div className='env-mode'><p>Lecture Mode</p></div>
           }
-          {(!isAuthorized && isEditorLocked) &&
-            <button className='btn btn-primary btn-sm disabled env-btn'><i className='fa fa-play'></i>&ensp;Run</button>
+          {!isEditorLocked &&
+            <div className='env-mode'><p>Quiz Mode</p></div>
           }
+   
         </div>
       </div>
     );
@@ -83,10 +84,6 @@ class EnvControls extends Component {
     this.props.actions.toggleChatLock(this.props.isChatLocked, this.props.roomID);
   }
 
-  _onRunClick(e) {
-    e.preventDefault();
-    this.props.actions.executeCode(this.props.language, this.props.editorValue);
-  }
 }
 
 EnvControls.propTypes = {
@@ -94,8 +91,7 @@ EnvControls.propTypes = {
     changeEditorTheme: PropTypes.func.isRequired,
     changeFontSize: PropTypes.func.isRequired,
     toggleEditorLock: PropTypes.func.isRequired,
-    toggleChatLock: PropTypes.func.isRequired,
-    executeCode: PropTypes.func.isRequired
+    toggleChatLock: PropTypes.func.isRequired
   }),
   theme: PropTypes.string.isRequired,
   fontSize: PropTypes.number.isRequired,

@@ -59,13 +59,24 @@ export function updateNewMessagesCount(currentMessagesCount){
   }
 }
 
-export function toggleFirstRender(){
+export function toggleFirstRender(toggle){
   console.log('dispatched');
   return dispatch => {
     dispatch({
       type: 'TOGGLE_FIRST_RENDER',
       payload: {
-        isFirstRender: false
+        isFirstRender: toggle ? false : true
+      }
+    })
+  }
+}
+
+export function switchSidebarTab(index){
+  return dispatch => {
+    dispatch({
+      type: 'SWITCH_SIDEBAR_TAB',
+      payload: {
+        currentTab: index
       }
     })
   }

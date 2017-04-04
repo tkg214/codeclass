@@ -1,0 +1,42 @@
+/*
+Chatbar flex sizes
+400px - min: 1320
+360px - max: 1319, min: 1160
+280px - max: 1159, min 960
+240px - max: 959, min: 768
+
+* App Breakpoint: 768px (standard tablet)
+
+*/
+
+$large-desktop-width: 1320px;
+$regular-desktop-width: 1160px;
+$small-desktop-width: 960px;
+$tablet-width: 768px;
+
+@mixin large-desktop {
+  @media (min-width: #{$large-desktop-width}) {
+    @content;
+  }
+}
+
+@mixin regular-desktop {
+  @media (min-width: #{$regular-desktop-width}) and (max-width: #{$large-desktop-width - 1}) {
+    @content;
+  }
+}
+
+@mixin small-desktop {
+  @media (min-width: #{$small-desktop-width}) and (max-width: #{$regular-desktop-width - 1}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$small-desktop-width - 1}) {
+    @content;
+  }
+}
+
+
+
