@@ -11,7 +11,8 @@ const initialState = {
     theme: 'monokai',
     fontSize: 12,
   },
-  language: 'markdown'
+  language: 'markdown',
+  isFirstRender: true
 }
 
 export default function reducer(state=initialState, action) {
@@ -24,7 +25,8 @@ export default function reducer(state=initialState, action) {
         isEditorLocked: action.payload.isEditorLocked,
         isChatLocked: action.payload.isChatLocked,
         language: action.payload.language,
-        userSettings: action.payload.userSettings
+        userSettings: action.payload.userSettings,
+        isFirstRender: action.payload.userSettings
       }
     }
     case 'TOGGLE_EDITOR_LOCK': {
@@ -44,6 +46,9 @@ export default function reducer(state=initialState, action) {
     }
     case 'TOGGLE_CHAT_NOTIFICATION_BAR': {
       return {...state, isChatNotificationVisible: action.payload.isChatNotificationVisible}
+    }
+    case 'TOGGLE_FIRST_RENDER': {
+      return {...state, isFirstRender: action.payload.isFirstRender}
     }
   }
   return state;

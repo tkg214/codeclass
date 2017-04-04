@@ -59,6 +59,18 @@ export function updateNewMessagesCount(currentMessagesCount){
   }
 }
 
+export function toggleFirstRender(){
+  console.log('dispatched');
+  return dispatch => {
+    dispatch({
+      type: 'TOGGLE_FIRST_RENDER',
+      payload: {
+        isFirstRender: false
+      }
+    })
+  }
+}
+
 
 // TODO LOCK MESSEAGES
 
