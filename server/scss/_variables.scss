@@ -23,7 +23,8 @@ $chat-bubble-own: #d1e1ef;
 /* BORDER STYLE */
 $faint-gray: 0.5px solid #dedede;
 
-$nav-height: 3em;
+$nav-height: 5vh;
+$main-height: 100vh - $nav-height;
 $controller-height: 3em;
 $terminal-height: 200px;
 $space: 1em;
@@ -33,6 +34,3 @@ $theme: #485563;
 $editor-height: calc($env-height - $controller-height - $terminal-height);
 $chat-notifcation-bar-width: 50px;
 $message-compose-container-height: 100px;
-
-
-
