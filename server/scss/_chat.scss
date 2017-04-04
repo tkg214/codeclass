@@ -50,14 +50,14 @@
   position: relative;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
-  -webkit-transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  transition: all 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  -webkit-transition: all 150ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 150ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   transform-origin: right;
 
   p {
     font-family: $content-font;
   }
-  
+
   li {
     font-family: $title-font;
   }
@@ -73,8 +73,8 @@
     //TODO: looks bad atm. Style chatroom
   }
   @include tablet {
-    flex: 0 0 240px;    
-    //TODO: looks bad atm. Style chatroom    
+    flex: 0 0 240px;
+    //TODO: looks bad atm. Style chatroom
   }
 
 }
@@ -97,6 +97,7 @@
   -webkit-transform: translate(75px);
   transform: translate(75px);
   visibility: hidden;
+  width: 0px;
 }
 
 #notification-close{
@@ -138,7 +139,7 @@
 .message-compose-container {
   background-color: #fff;
   bottom: 5px;
-  display: block;  
+  display: block;
   margin: 0 auto;
   position: absolute;
   width: 100%;
@@ -206,11 +207,11 @@
 }
 
 .message-container-other {
-  @include message-container-styles; 
+  @include message-container-styles;
   flex-direction: row-reverse;
 
   @include tablet {
-    padding: 10px 15px 0 5px;    
+    padding: 10px 15px 0 5px;
   }
 
   article {
@@ -259,5 +260,5 @@
       }
     }
   }
-  
+
 }
