@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'source-map',
   entry: './src/client.jsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
     publicPath: '/build/'
   },
