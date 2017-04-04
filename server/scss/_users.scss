@@ -14,11 +14,18 @@
 
 .env-nav-panel {
   @include flex-clear;
-  background-color: $gray1;
+  background-color: #fff;
   border-radius: 5px;
+  display: block;
+  padding: 15px;
 
   p {
+    margin: 0 0 2px;
     color: $dark2;
+  }
+
+  .room-language-icon {
+    font-size: 5em;
   }
 }
 
@@ -67,3 +74,4 @@
     font-size: 1.5em;
   }
 }
+

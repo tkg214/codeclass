@@ -130,11 +130,6 @@
   top: -40;
 }
 
-.sidebar-tablist {
-  background-color: $gray1 !important;
-  margin: 0 !important;
-}
-
 .message-compose-container {
   background-color: #fff;
   bottom: 5px;
@@ -234,6 +229,11 @@
 
 .users-connected-button{
   height: 100px;
+}
+
+.sidebar-tablist {
+  background-color: $green;  
+  margin: 0 !important;  
 }
 
 .sidebar-tabs {
