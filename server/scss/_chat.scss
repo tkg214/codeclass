@@ -170,7 +170,6 @@
     padding: 10px 15px 0 15px;
 
     img {
-      margin: 5px 5px 5px 20px;
       max-height: 50px;
       max-width: 50px;
     }
@@ -204,7 +203,6 @@
   img {
     @include chat-avatar;
     @include tablet {
-      margin: 5px 20px 5px 5px;
       max-height: 50px;
       max-width: 50px;
     }
@@ -260,7 +258,7 @@
   background-color: $dark3;
   font-size: 1.5em;
   font-family: $title-font;
-  height: 180px;
-  padding-top: 20px;
+  height: 100%;
   text-align: center;
+  width:100%
 }
