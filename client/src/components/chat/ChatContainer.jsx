@@ -16,6 +16,7 @@ class ChatContainer extends Component {
     const { chat, roomControls, onlineUsers, sidebar } = this.props
     let visibility = roomControls.isChatVisible ? 'open' : 'close'
     // Tabs.setUseDefaultStyles(false);
+
     return (
       <div className={'chat-container ' + visibility }>
         <div className="sidebar-tabs">
@@ -38,8 +39,8 @@ class ChatContainer extends Component {
 
         <TabPanel>
           <MessageListContainer chat={chat}/>
-          <MessageComposeContainer 
-            actions={this.props.actions} 
+          <MessageComposeContainer
+            actions={this.props.actions}
             isChatLocked={roomControls.isChatLocked}
             roomID={roomControls.roomID} />
         </TabPanel>
@@ -51,12 +52,11 @@ class ChatContainer extends Component {
   _handleClick(e) {
     e.preventDefault();
     const { roomControls, chat, actions } = this.props;
-    // this.props.actions.toggleChatContainer(this.props.roomControls.isChatVisible);
     actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
     actions.toggleChatContainer(roomControls.isChatVisible);
     let messageList = chat.messages[0] || [];
-    //this.props.actions.updateNewMessagesCount(messageList.length);
     actions.updateNewMessagesCount(messageList.length);
+
   }
 
   handleSelect(index, last) {

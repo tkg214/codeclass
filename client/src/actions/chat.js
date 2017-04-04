@@ -59,16 +59,30 @@ export function updateNewMessagesCount(currentMessagesCount){
   }
 }
 
+<<<<<<< HEAD
 export function switchSidebarTab(index){
   return dispatch => {
     dispatch({
       type: 'SWITCH_SIDEBAR_TAB',
       payload: {
         currentTab: index
+=======
+export function toggleFirstRender(){
+  console.log('dispatched');
+  return dispatch => {
+    dispatch({
+      type: 'TOGGLE_FIRST_RENDER',
+      payload: {
+        isFirstRender: false
+>>>>>>> P/room-scss
       }
     })
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> P/room-scss
 
 // TODO LOCK MESSEAGES
 
