@@ -28,7 +28,7 @@ class MessageComposeContainer extends Component {
             <button onClick={this._handleSubmit.bind(this)} className="chatbar-button">Send</button>
           }
           {isChatLocked &&
-            <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
+            <div className="chat-locked-warning">Chat Locked</div>
           }
         </div>
       </div>
