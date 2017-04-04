@@ -182,9 +182,6 @@
 
 .message-container-own {
   @include message-container-styles;
-  @include tablet {
-    padding: 10px 5px 0 15px;
-  }
 
   article {
     @include bubble-chat-styles($chat-bubble-own);
@@ -192,14 +189,29 @@
       right: -10px;
     }
   }
+
   img {
     @include chat-avatar;
-    @include tablet {
+  }
+
+  @include tablet {
+    padding: 10px 15px 0 15px;
+
+    img {
       margin: 5px 5px 5px 20px;
       max-height: 50px;
       max-width: 50px;
     }
   }
+
+  @include small-desktop {
+    padding: 10px 15px 0 15px;
+    article {
+      width: 65%;
+    }
+  }
+
+
 }
 
 .message-container-other {
@@ -220,10 +232,17 @@
   img {
     @include chat-avatar;
     @include tablet {
-    margin: 5px 20px 5px 5px;
-    max-height: 50px;
-    max-width: 50px;
+      margin: 5px 20px 5px 5px;
+      max-height: 50px;
+      max-width: 50px;
+    }
   }
+
+  @include small-desktop {
+    padding: 10px 15px 0 15px;
+    article {
+      width: 65%;
+    }
   }
 }
 
