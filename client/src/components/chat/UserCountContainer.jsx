@@ -12,6 +12,9 @@ class UserCountContainer extends Component {
     return (
       <div className='online-users-container'>
         <section className='users-box'>
+          <article className='sidebar-users-online-title'>
+            <p>--- Users online ---</p>
+          </article>
           <section className='user-list'>
             {users.usersOnline.map((user) => {
               return <User key={user.id} avatar={user.avatar} name={user.name}></User>
