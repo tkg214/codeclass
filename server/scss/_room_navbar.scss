@@ -13,7 +13,7 @@
     font-size: 2.5em;
     text-decoration: none;
     &:hover{
-      color: $yellow;
+      color: $jsyellow;
     }
   }
 }
@@ -32,15 +32,15 @@
   width: 50px;
 
   &:nth-child(2) {
-    background-color: $red;
+    background-color: $rubyred;
   }
 
   &:nth-child(3) {
-    background-color: $yellow;
+    background-color: $jsyellow;
   }
 
   &:nth-child(4) {
-    background-color: $blue;
+    background-color: $pythonblue;
   }
 
   i {
