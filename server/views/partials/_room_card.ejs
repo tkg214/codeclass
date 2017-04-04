@@ -1,4 +1,15 @@
-<article class='card panel panel-default z-3'>
+<% if (classroom.language_id === 'javascript') { %>
+  <article class='card panel panel-default z-3 javascript' data-language='Javascript'>
+<% } %>
+<% if (classroom.language_id === 'ruby') { %>
+  <article class='card panel panel-default z-3 ruby' data-language='Ruby'>
+<% } %>
+<% if (classroom.language_id === 'python') { %>
+  <article class='card panel panel-default z-3 python' data-language='Python'>
+<% } %>
+
+
+
     <a class="card-body" href=<%= `/rooms/${classroom.room_key}` %>>
     <div class='panel-body'>
     <span>

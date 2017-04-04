@@ -17,6 +17,7 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
+    "isotope-layout": "^3.0.3",
     "jsonwebtoken": "^7.3.0",
     "knex": "^0.12.9",
     "knex-logger": "^0.1.0",
