@@ -1,14 +1,14 @@
 /* FONTS */
 $logo-font: 'Lobster', cursive;
-$title-font: 'Muli', sans-serif;
-$content-font: 'Lato', sans-serif;
+$title-font: 'Muli', Helvetica, Arial, sans-serif;
+$content-font: 'Lato', Helvetica, Arial, sans-serif;
 
 
 /* COLORS */
 $brand: rgb(152, 195, 53);
 
 $card-background: #485563;
-$card-text: #FFFFFF;
+$card-text: $gray1;
 
 $green: #19B98B;
 $jsyellow: #FFCA4A;
@@ -27,14 +27,13 @@ $chat-bubble-own: #d1e1ef;
 $chat-bubble-other: $gray2;
 
 /* BORDER STYLE */
-$faint-gray: 0.5px solid #dedede;
+$faint-gray: 0.5px solid $gray2;
 
 $nav-height: 5vh;
 $main-height: 95vh;
-$controller-height: 3em;
 $terminal-height: 200px;
 $space: 1em;
-$light: #ebebeb;
+$light: $gray1;
 $typed-size: 4em;
 $theme: #485563;
 $chat-notifcation-bar-width: 50px;
