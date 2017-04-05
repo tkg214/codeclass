@@ -8,11 +8,11 @@
     </div>
     <div class="room-nav-util">
       <% if (user) { %>
-      <a id="modal-button" class="util-btn"><div><i class="fa fa-plus" aria-hidden="true"></i></div></a>
-      <a class="util-btn" href="/users/<%=user.github_login %>"><div><i class="fa fa-user-circle-o" aria-hidden="true"></i></div></a>
-      <a class="util-btn" href="/logout"><div><i class="fa fa-sign-out" aria-hidden="true"></i></div></a>
+      <a id="modal-button" class="util-btn util-btn-new"><div><i class="fa fa-plus" aria-hidden="true"></i></div></a>
+      <a class="util-btn util-btn-user" href="/users/<%=user.github_login %>"><div><i class="fa fa-user-circle-o" aria-hidden="true"></i></div></a>
+      <a class="util-btn util-btn-logout" href="/logout"><div><i class="fa fa-sign-out" aria-hidden="true"></i></div></a>
       <% } else { %>
-      <a  class="util-btn" href="/login"><div><i class="fa fa-sign-in" aria-hidden="true"></i></div></a>
+      <a  class="util-btn util-btn-login" href="/login"><div><i class="fa fa-sign-in" aria-hidden="true"></i></div></a>
       <% } %>
     </div>
 </nav>

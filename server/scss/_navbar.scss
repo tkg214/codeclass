@@ -13,3 +13,50 @@ nav {
   font-size: 2.3em;
   height: $nav-height;
 }
+
+.room-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-nav-util {
+  display: flex;
+  height: 5vh;
+  justify-content: flex-end;
+}
+
+.util-btn {
+  @include ver-hor-center;
+  padding: 5px;
+  cursor: pointer;
+  width: 50px;
+
+  &-new {
+    background-color: $rubyred;
+  }
+
+  &-user {
+    background-color: $jsyellow;
+  }
+
+  &-login {
+    background-color: $brand;
+  }
+
+  &-logout {
+    background-color: $pythonblue;
+  }
+
+  &:hover {
+    background-color: $gray1;
+    i {
+      color: $dark1;
+    }
+  }
+
+  & .fa {
+    color: $gray1;
+    font-size: 1.5em;
+  }
+}
