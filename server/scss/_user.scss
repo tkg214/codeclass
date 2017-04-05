@@ -52,6 +52,7 @@
 }
 
 .card-header{
+  font-family: 'Raleway', sans-serif;
   color: $card-text;
   -webkit-text-shadow: none;
     text-shadow: none;
@@ -68,7 +69,7 @@ a.card-body:hover{
 }
 
 .clipboard-check {
-  display:none;
+  opacity: 0;
 }
 
 .delete-card-icon{
