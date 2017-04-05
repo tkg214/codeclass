@@ -1,5 +1,6 @@
 export default function reducer(state = {
-  messages: []
+  messages: [],
+  currentMessagesCount: 0
 }, action) {
   switch(action.type) {
     case 'UPDATE_ROOM_STATE': {
@@ -7,14 +8,16 @@ export default function reducer(state = {
       roomMessages.push(action.payload.messages)
       return {...state, messages: roomMessages}
     }
-    case 'SEND_OUTGOING_MESSAGE': {
+    case 'RECEIVE_NEW_MESSAGE': {
       const newMessages = [...state.messages];
-      console.log('TESTING',...state.messages);
-      console.log('payload', action.payload);
       newMessages[0].push(action.payload);
-      console.log(newMessages);
       return {...state, messages: newMessages}
-      break;
+    }
+    case 'SEND_OUTGOING_MESSAGE': {
+      return state;
+    }
+    case 'UPDATE_NEW_MESSAGES_COUNT': {
+      return {...state, currentMessagesCount: action.payload}
     }
   }
   return state;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class MessageComposeContainer extends Component {
 
@@ -10,25 +10,28 @@ class MessageComposeContainer extends Component {
   }
 
   render() {
-    const { roomControls } = this.props;
+    const { isChatLocked } = this.props;
     return (
       <div className='message-compose-container'>
-        {!roomControls.isChatLocked &&
+        {!isChatLocked &&
           <textarea
             className="chatbar-message"
-            placeholder="Chat Bar"
             onKeyUp={this._onKeyUp.bind(this)}
             value={this.state.input}
             onChange={this._handleChange.bind(this)}
             maxLength="500"
+            required
+            ref='textAreaInput'
             />
         }
-        {!roomControls.isChatLocked &&
-          <button onClick={this._handleSubmit.bind(this)} className="btn btn-default btn-sm chatbar-button">Send</button>
-        }
-        {roomControls.isChatLocked &&
-          <span className="btn btn-warning btn-large chat-locked-warning">Chat Locked</span>
-        }
+        <div className="message-submit">
+          {!isChatLocked &&
+            <button onClick={this._handleSubmit.bind(this)} className="chatbar-button">Send</button>
+          }
+          {isChatLocked &&
+            <div className="chat-locked-warning">Chat Locked</div>
+          }
+        </div>
       </div>
     )
   }
@@ -38,18 +41,39 @@ class MessageComposeContainer extends Component {
   }
 
   _onKeyUp(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
-      this.props.actions.sendMessage(e.target.value, this.props.roomControls.roomID);
+      if(e.target.value.match(/^\s+$/)){
+        e.target.placeholder = 'Try writing something first!';
+        this.setState({input: ''});
+      } else {
+      this.props.actions.sendMessage(this.refs.textAreaInput.value, this.props.roomID);
+      e.target.placeholder = 'Enter a message';
       this.setState({input: ''});
+      }
     }
   }
 
   _handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.sendMessage(this.state.input, this.props.roomControls.roomID);
-    this.setState({input: ''})
+    let textAreaInput = this.refs.textAreaInput.value;
+    console.log(typeof this.refs.textAreaInput.value);
+    if(this.refs.textAreaInput.value === '' || this.refs.textAreaInput.value.match(/^\s+$/)){
+      this.refs.textAreaInput.placeholder = 'Try writing something first!';
+      this.setState({input: ''})
+    } else {
+      this.props.actions.sendMessage(this.state.input, this.props.roomID);
+      this.setState({input: ''})
+    }
   }
+}
+
+MessageComposeContainer.propTypes = {
+  actions: PropTypes.shape({
+    sendMessage: PropTypes.func.isRequired
+  }),
+  isChatLocked: PropTypes.bool.isRequired,
+  roomID: PropTypes.number.isRequired
 }
 
 export default MessageComposeContainer;

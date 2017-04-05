@@ -1,0 +1,14 @@
+<script src="/scripts/card_functions.js"></script>
+<script src="/scripts/clipboard.min.js"></script>
+<script>
+  $(document).ready(function() {
+    const clipboard = new Clipboard('.card-share');
+    clipboard.on('success', function(e) {
+      $(e.trigger).closest('.card-footer').find('.clipboard-check')
+        .fadeIn(200)
+        .delay(1500)
+        .fadeOut(200);
+    });
+  });
+</script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>

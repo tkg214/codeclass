@@ -1,0 +1,21 @@
+.gist-saving-enter {
+  opacity: 0.01;
+}
+
+.gist-saving-enter.gist-saving-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.gist-saving-leave {
+  opacity: 1;
+}
+
+.gist-saving-leave.gist-saving-leave-active {
+  opacity: 0.01;
+  transition: opacity 250ms ease-in;
+}
+
+.absolute {
+    position: absolute;
+}

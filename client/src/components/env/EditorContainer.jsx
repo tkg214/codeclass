@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import AceEditor from 'react-ace';
-import brace from 'brace';
 
+import brace from 'brace';
 import 'brace/mode/javascript';
 import 'brace/mode/ruby';
 import 'brace/mode/python';
@@ -23,42 +23,44 @@ class EditorContainer extends Component {
 
   constructor() {
     super();
-    this.width = $(window).width() - $('.chat-container').width();
+    let w = $(window).width() - $('.chat-contaidner').width();
+    this.width = w.toString();
   }
 
   render() {
-    const { editorValue, roomControls } = this.props;
+    const { editorValue, language, theme, isEditorLocked, fontSize } = this.props;
+
     return (
       <div className='editor-container'>
         <AceEditor
           className ='editor'
-          mode={roomControls.language}
-          theme={roomControls.userSettings.theme}
-          fontSize={Number(roomControls.userSettings.fontSize)}
+          mode={language}
+          theme={theme}
+          fontSize={fontSize}
           onChange={this._onChange.bind(this)}
-          width={`${this.width}`}
+          width={this.width}
           value={editorValue}
-          readOnly={roomControls.isEditorLocked}
+          readOnly={isEditorLocked}
         />
       </div>
     )
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue, this.props.roomControls.roomID)
+    this.props.actions.updateEditorValues(newValue, this.props.roomID)
   }
 }
 
 EditorContainer.propTypes = {
-  roomControls: React.PropTypes.shape({
-    language: React.PropTypes.string.isRequired,
-    isEditorLocked: React.PropTypes.bool.isRequired,
-    userSettings: React.PropTypes.shape({
-      theme: React.PropTypes.string.isRequired
-    })
+  actions: PropTypes.shape({
+    updateEditorValues: PropTypes.func.isRequired
   }),
-  editor: React.PropTypes.string,
-  actions: React.PropTypes.object
+  language: PropTypes.string.isRequired,
+  fontSize: PropTypes.number.isRequired,
+  theme: PropTypes.string.isRequired,
+  editorValue: PropTypes.string.isRequired,
+  roomID: PropTypes.number.isRequired,
+  isEditorLocked: PropTypes.bool.isRequired
 }
 
 export default EditorContainer;

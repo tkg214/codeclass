@@ -8,7 +8,14 @@
 		<header>
 			<% include ./partials/_nav.ejs %>
 		</header>
-		<a href="/auth/github">Login with GitHub</a>
+		<div class="container">
+			<div class="jumbotron">
+				<div class="page-header">
+					<h1 class="typed">&gt; Login</h1>
+					<a class="btn btn-success btn-lg" href="/auth/github"><span class="fa fa-github fa-lg"></span>&ensp;Login via Github</a>
+				</div>
+			</div>
+		</div>
 	</body>
 	<% include ./partials/_scripts.ejs %>
 </html>

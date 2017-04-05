@@ -54,49 +54,84 @@ export function executeCode(lang, code) {
   }
 }
 
-export function changeEditorTheme(theme) {
+export function changeEditorTheme(fontSize, theme) {
   return dispatch => {
     dispatch({
       type: 'CHANGE_EDITOR_THEME',
       meta: {remote: true},
       payload: {
-        userSettings: {theme}
+        userSettings: { fontSize, theme }
       }
     })
   }
 }
 
 export function saveToGist(gistName, content, language) {
+  let extension;
+  switch (language) {
+  case 'javascript':
+    extension = '.js';
+    break;
+  case 'ruby':
+    extension = '.rb';
+    break;
+  case 'python':
+    extension = '.py';
+    break;
+  }
   return dispatch => {
+    dispatch({
+      type: 'GIST_SAVING',
+      payload: {
+        saveStatus: 'Saving...'
+      }
+    })
     axios.post('/savegist', {
       data: {
         title: gistName,
         content,
-        language
+        extension
       }
     }).then((response) => {
       dispatch({
         type: 'GIST_SAVED',
         payload: {
-          isGistSaved: true
+          saveStatus: 'Complete',
+          details: {
+            timestamp: response.headers.date,
+            text: `Saved ${gistName}${extension}`,
+            response
+          }
       }});
+      setTimeout(() =>
+      dispatch({
+        type: 'GIST_DEFAULT',
+        payload: {
+          saveStatus: 'Save'
+        }
+      }), 3000)
     }).catch((error) => {
       dispatch({
         type: 'GIST_ERROR',
         payload: {
-          isGistSaved: false
+          saveStatus: 'Failed',
+          details: {
+            timestamp: error.headers.date,
+            text: `Failed to save ${gistName}${extension}`,
+            error
+          }
       }});
     });
   }
 }
 
-export function changeFontSize(fontSize) {
+export function changeFontSize(fontSize, theme) {
   return dispatch => {
     dispatch({
       type: 'CHANGE_FONT_SIZE',
       meta: {remote: true},
       payload: {
-        userSettings: {fontSize}
+        userSettings: { fontSize, theme }
       }
     })
   }

@@ -8,28 +8,46 @@
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
-  <body>
+  <body id="user-classroom-body">
+
+
+
+
     <section id="user-classroms" class="container">
-      <div class="jumbotron clearfix">
+      <div id="user-jumbo" class="jumbotron clearfix top">
         <div class="col-xs-2 col-sm-3">
-          <img class="img-circle img-responsive" src=<%= user.github_avatar %> />
+          <img class="img-circle img-responsive" src=<%= profile.github_avatar %> />
         </div>
         <div class="col-xs-10 col-sm-9">
-          <h1><%= user.github_login %></h1>
+          <h1 class="username"><%= profile.github_login %></h1>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2> My Classrooms </h2>
-        </div>
-      <% classrooms.forEach((classroom) => { %>
-        <div class="panel-body">
-          <a  class="pull-left" href="/rooms/<%= classroom.room_key %>"><%= classroom.topic %></a>
-          <p class="pull-right"><%= classroom.created_at %></p>
-        </div>
-      <% }) %>
+      <div>
+      <h1 class="my-classrooms-heading" style="display: inline-block"> My Classrooms </h1>
+        <div style="display: inline-block; float: right">
+              <div class="btn-group btn-group-sm filter-language-group" role="group" aria-label="...">
+                  <button type="button" class="btn btn-default filter-js" data-filter="*">All</button>
+                  <button type="button" class="btn btn-default filter-js" data-filter=".javascript">Javascript</button>
+                  <button type="button" class="btn btn-default filter-ruby" data-filter=".ruby">Ruby</button>
+                  <button type="button" class="btn btn-default filter-python" data-filter=".python">Python</button>
+              </div>
+
+              <div class="btn-group btn-group-sm sort-by-button-group" role="group" aria-label="...">
+                  <button type="button" class="btn btn-default filter-js" data-sort-by="original-order">Reset</button>
+                  <button type="button" class="btn btn-default filter-js" data-sort-by="topic" data-order="ascending"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></button>
+                  <button type="button" class="btn btn-default filter-js" data-sort-by="topic" data-order="descending"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+
+        <div class="well well-lg myrooms-container">
+          <% classrooms.forEach((classroom) => { %>
+            <% include ./partials/_room_card.ejs %>
+          <% }) %>
       </div>
+    </div>
     </section>
     <% include ./partials/_scripts.ejs %>
+    <% include ./partials/_card_scripts.ejs %>
   </body>
 </html>
