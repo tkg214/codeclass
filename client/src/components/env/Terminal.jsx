@@ -12,17 +12,17 @@ class Terminal extends Component {
 
     return (
       <div className='terminal'>
-        <div className='output-container'>
+        <div classNAme='terminal-output-wrapper'>
           {terminal.map((outputs) => {
             if (outputs.response.stderr) {
-              return <pre key={outputs.timestamp}>{outputs.response.stderr}</pre>
+              return <pre className='terminal-output' key={outputs.timestamp}>{outputs.response.stderr}</pre>
             }
             if (outputs.response.stdout) {
-              return <pre key={outputs.timestamp}> > {outputs.response.stdout}</pre>
+              return <pre className='terminal-output' key={outputs.timestamp}>{outputs.response.stdout}</pre>
             }
           })}
         </div>
-        <div ref={(el) => { this.outputsEnd = el; }}></div>
+      <div ref={(el) => { this.outputsEnd = el; }}></div>
       </div>
     )
   }

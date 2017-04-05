@@ -1,14 +1,23 @@
 .terminal {
   background-color: #141414;
   height: $terminal-height;
-  padding: 10px;
-  word-wrap: break-word;
+  padding: $space;
   overflow-y: auto;
-}
 
-pre {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 12px;
+  &-output {
+    background: none;
+    border: none;
+    color: #fff;
+    display: block;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+    overflow-wrap: break-word; 
+  }
+
+  &-output-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
 }

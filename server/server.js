@@ -32,7 +32,6 @@ if (ENV === 'production') {
   githubAuthUrl = 'http://127.0.0.1:3000/auth/github/callback';
 }
 
-console.log('GH: ', githubAuthUrl);
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');

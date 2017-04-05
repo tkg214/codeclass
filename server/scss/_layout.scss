@@ -1,0 +1,24 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+main {
+  background-color: $dark3;
+  display: flex;
+  height: $main-height;
+  overflow-x: hidden;
+}
+
+.btn {
+  border-radius: 0%;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.sm {
+  font-size: 0.65em;
+}
