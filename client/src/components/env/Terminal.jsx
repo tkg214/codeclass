@@ -12,7 +12,6 @@ class Terminal extends Component {
 
     return (
       <div className='terminal'>
-        <div className='output-container'>
           {terminal.map((outputs) => {
             if (outputs.response.stderr) {
               return <pre key={outputs.timestamp}>{outputs.response.stderr}</pre>
@@ -21,7 +20,6 @@ class Terminal extends Component {
               return <pre key={outputs.timestamp}> > {outputs.response.stdout}</pre>
             }
           })}
-        </div>
         <div ref={(el) => { this.outputsEnd = el; }}></div>
       </div>
     )

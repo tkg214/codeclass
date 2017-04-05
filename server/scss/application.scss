@@ -6,19 +6,17 @@
 
 //Variables and mixins
 @import 'variables';
-@import 'media_queries';
 @import 'mixins';
+@import 'media_query_mixins';
 
 @import 'chat';
 @import 'chat_tabs';
 @import 'cursor';
 @import 'env_controls';
 @import 'form';
-@import 'home';
 @import 'navbar';
 @import 'react_transition';
 @import 'room_layout';
-@import 'room_navbar';
 @import 'room_terminal';
 @import 'user';
 @import 'users';
