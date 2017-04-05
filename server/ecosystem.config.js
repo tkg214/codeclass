@@ -9,11 +9,13 @@ module.exports = {
       script    : "server.js",
       env: {
         GITHUB_CLIENT_SECRET: "4c88faaad3e8962bd509e42a6678cdee2d588f34",
-        GITHUB_CLIENT_ID: "774e1a299372552cc64d"
-        DB_HOST: 'waffleio.cv2tfhzqgjzn.us-west-2.rds.amazonaws.com:5432',
-        DB_USER: waffle,
-        DB_PASS: waffleio,
-        DB_NAME: waffleio
+        GITHUB_CLIENT_ID: "774e1a299372552cc64d",
+        // DB_HOST: 'waffleio.cv2tfhzqgjzn.us-west-2.rds.amazonaws.com:5432',
+        // DB_USER: 'waffle',
+        // DB_PASS: 'waffleio',
+        // DB_NAME: 'waffleio',
+	DATABASE_URL: "postgres://waffle:waffleio@waffleio.cv2tfhzqgjzn.us-west-2.rds.amazonaws.com:5432/waffleio"
+
       },
       env_development : {
         SESSION_SECRET: "development",
@@ -23,10 +25,6 @@ module.exports = {
         SESSION_SECRET: "wafflesio",
         TOKEN_SECRET: "wafflesio"
       }
-    },
-    {
-      name      : "WEB",
-      script    : "web.js"
     }
   ],
 

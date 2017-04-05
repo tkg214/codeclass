@@ -14,7 +14,7 @@ const sass          = require("node-sass-middleware");
 const session       = require('express-session');
 const util          = require('util');
 
-const ENV           = process.env.ENV || "development";
+const ENV           = process.env.NODE_ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const moment        = require('moment');
@@ -31,6 +31,8 @@ if (ENV === 'production') {
 } else {
   githubAuthUrl = 'http://127.0.0.1:3000/auth/github/callback';
 }
+
+console.log('GH: ', githubAuthUrl);
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
