@@ -108,25 +108,21 @@ class AudioContainer extends Component {
     // TODO add on seeked feakture
 
     return (
-      <div className='col-lg-12'>
-        <div className='env-nav-panel'>
-          <div id ='audioPanel' className='panel panel-default'>
-            {isAuthorized && !this.state.isRecording &&
-              <button className='btn env-btn btn-primary btn-sm' onClick={this._onStartLiveStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
-            }
-            {isAuthorized && this.state.isRecording &&
-              <button className='btn env-btn btn-primary btn-sm disabled'><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
-            }
-            {isAuthorized && this.state.isRecording &&
-              <button className='btn env-btn btn-primary btn-sm' onClick={this._onStopLiveStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
-            }
-            {isAuthorized && !this.state.isRecording &&
-              <button className='btn env-btn btn-primary btn-sm disabled'><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
-            }
-            <RecordingsListContainer actions={actions} recordings={recordings} isAuthorized={isAuthorized}/>
-            <audio id='audio-player' onPause={this._onPauseRecordedEdits.bind(this)} onPlay={this._onPlayRecordedEdits.bind(this)} controls></audio>
-          </div>
-        </div>
+      <div id ='audioPanel' className='panel panel-default'>
+        {isAuthorized && !this.state.isRecording &&
+          <button className='btn btn-primary btn-sm' onClick={this._onStartLiveStreamClick.bind(this)}><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
+        }
+        {isAuthorized && this.state.isRecording &&
+          <button className='btn btn-primary btn-sm disabled'><i className='fa fa-microphone'></i>&ensp;Start Recording</button>
+        }
+        {isAuthorized && this.state.isRecording &&
+          <button className='btn btn-primary btn-sm' onClick={this._onStopLiveStreamClick.bind(this)}><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
+        }
+        {isAuthorized && !this.state.isRecording &&
+          <button className='btn btn-primary btn-sm disabled'><i className='fa fa-stop-circle'></i>&ensp;Stop Recording</button>
+        }
+        <RecordingsListContainer actions={actions} recordings={recordings} isAuthorized={isAuthorized}/>
+        <audio id='audio-player' onPause={this._onPauseRecordedEdits.bind(this)} onPlay={this._onPlayRecordedEdits.bind(this)} controls></audio>
       </div>
     )
   }

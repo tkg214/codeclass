@@ -8,7 +8,7 @@ class RecordingsListContainer extends Component {
     let recordingsArray = recordings.recordings[0] || [];
 
     return (
-      <div className="btn-group env-btn btn btn-primary btn-sm">
+      <div className="btn-group btn btn-primary btn-sm">
         <a className="dropdown-toggle" data-toggle="dropdown"><i className='fa fa-file-audio-o'></i>&ensp;Recordings<span className="caret"></span></a>
         <ul className="dropdown-menu rec-list">
           {recordingsArray.map((recording) => {

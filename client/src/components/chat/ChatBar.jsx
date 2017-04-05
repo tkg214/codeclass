@@ -67,7 +67,6 @@ function mapStateToProps(state) {
     chat: state.chat,
     roomControls: state.roomControls,
     onlineUsers: state.onlineUsers
-
    }
 }
 

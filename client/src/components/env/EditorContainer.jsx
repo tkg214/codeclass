@@ -35,6 +35,8 @@ class EditorContainer extends Component {
       editorStatus = false;
     } else if (isAuthorized && !isEditorLocked) {
       editorStatus = false;
+    } else if (!isAuthorized && !isEditorLocked){
+      editorStatus = false;
     } else {
       editorStatus = true;
     }
@@ -56,7 +58,7 @@ class EditorContainer extends Component {
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue, this.props.roomID)
+    this.props.actions.updateEditorValues(newValue, this.props.roomID, this.props.isEditorLocked)
   }
 }
 

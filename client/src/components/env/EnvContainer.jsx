@@ -69,8 +69,7 @@ EnvContainer.propTypes = {
   editor: PropTypes.object.isRequired,
   roomControls: PropTypes.object.isRequired,
   gist: PropTypes.object.isRequired,
-  terminal: PropTypes.array.isRequired,
-  socket: PropTypes.object.isRequired
+  terminal: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);

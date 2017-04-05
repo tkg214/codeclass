@@ -11,6 +11,11 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
         sk.broadcastToRoom(room, action);
       }
     },
+    UPDATE_EDITOR_VALUES_DB: (action) => {
+      if (roomOwnerID === clientData.id) {
+        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue);
+      }
+    },
     TOGGLE_EDITOR_LOCK : (action) => {
       if (roomOwnerID === clientData.id) {
         dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked);

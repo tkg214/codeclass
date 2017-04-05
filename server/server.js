@@ -418,7 +418,6 @@ io.on('connection', (socket) => {
 
   socket.on('stop-stream', () => {
     if (isRecording) {
-      console.log('stopped');
       recordingInfo.time = (Date.now() - startTime);
       fileWriter.end();
       dbHelpers.storeRecordingInfo(recordingInfo, broadcastNewInc);
