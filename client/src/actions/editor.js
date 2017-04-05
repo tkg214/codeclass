@@ -41,7 +41,7 @@ export function toggleChatLock(isChatLocked, roomID) {
 
 export function executeCode(lang, code) {
   return dispatch => {
-    axios.post('http://ec2-52-33-39-121.us-west-2.compute.amazonaws.com/api', {
+    axios.post('http://52.33.138.163:8080/api', {
       lang : lang,
       code : code
     })
