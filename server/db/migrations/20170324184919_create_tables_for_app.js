@@ -29,8 +29,6 @@ exports.up = function(knex, Promise) {
       table.integer('user_id').unsigned();
       table.integer('classroom_id').unsigned().notNullable();
     })
-
-
   ]);
 
 };

@@ -3,7 +3,6 @@ import GistContainer from './GistContainer.jsx';
 import EditorContainer from './EditorContainer.jsx';
 import Terminal from './Terminal.jsx';
 import EnvControls from './EnvControls.jsx';
-// import EnvHeader from './EnvHeader.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions/editor';
@@ -11,7 +10,7 @@ import * as Actions from '../../actions/editor';
 class EnvContainer extends Component {
 
   render() {
-    const { editor, roomControls, gist, terminal, actions } = this.props;
+    const { editor, roomControls, gist, actions, terminal } = this.props;
     return (
       <div className='env-container'>
         <div className='env-nav-container'>
@@ -33,6 +32,7 @@ class EnvContainer extends Component {
           language={roomControls.language}
           isEditorLocked={roomControls.isEditorLocked}
           fontSize={roomControls.userSettings.fontSize}
+          isAuthorized={roomControls.isAuthorized}
           theme={roomControls.userSettings.theme}/>
         <EnvControls
               actions={actions}
@@ -50,13 +50,13 @@ class EnvContainer extends Component {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     editor: state.editor,
     roomControls: state.roomControls,
     terminal: state.terminal,
-    gist: state.gist
+    gist: state.gist,
+    recordings: state.recordings
    }
 }
 
@@ -69,7 +69,8 @@ EnvContainer.propTypes = {
   editor: PropTypes.object.isRequired,
   roomControls: PropTypes.object.isRequired,
   gist: PropTypes.object.isRequired,
-  terminal: PropTypes.array.isRequired
+  terminal: PropTypes.array.isRequired,
+  socket: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvContainer);

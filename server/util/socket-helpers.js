@@ -1,6 +1,6 @@
 module.exports = function makeSocketHelpers(io, socket, room) {
   return {
-    broadcastToRoom : (room, action, cb) => {
+    broadcastToRoom : (room, action) => {
       socket.broadcast.to(room).emit('action', action);
     },
     emitToUser : (action) => {

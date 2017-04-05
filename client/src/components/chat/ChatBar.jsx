@@ -9,8 +9,7 @@ class ChatBar extends Component {
   constructor() {
     super();
     this.state = {
-      lastCount: 0,
-
+      lastCount: 0
     }
   }
 
@@ -58,8 +57,6 @@ class ChatBar extends Component {
     actions.toggleChatContainer(roomControls.isChatVisible);
     actions.toggleChatNotificationBar(roomControls.isChatNotificationVisible);
     // actions.updateNewMessagesCount(messageList.length);
-    console.log('chat container', roomControls.isChatVisible);
-    console.log('chat notif', roomControls.isChatNotificationVisible);
     // this.setState({})
   }
 

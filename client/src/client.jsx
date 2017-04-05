@@ -13,7 +13,6 @@ import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
 import axios from 'axios';
 
-
 const app = document.getElementById('react-root');
 
 //Get the room_key from a url of thr structure http://host/rooms/:room_key
@@ -54,7 +53,7 @@ function connect_socket(token) {
   });
 
   ReactDOM.render(<Provider store={store}>
-    <RoomApp/>
+    <RoomApp socket={socket}/>
   </Provider>, app);
 }
 

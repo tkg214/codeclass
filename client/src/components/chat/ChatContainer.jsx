@@ -5,17 +5,16 @@ import * as Actions from '../../actions/chat';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 Tabs.setUseDefaultStyles(false);
 
-
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
 import MessageComposeContainer from './MessageComposeContainer.jsx';
 import EnvHeader from './EnvHeader.jsx';
-
+import AudioContainer from './AudioContainer.jsx';
 
 class ChatContainer extends Component {
 
   render() {
-    const { chat, roomControls, onlineUsers, sidebar } = this.props
+    const { chat, roomControls, onlineUsers, sidebar, recordings, socket, actions } = this.props
     let visibility = roomControls.isChatVisible ? 'open' : 'close'
     // Tabs.setUseDefaultStyles(false);
 
@@ -32,6 +31,7 @@ class ChatContainer extends Component {
         <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab content-tab">Classroom</Tab>
           <Tab className="sidebar-tab content-tab">Chatroom</Tab>
+          <Tab className="sidebar-tab content-tab">Recordings</Tab>
         </TabList>
 
         <TabPanel className="sidebar-panel">
@@ -45,6 +45,14 @@ class ChatContainer extends Component {
             actions={this.props.actions}
             isChatLocked={roomControls.isChatLocked}
             roomID={roomControls.roomID} />
+        </TabPanel>
+
+        <TabPanel className='recordings-panel'>
+          <AudioContainer
+            actions={actions}
+            socket={socket}
+            recordings={recordings}
+            isAuthorized={roomControls.isAuthorized}/>
         </TabPanel>
       </Tabs>
       </div>
@@ -75,7 +83,8 @@ function mapStateToProps(state) {
     chat: state.chat,
     roomControls: state.roomControls,
     onlineUsers: state.onlineUsers,
-    sidebar: state.sidebar
+    sidebar: state.sidebar,
+    recordings: state.recordings
    }
 }
 
@@ -93,7 +102,9 @@ ChatContainer.propTypes = {
   roomControls: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
   onlineUsers: PropTypes.object.isRequired,
-  sidebar: PropTypes.object.isRequired
+  sidebar: PropTypes.object.isRequired,
+  socket: PropTypes.object.isRequired,
+  recordings: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

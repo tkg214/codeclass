@@ -8,6 +8,12 @@ export default function reducer(state={
     case 'UPDATE_EDITOR_VALUES': {
       return {...state, editorValue: action.payload.editorValue}
     }
+    case 'UPDATE_EDITOR_FROM_REC': {
+      return {...state, editorValue: action.payload.editorValue}
+    }
+    case 'RECORDED_EDITS_SUCCESS': {
+      return {...state, editorValue: action.payload.editorValue}
+    }
   }
   return state;
 }
