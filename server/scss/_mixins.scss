@@ -52,6 +52,7 @@
   padding: $space $space 0.5*$space $space;
   position: relative;
   width: 65%;
+  word-break: break-all; 
 
   //Triangle on chat bubble
   &:after {
