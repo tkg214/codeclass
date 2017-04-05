@@ -4,6 +4,6 @@ server/public/styles
 .DS_Store
 npm-debug.log
 .env
-/tmp
+server/tmp
 settings.json
 ecosystem.config.js

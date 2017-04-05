@@ -41,7 +41,7 @@ export function toggleChatLock(isChatLocked, roomID) {
 
 export function executeCode(lang, code) {
   return dispatch => {
-    axios.post('http://52.33.138.163:8080/api', {
+    axios.post('http://exec-api.codeclass.live:8080/api', {
       lang : lang,
       code : code
     })
