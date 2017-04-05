@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
 import axios from 'axios';
+import './helpers/resize.js';
 
 
 const app = document.getElementById('react-root');
