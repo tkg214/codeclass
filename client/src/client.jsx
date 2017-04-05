@@ -8,7 +8,6 @@ import io from 'socket.io-client';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-// import promise from 'redux-promise-middleware';
 import reducer from './reducers';
 import socketMiddleware from './socketMiddleware.js';
 import axios from 'axios';
@@ -58,7 +57,3 @@ function connect_socket(token) {
     <RoomApp/>
   </Provider>, app);
 }
-
-// const socket = io();
-//socket.emit('join', room[2]);
-// const socketData = { roomUrl : room[2], user : 'tester523'}

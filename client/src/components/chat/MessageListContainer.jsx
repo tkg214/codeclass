@@ -4,13 +4,13 @@ import Message from './Message.jsx';
 
 class MessageListContainer extends Component {
 
-  // componentDidMount() {
-  //   this._scrollToBottom();
-  // }
+  componentDidMount() {
+    this._scrollToBottom();
+  }
 
-  // componentDidUpdate() {
-  //   this._scrollToBottom();
-  // }
+  componentDidUpdate() {
+    this._scrollToBottom();
+  }
 
   render() {
     const { chat } = this.props;
