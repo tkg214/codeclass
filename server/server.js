@@ -190,10 +190,8 @@ app.get('/users/:username', ensureAuthenticated, (req, res) => {
   const classrooms = knex('classrooms').where('user_id', 'in',
     knex('users').where('github_login', req.params.username).select('id').limit(1)
   );
-  console.log(classrooms);
   const profile = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
   Promise.all([classrooms, profile]).then((profileData) => {
-    console.log(profileData[0]);
     res.render('show_user', {classrooms: profileData[0], profile: (profileData[1])[0]});
   });
 });
@@ -230,7 +228,6 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 
 app.post('/rooms', (req, res) => {
   if(/([A-Za-z]|[0-9]|_|-|\w|~)$/.test(req.body.topic)){
-    console.log('didnt work');
     knex('classrooms').where('topic', req.body.topic)
     .then((results) => {
       if(results.length === 0){
@@ -344,7 +341,6 @@ io.on('connection', (socket) => {
     //Return room owner id (want to refactor this out but it has to be here lol)
     function emitRoomData(roomData) {
       roomOwnerID = roomData.roomOwnerID;
-      console.log(roomOwnerID);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       sk.emitToUser(action);
