@@ -78,7 +78,7 @@
 }
 
 .chat-messages {
-  height: 85vh;
+  height: $messages-height;
   display: flex;
   flex-flow: column;
   overflow: hidden;

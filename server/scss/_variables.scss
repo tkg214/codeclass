@@ -33,6 +33,8 @@ $faint-gray: 0.5px solid $gray2;
 // Spacing
 $nav-height: 6vh;
 $main-height: 100vh - $nav-height;
+//3*$nav-height because chat toggle, chat tabs, and nav are each $nav-height
+$messages-height: 100vh - 3*$nav-height;
 $terminal-height: 200px;
 $space: 1em;
 $typed-size: 4em;
