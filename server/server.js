@@ -321,10 +321,10 @@ app.get('/api/recorded_edits', ensureAuthenticated, (req, res) => {
   }
 })
 
-// app.post('/api/recorded_edits', ensureAuthenticated, (req, res) => {
-//   dbHelpers.deleteRecInfo(req.body.data.id);
-//   res.sendStatus(200)
-// })
+app.post('/api/recorded_edits', ensureAuthenticated, (req, res) => {
+  dbHelpers.deleteRecInfo(req.body.data.id);
+  res.sendStatus(200)
+})
 
 //Temp data
 // const roomData = require('./temp-room-api-data.json');

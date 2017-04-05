@@ -185,7 +185,6 @@ module.exports = function makeDataHelpers(knex) {
               content: ''
             }]
           } else {
-            // TODO look into psql sol for converting to unix
             let audioStart = moment(start).unix() * 1000;
             data.forEach((row) => {
               row.time = moment(row.created_at).unix() * 1000;

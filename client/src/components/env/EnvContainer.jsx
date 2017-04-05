@@ -51,6 +51,7 @@ class EnvContainer extends Component {
           language={roomControls.language}
           isEditorLocked={roomControls.isEditorLocked}
           fontSize={roomControls.userSettings.fontSize}
+          isAuthorized={roomControls.isAuthorized}
           theme={roomControls.userSettings.theme}/>
         <Terminal terminal={terminal}/>
       </div>

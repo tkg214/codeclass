@@ -21,6 +21,13 @@ export default function reducer(state={
     case 'STORE_RECORDED_EDITS': {
       return {...state, recordedEdits: action.payload.recordedEdits}
     }
+    case 'REMOVE_REC_FROM_LIST': {
+      const recList = [...state.recordings];
+      recList[0].filter((rec) => {
+        return rec.id !== action.payload.id;
+      })
+      return {...state, recordings: recList}
+    }
   }
   return state;
 }

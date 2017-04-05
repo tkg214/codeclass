@@ -170,24 +170,24 @@ export function selectRecording(recordingID) {
 }
 
 
-// // TODO add error and success messages
-// export function deleteRecording(recordingID) {
-//   return dispatch => {
-//     axios.post('/api/recorded_edits', {
-//       data: {
-//         id: recordingID.slice(2)
-//       }
-//     }).then(() => {
-//       dispatch({
-//         type: 'REMOVE_REC_FROM_LIST',
-//         meta: {remote: true},
-//         payload: {
-//           id: recordingID
-//         }
-//       })
-//     })
-//   }
-// }
+// TODO add error and success messages
+export function deleteRecording(recordingID) {
+  return dispatch => {
+    axios.post('/api/recorded_edits', {
+      data: {
+        id: recordingID.slice(2)
+      }
+    }).then(() => {
+      dispatch({
+        type: 'REMOVE_REC_FROM_LIST',
+        meta: {remote: true},
+        payload: {
+          id: recordingID
+        }
+      })
+    })
+  }
+}
 
 export function updateEditorFromRecording(recordedEditsArray, currentTime) {
   return dispatch => {

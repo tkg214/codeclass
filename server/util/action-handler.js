@@ -52,6 +52,10 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
     },
     CHANGE_FONT_SIZE : (action) => {
       dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
+    },
+
+    REMOVE_REC_FROM_LIST: (action) => {
+      sk.broadcastToRoom(room, action);
     }
   }
 }
