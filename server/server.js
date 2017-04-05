@@ -18,13 +18,19 @@ const ENV           = process.env.ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const moment        = require('moment');
+let githubAuthUrl   = "";
 
 //Only use knexLogger in development
-if (process.env.ENV === 'development') {
+if (ENV === 'development') {
   const knexLogger = require('knex-logger');
   app.use(knexLogger(knex));
 }
 
+if (ENV === 'production') {
+  githubAuthUrl = 'http://35.163.216.237:3000/auth/github/callback';
+} else {
+  githubAuthUrl = 'http://127.0.0.1:3000/auth/github/callback';
+}
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
@@ -66,7 +72,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+  callbackURL: githubAuthUrl
 },
   function(accessToken, refreshToken, profile, done) {
     knex('users').where('github_id', profile.id).then(user => {
@@ -140,8 +146,8 @@ app.use(function(req, res, next){
   //Define source of bundle.js depending on environment
   let bundleSrc;
   if(req.user) {
-    if (process.env.ENV === 'production') {
-      bundleSrc = '/bundle.js';
+    if (ENV === 'production') {
+      bundleSrc = '/dist/bundle.js';
     } else {
       bundleSrc = 'http://localhost:8080/build/bundle.js';
     }

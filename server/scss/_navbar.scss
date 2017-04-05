@@ -1,17 +1,76 @@
 nav {
-  background-color: $dark3;
+  background-color: $dark2;
   height: $nav-height;
-  //Override bootstrap
-  .container-fluid {
-    padding-right: 0;
-  }
 }
 
-#navbar-brand{
+.nav-name{
   color: $brand;
   font-family: 'Raleway', sans-serif;
   font-size: 2.3em;
   height: $nav-height;
+  line-height: $nav-height;
+  padding-left: 0.5*$space;
+
+  &:hover {
+    color: $gray1;
+    text-decoration: none;
+  }
+}
+
+.nav-btn {
+  display: block;
+  line-height: $nav-height;
+  padding: 0 5px;
+  text-align: center;
+  text-decoration: none;
+  width: $nav-height;
+
+  &-new {
+    background-color: $rubyred;
+  }
+
+  &-user {
+    background-color: $jsyellow;
+  }
+
+  &-login {
+    background-color: $brand;
+  }
+
+  &-logout {
+    background-color: $pythonblue;
+  }
+
+  &:hover {
+    background-color: $gray1;
+    i {
+      color: $dark1;
+    }
+  }
+
+  & .fa {
+    color: $gray1;
+    font-size: 1.5em;
+    position:relative;
+    top: 2px;
+  }
+}
+
+.nav-item {
+  height: $nav-height;
+  list-style-type: none;
+  &-left {
+    float:left;
+  }
+  &-right{
+    float: right;
+  }
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 body{

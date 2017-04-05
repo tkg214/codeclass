@@ -2,13 +2,14 @@
   background-color: #141414;
   height: $terminal-height;
   padding: 10px;
-  word-wrap: break-word;
+  overflow-x: auto;
   overflow-y: auto;
-}
+  word-wrap: break-word;
 
-pre {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 12px;
+  & pre {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1em;
+  }
 }

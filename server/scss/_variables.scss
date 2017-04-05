@@ -1,20 +1,9 @@
-/* FONTS */
+// Fonts
 $logo-font: 'Lobster', cursive;
-$title-font: 'Muli', sans-serif;
-$content-font: 'Lato', sans-serif;
+$title-font: 'Muli', Helvetica, Arial, sans-serif;
+$content-font: 'Lato', Helvetica, Arial, sans-serif;
 
-
-/* COLORS */
-$brand: rgb(152, 195, 53);
-
-$card-background: #485563;
-$card-text: #FFFFFF;
-
-$green: #19B98B;
-$yellow: #FFCA4A;
-$red: #E9484E;
-$blue: #18B0F1;
-
+// Colors
 $dark1: #2F333D;
 $dark2: #262B34;
 $dark3: #1D202A;
@@ -23,23 +12,31 @@ $gray1: #F4F7FA;
 $gray2: #DBE0E4;
 $gray3: #C5CACE;
 
+$card-background: #485563;
+$card-text: $gray1;
+
 $chat-bubble-own: #d1e1ef;
 $chat-bubble-other: $gray2;
 
-$jsyellow: rgb(231, 224, 50);
-$rubyred: rgb(231, 50, 50);
-$pythonblue: rgb(50, 117, 231);
+$theme: #485563;
 
-/* BORDER STYLE */
-$faint-gray: 0.5px solid #dedede;
+$brand: rgb(152, 195, 53);
+$green: #19B98B;
+$jsyellow: #FFCA4A;
+$rubyred: #E9484E;
+$pythonblue: #18B0F1;
 
-$nav-height: 5vh;
-$main-height: 95vh;
-$controller-height: 3em;
+
+// Border style
+$faint-gray: 0.5px solid $gray2;
+
+// Spacing
+$nav-height: 6vh;
+$main-height: 100vh - $nav-height;
+//3*$nav-height because chat toggle, chat tabs, and nav are each $nav-height
+$messages-height: 100vh - 3*$nav-height;
 $terminal-height: 200px;
 $space: 1em;
-$light: #ebebeb;
 $typed-size: 4em;
 $theme: #485563;
-$chat-notifcation-bar-width: 50px;
 $message-compose-container-height: 100px;

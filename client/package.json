@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint src",
     "knex": "./node_modules/.bin/knex",
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": "./node_modules/.bin/webpack-dev-server",
+    "build": "webpack -p --config webpack.production.config.js"
   },
   "repository": {
     "type": "git",
