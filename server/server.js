@@ -27,7 +27,7 @@ if (ENV === 'development') {
 }
 
 if (ENV === 'production') {
-  githubAuthUrl = 'http://35.163.216.237:3000/auth/github/callback';
+  githubAuthUrl = 'http://www.codeclass.live/auth/github/callback';
 } else {
   githubAuthUrl = 'http://127.0.0.1:3000/auth/github/callback';
 }
