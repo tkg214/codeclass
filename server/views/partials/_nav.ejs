@@ -1,18 +1,13 @@
-    <% include ./_new_classroom_modal.ejs %>
-
+<% include ./_new_classroom_modal.ejs %>
 <nav>
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a id="navbar-brand" class="navbar-brand" href="/">CodeClass</a>
-
-    </div>
-    <div class="room-nav-util">
+    <ul class="nav-list">
+      <li class="nav-item nav-item-left"><a class="nav-name" href="/">CodeClass</a></li>
       <% if (user) { %>
-      <a id="modal-button" class="util-btn util-btn-new"><div><i class="fa fa-plus" aria-hidden="true"></i></div></a>
-      <a class="util-btn util-btn-user" href="/users/<%=user.github_login %>"><div><i class="fa fa-user-circle-o" aria-hidden="true"></i></div></a>
-      <a class="util-btn util-btn-logout" href="/logout"><div><i class="fa fa-sign-out" aria-hidden="true"></i></div></a>
+      <li class="nav-item nav-item-right"><a id="modal-button" class="nav-btn nav-btn-new"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
+      <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-user" href="/users/<%=user.github_login %>"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+      <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-logout" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
       <% } else { %>
-      <a  class="util-btn util-btn-login" href="/login"><div><i class="fa fa-sign-in" aria-hidden="true"></i></div></a>
+      <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-login" href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
       <% } %>
-    </div>
+    </ul>
 </nav>

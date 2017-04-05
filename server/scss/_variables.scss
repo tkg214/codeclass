@@ -31,11 +31,10 @@ $pythonblue: #18B0F1;
 $faint-gray: 0.5px solid $gray2;
 
 // Spacing
-$nav-height: 5vh;
-$main-height: 95vh;
+$nav-height: 6vh;
+$main-height: 100vh - $nav-height;
 $terminal-height: 200px;
 $space: 1em;
 $typed-size: 4em;
 $theme: #485563;
-$chat-notifcation-bar-width: 50px;
 $message-compose-container-height: 100px;
