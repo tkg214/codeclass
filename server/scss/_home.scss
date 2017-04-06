@@ -31,24 +31,36 @@
 margin-left: 29%;
 margin-right: auto;
 // left: 25vw;
-  width: auto;
-  display: inline-block;
-    // position: ;
+  // display: inline-block;
     // left: 50%;
     // top: 15%;
+    @include tv{
+      margin-left: 13%;
+      // display: none;
+    }
 }
 
 .welcome-login {
-    // position: absolute;
-    // left: 11%;
-    // top: 27%;
+    position: absolute;
+    left: 40%;
+    top: 27%;
+    @include tv{
+      // transform: scale(0.25);
+    }
 }
 
 .desk-setup {
   margin: 0 auto;
+  @include tv{
+    margin-top: 850px;
+    // bottom:-100 ;
+    transform: scale(0.70);
+  }
 }
 
+
 #workspace {
+
     &:before {
         content: '';
         position: absolute;
@@ -58,6 +70,10 @@ margin-right: auto;
         background: rgb(190, 190, 190);
         height: 150px;
         border-top: 10px solid rgb(140, 140, 140);
+        @include tv{
+          bottom: -97px;
+          transform: scale(1,0.85);
+        }
     }
 
     .desk {
@@ -217,13 +233,18 @@ margin-right: auto;
     height: 170px;
     background: #343441;
     border: 8px solid #525151;
-    right: 45px;
-    top: -210px;
+    right: 25%;
+    top: 390px;
     background: url("http://i39.tinypic.com/2w5oktu.jpg");
     background-size: 100%;
     -webkit-animation: slide 15s linear infinite;
     -moz-animation: slide 15s linear infinite;
     animation: slide 15s linear infinite;
+    @include tablet{
+      top: -528px;
+      right: 20px;
+      transform: scale(0.75);
+    }
 
     &:before {
         content: '';
@@ -271,6 +292,9 @@ margin-right: auto;
     color: rgba(#000000, 0.50);
     text-align: center;
     z-index: 2;
+    @include tv{
+      left: 380px;
+    }
 }
 
 .shadows {
@@ -306,14 +330,14 @@ margin-right: auto;
             height: 15px;
         }
     }
-//     /* Note */
-//     .note {
-//         width: 23px;
-//         height: 16px;
-//         bottom: 0;
-//         border-top: 3px solid #cac222;
-//         font-size: 9px;
-//     }
+    /* Note */
+    // .note {
+    //     width: 23px;
+    //     height: 16px;
+    //     bottom: 0;
+    //     border-top: 3px solid #cac222;
+    //     font-size: 9px;
+    // }
 
     /* Black Screen */
     // .bk-screen {
@@ -345,10 +369,6 @@ margin-right: auto;
     //     }
     // }
     /* Cup */
-    .photo-frame{
-      top: 50px;
-      left: 1px;
-    }
     .cup {
         top: -39px;
         left: 149px;
@@ -394,6 +414,9 @@ margin-right: auto;
     position: absolute;
     transform: translate(-50%, 10%);
     box-shadow: 0 4px 0 -2px #909090;
+    @include tv{
+      left: 475px;
+    }
 }
 
 .keyboard {
@@ -516,4 +539,8 @@ $brick: rgb(250,170,130);
     position: absolute;
     text-align: center;
     transform: scale(.3);
+    @include tv{
+      left: 120;
+      top: -230px;
+    }
 }
