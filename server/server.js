@@ -176,7 +176,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/rooms', ensureAuthenticated, function(req, res) {
-  res.render('rooms');
+  res.redirect(`/users/${req.user.github_login}`);
 });
 
 app.get('/error', function(req, res) {
