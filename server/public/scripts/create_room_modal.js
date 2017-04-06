@@ -16,6 +16,7 @@ $(document).ready(function() {
     $('body').removeClass('modal-active');
   }
   //event listeners
+  
   button.addEventListener('click', openModal, false)
   close.addEventListener('click', closeModal, false)
   for (let i = 0; i < clickable.length; i++) {

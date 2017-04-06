@@ -2,10 +2,6 @@
 
 $(document).ready(function() {
 
-  // $('.delete-card-icon').click(() => {
-  //   console.log(this);
-  // })
-
   const $grid = $('.myrooms-container').isotope({
     itemSelector: '.card',
     layoutMode: 'fitRows',

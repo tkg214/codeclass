@@ -26,14 +26,13 @@
       <h4 class="card-header">
         <%= classroom.topic %>
       </h4>
-      <p class="card-moment"><%= moment(classroom.created_at).diff(moment(), 'days') < -5 ? moment(classroom.created_at).format('MMM Do YYYY') : moment(classroom.created_at).fromNow() %></p>
     </div>
     </a>
     <footer class='card-footer'>
       <a class="btn card-share" role="button" data-clipboard-text=<%= `rooms/${classroom.room_key}` %> >
         <i class="fa fa-clipboard"></i>
         Copy Link
+        <span class="fa fa-check text-success clipboard-check"></span>
       </a>
-      <span class="fa fa-check text-success clipboard-check"></span>
     </footer>
 </article>
