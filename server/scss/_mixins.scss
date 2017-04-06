@@ -1,6 +1,9 @@
 /* CENTERING */
 @mixin ver-hor-center {
-  display: flex;
+  display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -52,7 +55,8 @@
   padding: $space $space 0.5*$space $space;
   position: relative;
   width: 65%;
-  word-break: break-all; 
+  word-wrap: break-word;
+  word-break: break-all;
 
   //Triangle on chat bubble
   &:after {

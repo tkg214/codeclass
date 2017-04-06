@@ -31,7 +31,7 @@ $pythonblue: #18B0F1;
 $faint-gray: 0.5px solid $gray2;
 
 // Spacing
-$nav-height: 6vh;
+$nav-height: 7vh;
 $main-height: 100vh - $nav-height;
 //3*$nav-height because chat toggle, chat tabs, and nav are each $nav-height
 $messages-height: 100vh - 3*$nav-height;

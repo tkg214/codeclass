@@ -34,16 +34,19 @@ class ChatBar extends Component {
         </div>
         <div>
           <div className="users-connected-btn bar-btn">
-            <i className='fa fa-users fa-lg'></i><br/>
-            <p className="badge">{onlineUsers.usersOnline.length}</p>
+            <div className="bar-btn-container">
+              <div className='fa fa-users fa-lg'></div>
+              <p className="badge">{onlineUsers.usersOnline.length}</p>
+            </div>
           </div>
         </div>
         <div>
           <div className="users-connected-btn bar-btn">
-            <i className='fa fa-comments fa-lg'></i><br/>
-            <p className="badge">{messageCount}</p>
+            <div className="bar-btn-container">
+              <div className='fa fa-comments fa-lg'></div>
+              <p className="badge">{messageCount}</p>
+            </div>
           </div>
-
         </div>
       </div>
     )

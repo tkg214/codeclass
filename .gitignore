@@ -5,4 +5,4 @@ server/public/styles
 npm-debug.log
 .env
 settings.json
-ecosystem.config.js
+server/ecosystem.config.js

@@ -6,6 +6,9 @@ html, body {
 
 main {
   background-color: $dark3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   height: $main-height;
   overflow-x: hidden;

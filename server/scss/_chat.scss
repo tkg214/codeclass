@@ -1,12 +1,15 @@
 
-// in use
 .open-sidebar {
   align-items: center;
   background-color: $green;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   justify-content: center;
   height: $nav-height;
+  min-width: 1px;
   width: $nav-height;
 
   i {
@@ -17,20 +20,18 @@
 .bar-btn {
   background-color: $dark2;
   border-bottom: 0.1px solid #3f434a;
-  display: flex;
-  flex-direction: column;
-  height: 80px;
-  padding-top: 20px;
-  padding-left: 15px;
+  position: relative;
+  height: 1.5*$nav-height;
 
-  * {
-    display: block;
-    position: absolute;
+  &-container {
+    padding: 1.5*$space 0;
+    text-align: center;
   }
 
-  i {
+  .fa {
     color: $gray1;
-    margin-bottom: 20px;
+    display:block;
+    margin-bottom: 0.5*$space;
   }
 }
 
@@ -86,7 +87,7 @@
 
 .close {
   margin-right: 0em;
-  flex: 0 0 0;
+  flex: 0 1 auto;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform: translate(75px);
@@ -100,7 +101,7 @@
   visibility: hidden;
   width: 0px;
   margin-right: 0em;
-  flex: 0 0 0px!important;
+  flex: 0 1 auto;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
 }
