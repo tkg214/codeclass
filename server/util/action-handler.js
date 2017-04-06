@@ -7,20 +7,24 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
   return {
     UPDATE_EDITOR_VALUES : (action) => {
       if (roomOwnerID === clientData.id) {
-        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue, sk.broadcastToRoom);
-        sk.broadcastToRoom(room, action);  //is callback above necessary??
+        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue);
+        sk.broadcastToRoom(room, action);
+      }
+    },
+    UPDATE_EDITOR_VALUES_DB: (action) => {
+      if (roomOwnerID === clientData.id) {
+        dbHelpers.updateEditorValues(action.payload.roomID, action.payload.editorValue);
       }
     },
     TOGGLE_EDITOR_LOCK : (action) => {
-      console.log("toggle editor lock: ", action);
       if (roomOwnerID === clientData.id) {
-        dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked, sk.broadcastToRoom);
+        dbHelpers.toggleEditorLock(action.payload.roomID, action.payload.isEditorLocked);
         sk.broadcastToRoom(room, action);
       }
     },
     TOGGLE_CHAT_LOCK : (action) => {
       if (roomOwnerID === clientData.id) {
-        dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked, sk.broadcastToRoom);
+        dbHelpers.toggleChatLock(action.payload.roomID, action.payload.isChatLocked);
         sk.broadcastToRoom(room, action);
       }
     },
@@ -41,7 +45,7 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
           timestamp: moment()
         }
       }
-      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content, sk.broadcastToRoom);
+      dbHelpers.storeMessage(action.payload.roomID, clientData.id, action.payload.content);
       sk.broadcastToRoom(room, newAction);
       const newActionToSelf = Object.assign({}, newAction);
       newActionToSelf.payload.isOwnMessage = true;
@@ -54,8 +58,9 @@ module.exports = function makeActionHandlers(roomOwnerID, dbHelpers, sk, rm) {
     },
     CHANGE_FONT_SIZE : (action) => {
       dbHelpers.changeFontSize(clientData.id, action.payload.userSettings.fontSize);
+    },
+    REMOVE_REC_FROM_LIST: (action) => {
+      sk.broadcastToRoom(room, action);
     }
-
   }
-
 }
