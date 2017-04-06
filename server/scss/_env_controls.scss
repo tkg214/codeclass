@@ -9,7 +9,10 @@
 
 /* Gist  */
 .gist-run-container {
-  display: flex;
+  display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
   justify-content: space-between;
 }
 
@@ -28,7 +31,10 @@
 }
 
 .env-nav-controls {
-  display: flex;
+  display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
 }
 
 .env-btn {

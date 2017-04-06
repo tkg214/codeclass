@@ -42,7 +42,10 @@
   background-color: #fff;  
   border: $faint-gray;
   border-bottom: none;
-  display: flex;
+  display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
   padding: 10px;
   
   img {

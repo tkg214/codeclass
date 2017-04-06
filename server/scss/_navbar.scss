@@ -6,7 +6,7 @@ nav {
 .nav-name{
   color: $brand;
   font-family: 'Raleway', sans-serif;
-  font-size: 2.3em;
+  font-size: $nav-height - 1.5vh;
   height: $nav-height;
   line-height: $nav-height;
   padding-left: 0.5*$space;
@@ -53,6 +53,9 @@ nav {
     font-size: 1.5em;
     position:relative;
     top: 2px;
+    @include tablet {
+      font-size: 1em;
+    }
   }
 }
 

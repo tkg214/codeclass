@@ -42,7 +42,7 @@ margin-right: auto;
 
 .welcome-login {
     position: absolute;
-    left: 40%;
+    left: 44%;
     top: 27%;
     @include tv{
       // transform: scale(0.25);
@@ -233,8 +233,8 @@ margin-right: auto;
     height: 170px;
     background: #343441;
     border: 8px solid #525151;
-    right: 25%;
-    top: 390px;
+    right: 30%;
+    top: 407px;
     background: url("http://i39.tinypic.com/2w5oktu.jpg");
     background-size: 100%;
     -webkit-animation: slide 15s linear infinite;
@@ -441,6 +441,7 @@ margin-right: auto;
     border-radius: 0.4em 0.4em 0 0;
     transform-origin: bottom;
     transition: transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
 }
 
 .macbook-editor {
