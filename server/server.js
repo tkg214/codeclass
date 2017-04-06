@@ -17,7 +17,7 @@ const fs            = require('fs');
 const session       = require('express-session');
 const util          = require('util');
 
-const ENV           = process.env.ENV || "development";
+const ENV           = process.env.NODE_ENV || "development";
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
 const moment        = require('moment');
@@ -30,10 +30,11 @@ if (ENV === 'development') {
 }
 
 if (ENV === 'production') {
-  githubAuthUrl = 'http://35.163.216.237:3000/auth/github/callback';
+  githubAuthUrl = 'http://www.codeclass.live/auth/github/callback';
 } else {
   githubAuthUrl = 'http://127.0.0.1:3000/auth/github/callback';
 }
+
 
 //JSON WEB TOKEN CONFIG
 const jwt           = require('jsonwebtoken');
@@ -175,7 +176,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/rooms', ensureAuthenticated, function(req, res) {
-  res.render('rooms');
+  res.redirect(`/users/${req.user.github_login}`);
 });
 
 app.get('/error', function(req, res) {
@@ -193,7 +194,6 @@ app.get('/users/:username', ensureAuthenticated, (req, res) => {
   );
   const profile = knex.select('*').from('users').where('github_login', req.params.username).limit(1);
   Promise.all([classrooms, profile]).then((profileData) => {
-    console.log(profileData[0]);
     res.render('show_user', {classrooms: profileData[0], profile: (profileData[1])[0]});
   });
 });
@@ -230,7 +230,6 @@ app.get('/rooms/:key', ensureAuthenticated, (req, res) => {
 
 app.post('/rooms', (req, res) => {
   if(/([A-Za-z]|[0-9]|_|-|\w|~)$/.test(req.body.topic)){
-    console.log('didnt work');
     knex('classrooms').where('topic', req.body.topic)
     .then((results) => {
       if(results.length === 0){
