@@ -3,11 +3,12 @@
 }
 
 .react-tabs [role=tab] {
-  display: inline-block;
   border-bottom: none;
+  cursor: pointer;
+  display: inline-block;
   list-style: none;
   padding: 6px 12px;
-  cursor: pointer;
+  text-align: center;
 }
 
 .react-tabs [role=tab][aria-selected=true] {
