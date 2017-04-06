@@ -9,6 +9,10 @@
   list-style: none;
   padding: 6px 12px;
   text-align: center;
+  @include tablet {
+    font-size: 0.5em;
+    padding: 2px 4px;
+  }
 }
 
 .react-tabs [role=tab][aria-selected=true] {
