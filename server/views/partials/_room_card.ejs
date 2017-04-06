@@ -26,7 +26,6 @@
       <h4 class="card-header">
         <%= classroom.topic %>
       </h4>
-      <p class="card-moment"><%= moment(classroom.created_at).diff(moment(), 'days') < -5 ? moment(classroom.created_at).format('MMM Do YYYY') : moment(classroom.created_at).fromNow() %></p>
     </div>
     </a>
     <footer class='card-footer'>

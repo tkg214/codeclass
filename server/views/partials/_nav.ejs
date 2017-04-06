@@ -3,9 +3,9 @@
     <ul class="nav-list">
       <li class="nav-item nav-item-left"><a class="nav-name" href="/">CodeClass</a></li>
       <% if (user) { %>
-      <li class="nav-item nav-item-right"><a id="modal-button" class="nav-btn nav-btn-new"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-      <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-user" href="/users/<%=user.github_login %>"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
       <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-logout" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+      <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-user" href="/users/<%=user.github_login %>"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+      <li class="nav-item nav-item-right"><a id="modal-button" class="nav-btn nav-btn-new"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
       <% } else { %>
       <li class="nav-item nav-item-right"><a class="nav-btn nav-btn-login" href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
       <% } %>

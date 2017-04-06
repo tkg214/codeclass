@@ -1,15 +1,26 @@
 import axios from 'axios';
 
-export function updateEditorValues(editorValue, roomID) {
+export function updateEditorValues(editorValue, roomID, isEditorLocked, isAuthorized) {
   return dispatch => {
-    dispatch({
-      type: 'UPDATE_EDITOR_VALUES',
-      meta: {remote: true},
-      payload: {
-        roomID,
-        editorValue
-      }
-    })
+    if (isEditorLocked) {
+      dispatch({
+        type: 'UPDATE_EDITOR_VALUES',
+        meta: {remote: isAuthorized ? true : false},
+        payload: {
+          roomID,
+          editorValue
+        }
+      })
+    } else {
+      dispatch({
+        type: 'UPDATE_EDITOR_VALUES_DB',
+        meta: {remote: isAuthorized ? true : false},
+        payload: {
+          roomID,
+          editorValue
+        }
+      })
+    }
   }
 }
 
@@ -41,7 +52,7 @@ export function toggleChatLock(isChatLocked, roomID) {
 
 export function executeCode(lang, code) {
   return dispatch => {
-    axios.post('http://52.33.138.163:8080/api', {
+    axios.post('http://exec-api.codeclass.live:8080/api', {
       lang : lang,
       code : code
     })

@@ -6,11 +6,13 @@ module.exports = function makeRoomHelpers(sk, clients) {
   return {
     addToClientsStore : function() {
       console.log(`${clientData.github_login} is now connected to room ${room}`);
-      
+
       //Check if room object is already initialized
       if (!clients.hasOwnProperty(room)) {
         clients[room] = [];
       }
+
+      //TODO maybe use object set method from ES6 for to assess the data structure (could use in lines 17-24 and 28-38 to make more efficient)
       //Check if client is already in room
       const clientInRoom = clients[room].filter((client) => {
         return client.name === clientData.github_login;

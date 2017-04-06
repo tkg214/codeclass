@@ -9,8 +9,7 @@ class ChatBar extends Component {
   constructor() {
     super();
     this.state = {
-      lastCount: 0,
-
+      lastCount: 0
     }
   }
 
@@ -68,7 +67,6 @@ function mapStateToProps(state) {
     chat: state.chat,
     roomControls: state.roomControls,
     onlineUsers: state.onlineUsers
-
    }
 }
 
