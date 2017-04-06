@@ -33,3 +33,9 @@ $tablet-width: 768px;
     @content;
   }
 }
+
+@mixin tv{
+  @media(max-width: 955px) {
+    @content;
+  }
+}
