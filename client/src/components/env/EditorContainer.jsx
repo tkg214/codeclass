@@ -28,7 +28,18 @@ class EditorContainer extends Component {
   }
 
   render() {
-    const { editorValue, language, theme, isEditorLocked, fontSize } = this.props;
+    const { editorValue, language, theme, isEditorLocked, fontSize, isAuthorized } = this.props;
+
+    let editorStatus;
+    if (isAuthorized) {
+      editorStatus = false;
+    } else if (isAuthorized && !isEditorLocked) {
+      editorStatus = false;
+    } else if (!isAuthorized && !isEditorLocked){
+      editorStatus = false;
+    } else {
+      editorStatus = true;
+    }
 
     return (
       <div className='editor-container'>
@@ -40,14 +51,14 @@ class EditorContainer extends Component {
           onChange={this._onChange.bind(this)}
           width={this.width}
           value={editorValue}
-          readOnly={isEditorLocked}
+          readOnly={editorStatus}
         />
       </div>
     )
   }
 
   _onChange(newValue) {
-    this.props.actions.updateEditorValues(newValue, this.props.roomID)
+    this.props.actions.updateEditorValues(newValue, this.props.roomID, this.props.isEditorLocked, this.props.isAuthorized)
   }
 }
 
@@ -60,7 +71,8 @@ EditorContainer.propTypes = {
   theme: PropTypes.string.isRequired,
   editorValue: PropTypes.string.isRequired,
   roomID: PropTypes.number.isRequired,
-  isEditorLocked: PropTypes.bool.isRequired
+  isEditorLocked: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool.isRequired
 }
 
 export default EditorContainer;

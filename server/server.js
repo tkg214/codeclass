@@ -11,6 +11,9 @@ const passport      = require('passport');
 const path          = require('path');
 const request       = require('request');
 const sass          = require("node-sass-middleware");
+const wav           = require('wav');
+const ss            = require('socket.io-stream');
+const fs            = require('fs');
 const session       = require('express-session');
 const util          = require('util');
 
@@ -142,7 +145,6 @@ function ensureAuthenticated(req, res, next) {
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.user = req.user;
-  res.locals.moment = moment;
   //Define source of bundle.js depending on environment
   let bundleSrc;
   if(req.user) {
@@ -302,6 +304,30 @@ app.post('/savegist', function (req, res) {
   });
 });
 
+app.get('/api/recorded_edits', ensureAuthenticated, (req, res) => {
+  dbHelpers.getEditorValuesForStream(req.query.id, sendRecordings);
+  function sendRecordings(data) {
+    if (data) {
+      console.log(data);
+      res.json(data);
+    }
+  }
+})
+
+// route for deleting edits. posting new recs comes from socket stream
+app.post('/api/recorded_edits', ensureAuthenticated, (req, res) => {
+  dbHelpers.getRecordingInfoForStream(req.body.data.id, deleteRec);
+  function deleteRec(data) {
+    fs.unlink((data.filePath + data.fileName), (err) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        dbHelpers.deleteRecInfo(req.body.data.id);
+        res.sendStatus(200)
+      }
+    });
+  }
+})
 
 //Temp data
 // const roomData = require('./temp-room-api-data.json');
@@ -324,6 +350,7 @@ io.on('connection', (socket) => {
   const clientData = socket.decoded_token;
   let roomOwnerID;
   let room;
+  let roomID;
   let sk;
   let rm;
 
@@ -342,12 +369,13 @@ io.on('connection', (socket) => {
 
     //Return room owner id (want to refactor this out but it has to be here lol)
     function emitRoomData(roomData) {
+      roomID = roomData.roomID;
       roomOwnerID = roomData.roomOwnerID;
-      console.log(roomOwnerID);
       delete roomData.roomOwnerID;
       let action = {type: 'UPDATE_ROOM_STATE', payload: roomData}
       sk.emitToUser(action);
     }
+
   });
 
   socket.on('action', (action) => {
@@ -356,7 +384,81 @@ io.on('connection', (socket) => {
     executeAction(action);
   });
 
+  let fileWriter;
+  let streamSampleRate;
+  let fileName;
+  let recordingInfo;
+  let startTime;
+  let isRecording = false;
+  const PATH = './tmp/';
+
+  function createRecordingInfo() {
+    recordingInfo = {
+      classroom_id: roomID,
+      file_path: PATH,
+      file_name: fileName,
+      sample_rate: streamSampleRate
+    }
+    return;
+  }
+
+  // TODO replace path with path.resolve([path]...)
+  function createFilePath(room) {
+    fileName = room + '_' + String(Date.now()) + '.wav';
+    return (PATH + fileName)
+  }
+
+  // TODO do a check for not streaming if more than one tab is open
+  // TODO use opus or other compressed format instead of wav if possible
+
+  ss(socket).on('start-stream', (stream, meta) => {
+    fileWriter = new wav.FileWriter(createFilePath(room), {
+      channels: 1,
+      sampleRate: meta.sampleRate || 48000,
+      bitDepth: 16
+    });
+    streamSampleRate = meta.sampleRate;
+    startTime = Date.now();
+    isRecording = true;
+    createRecordingInfo();
+    stream.pipe(fileWriter);
+  });
+
+  socket.on('stop-stream', () => {
+    if (isRecording) {
+      recordingInfo.time = (Date.now() - startTime);
+      fileWriter.end();
+      dbHelpers.storeRecordingInfo(recordingInfo, broadcastNewInc);
+      isRecording = false;
+      function broadcastNewInc(data) {
+        let action = {type: 'UPDATE_REC_LIST', payload: data};
+        sk.broadcastToRoomInclusive(room, action);
+      }
+    }
+  });
+
+  socket.on('playback', (action) => {
+    let id = action.payload.recordingID.slice(2);
+    dbHelpers.getRecordingInfoForStream(id, createPlaybackStream);
+    function createPlaybackStream(data) {
+      let roomStream = new ss.createStream();
+      let file = data.filePath + data.fileName;
+      ss(socket).emit('playback-stream', roomStream, {sampleRate: data.sampleRate});
+      fs.createReadStream(file).pipe(roomStream);
+    }
+  });
+
   socket.on('disconnect', () => {
+    if (isRecording) {
+      recordingInfo.time = (Date.now() - startTime);
+      fileWriter.end();
+      dbHelpers.storeRecordingInfo(recordingInfo, broadcastNew);
+      isRecording = false;
+      function broadcastNew(data) {
+        let action = {type: 'UPDATE_REC_LIST', payload: data};
+        sk.broadcastToRoom(room, action);
+      }
+    }
     rm.removeFromClientsStore();
     let action = {type: 'UPDATE_USERS_ONLINE', payload: {usersOnline: clients[room]}};
     sk.broadcastToRoomInclusive(room, action);

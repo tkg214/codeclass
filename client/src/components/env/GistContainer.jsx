@@ -11,7 +11,7 @@ class GistContainer extends Component {
   }
 
   render() {
-    const { saveStatus, isAuthorized, isChatLocked, isEditorLocked } = this.props;
+    const { saveStatus, isAuthorized, isEditorLocked } = this.props;
     const buttonClass = {
       'Saving...': {'style': 'btn-warning', 'icon': 'fa-spin fa-spinner fa-pulse'},
       'Complete': {'style': 'btn-success', 'icon': 'fa-check'},

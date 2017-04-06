@@ -6,6 +6,8 @@ class EnvControls extends Component {
     const { isAuthorized, isChatLocked, isEditorLocked } = this.props;
     const themes = ['Monokai', 'Github', 'Kuroir', 'Textmate', 'Solarized Dark', 'Solarized Light', 'Terminal'];
     const fontSizes = [8, 9, 11, 12, 14, 18, 24, 30, 36, 48];
+
+    // TODO refactor below with a map buttons to state function
     return (
       <div className='editor-group'>
         <div className='env-nav-controls'>
@@ -101,7 +103,6 @@ EnvControls.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   isChatLocked: PropTypes.bool.isRequired,
   isEditorLocked: PropTypes.bool.isRequired
-
 }
 
 export default EnvControls;

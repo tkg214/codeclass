@@ -1,15 +1,26 @@
 import axios from 'axios';
 
-export function updateEditorValues(editorValue, roomID) {
+export function updateEditorValues(editorValue, roomID, isEditorLocked, isAuthorized) {
   return dispatch => {
-    dispatch({
-      type: 'UPDATE_EDITOR_VALUES',
-      meta: {remote: true},
-      payload: {
-        roomID,
-        editorValue
-      }
-    })
+    if (isEditorLocked) {
+      dispatch({
+        type: 'UPDATE_EDITOR_VALUES',
+        meta: {remote: isAuthorized ? true : false},
+        payload: {
+          roomID,
+          editorValue
+        }
+      })
+    } else {
+      dispatch({
+        type: 'UPDATE_EDITOR_VALUES_DB',
+        meta: {remote: isAuthorized ? true : false},
+        payload: {
+          roomID,
+          editorValue
+        }
+      })
+    }
   }
 }
 

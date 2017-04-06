@@ -5,17 +5,16 @@ import * as Actions from '../../actions/chat';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 Tabs.setUseDefaultStyles(false);
 
-
 import UserCountContainer from './UserCountContainer.jsx';
 import MessageListContainer from './MessageListContainer.jsx';
 import MessageComposeContainer from './MessageComposeContainer.jsx';
 import EnvHeader from './EnvHeader.jsx';
-
+import AudioContainer from './AudioContainer.jsx';
 
 class ChatContainer extends Component {
 
   render() {
-    const { chat, roomControls, onlineUsers, sidebar } = this.props
+    const { chat, roomControls, onlineUsers, sidebar, recordings, socket, actions } = this.props
     let visibility = roomControls.isChatVisible ? 'open' : 'close'
     // Tabs.setUseDefaultStyles(false);
 
@@ -32,19 +31,28 @@ class ChatContainer extends Component {
         <TabList className="sidebar-tablist">
           <Tab className="sidebar-tab content-tab">Classroom</Tab>
           <Tab className="sidebar-tab content-tab">Chatroom</Tab>
+          <Tab className="sidebar-tab content-tab">Recordings</Tab>
         </TabList>
 
         <TabPanel className="sidebar-panel">
           <EnvHeader roomTitle={roomControls.roomTitle} language={roomControls.language}/>
-          <UserCountContainer chat={chat} actions={this.props.actions} users={onlineUsers}/>
+          <UserCountContainer chat={chat} actions={actions} users={onlineUsers}/>
         </TabPanel>
 
         <TabPanel className="chat-messages">
           <MessageListContainer chat={chat}/>
           <MessageComposeContainer
-            actions={this.props.actions}
+            actions={actions}
             isChatLocked={roomControls.isChatLocked}
             roomID={roomControls.roomID} />
+        </TabPanel>
+
+        <TabPanel className='recordings-panel'>
+          <AudioContainer
+            actions={actions}
+            socket={socket}
+            recordings={recordings}
+            isAuthorized={roomControls.isAuthorized}/>
         </TabPanel>
       </Tabs>
       </div>
@@ -58,7 +66,6 @@ class ChatContainer extends Component {
     actions.toggleChatContainer(roomControls.isChatVisible);
     let messageList = chat.messages[0] || [];
     actions.updateNewMessagesCount(messageList.length);
-
   }
 
   handleSelect(index, last) {
@@ -66,8 +73,6 @@ class ChatContainer extends Component {
     console.log('Selected tab: ' + index + ', Last tab: ' + last);
     actions.switchSidebarTab(index);
   }
-
-
 }
 
 function mapStateToProps(state) {
@@ -75,7 +80,8 @@ function mapStateToProps(state) {
     chat: state.chat,
     roomControls: state.roomControls,
     onlineUsers: state.onlineUsers,
-    sidebar: state.sidebar
+    sidebar: state.sidebar,
+    recordings: state.recordings
    }
 }
 
@@ -93,7 +99,9 @@ ChatContainer.propTypes = {
   roomControls: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
   onlineUsers: PropTypes.object.isRequired,
-  sidebar: PropTypes.object.isRequired
+  sidebar: PropTypes.object.isRequired,
+  socket: PropTypes.object.isRequired,
+  recordings: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

@@ -12,7 +12,7 @@ class Terminal extends Component {
 
     return (
       <div className='terminal'>
-        <div classNAme='terminal-output-wrapper'>
+        <div className='terminal-output-wrapper'>
           {terminal.map((outputs) => {
             if (outputs.response.stderr) {
               return <pre className='terminal-output' key={outputs.timestamp}>{outputs.response.stderr}</pre>

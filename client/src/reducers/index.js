@@ -8,6 +8,7 @@ import terminal from './terminal';
 import gist from './gist';
 import onlineUsers from './onlineUsers';
 import sidebar from './sidebar';
+import recordings from './recordings';
 
 export default combineReducers({
   chat,
@@ -16,5 +17,6 @@ export default combineReducers({
   terminal,
   gist,
   onlineUsers,
-  sidebar
+  sidebar,
+  recordings
 });
