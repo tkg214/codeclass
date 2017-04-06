@@ -21,7 +21,6 @@
     "jsonwebtoken": "^7.3.0",
     "knex": "^0.12.9",
     "knex-logger": "^0.1.0",
-    "lame": "^1.2.4",
     "moment": "^2.18.1",
     "node-sass-middleware": "^0.11.0",
     "passport": "^0.3.2",
