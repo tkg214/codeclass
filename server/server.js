@@ -160,7 +160,7 @@ app.get('/', function(req, res) {
   if (req.user) {
     res.redirect('/rooms');
   } else {
-    res.render('index');
+    res.render('home');
   }
 });
 
